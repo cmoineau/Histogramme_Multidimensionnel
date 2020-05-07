@@ -1,0 +1,4550 @@
+{
+    "AirTime.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.long AND ArrDelay.early": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND CarrierDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND DayOfMonth.beginning": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND DayOfMonth.end": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND DayOfMonth.middle": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND DepDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND DepDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND Distance.medium": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND Distance.short": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND TaxiIn.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.long AND TaxiOut.medium": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND TaxiOut.short": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.long AND WeatherDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.medium AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND ArrDelay.early": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.medium AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.medium AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.medium AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "AirTime.short AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.short AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.short AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "AirTime.short AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.short AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.short AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.short AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.short AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.veryShort": [
+        "Around half", 
+        "Around half"
+    ], 
+    "AirTime.veryShort AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND DepDelay.long": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.veryShort AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.veryShort AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "AirTime.veryShort AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "AirTime.veryShort AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.veryShort AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "AirTime.veryShort AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "AirTime.veryShort AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.acceptable AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.acceptable AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.acceptable AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.acceptable AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early": [
+        "Around half", 
+        "Around half"
+    ], 
+    "ArrDelay.early AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND DepDelay.long": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.early AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.early AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "ArrDelay.early AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.early AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.early AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.early AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.early AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.long AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.long AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.long AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.long AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.long AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.long AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.long AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.onTime AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.onTime AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.onTime AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.onTime AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.short AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.short AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.short AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.short AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.veryLong AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.veryLong AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrDelay.veryLong AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrDelay.veryLong AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrDelay.veryLong AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.afternoon AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.afternoon AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.afternoon AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.evening AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.evening AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.evening AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.midday AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.midday AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.midday AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.morning AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.morning AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.morning AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.night AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND AirTime.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND AirTime.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.early": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "ArrTime.night AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "ArrTime.night AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "ArrTime.night AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.acceptable AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.acceptable AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.acceptable AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.acceptable AND WeatherDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.long AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.long AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.long AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.long AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.long AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "CarrierDelay.none AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.none AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.none AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.none AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.none AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.none AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.none AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.short AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.short AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.short AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.short AND WeatherDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.veryLong AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.veryLong AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.veryLong AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "CarrierDelay.veryLong AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "CarrierDelay.veryLong AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DayOfMonth.beginning AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.beginning AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.beginning AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DayOfMonth.beginning AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.beginning AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.beginning AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.beginning AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.beginning AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.beginning AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.end": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DayOfMonth.end AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.end AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.end AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DayOfMonth.end AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.end AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.end AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.end AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.end AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.end AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DayOfMonth.middle AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DayOfMonth.middle AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DayOfMonth.middle AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.acceptable AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.acceptable AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.acceptable AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.acceptable AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.long AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.long AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.long AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.long AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.long AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.long AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.long AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.long AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.long AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.long AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DepDelay.none AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.none AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND LateAirCraftDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.none AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "DepDelay.none AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.none AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.none AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.none AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.none AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.short AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.short AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.short AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.short AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.veryLong AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepDelay.veryLong AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepDelay.veryLong AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepDelay.veryLong AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrTime.afternoon": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND ArrTime.evening": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND ArrTime.midday": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrTime.morning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND ArrTime.night": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.afternoon AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.afternoon AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.afternoon AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrTime.afternoon": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrTime.evening": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND ArrTime.midday": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrTime.morning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND ArrTime.night": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.evening AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.evening AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.evening AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrTime.afternoon": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrTime.evening": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrTime.midday": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrTime.morning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND ArrTime.night": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND CarrierDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND TaxiOut.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.midday AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.midday AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.midday AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND AirTime.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND AirTime.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND AirTime.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND AirTime.veryShort": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND ArrDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrDelay.early": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND ArrDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrDelay.onTime": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrTime.afternoon": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND ArrTime.evening": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND ArrTime.midday": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrTime.morning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND ArrTime.night": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND CarrierDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND DepDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND DepDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND DepDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND DepDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND DepDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND Distance.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND Distance.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND TaxiIn.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.morning AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.morning AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "DepTime.morning AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND AirTime.medium": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND AirTime.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND AirTime.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND ArrDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrDelay.early": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND ArrDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrDelay.onTime": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrTime.afternoon": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND ArrTime.evening": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND ArrTime.midday": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND ArrTime.morning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND ArrTime.night": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND CarrierDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND DepDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND DepDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND DepDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND DepDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND DepDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND Distance.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND Distance.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND Distance.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND Distance.veryShort": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "DepTime.night AND TaxiIn.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "DepTime.night AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "Distance.long AND TaxiIn.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.long AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium": [
+        "Around half", 
+        "Around half"
+    ], 
+    "Distance.medium AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "Distance.medium AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "Distance.medium AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.medium AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "Distance.medium AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.medium AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.medium AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "Distance.short AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND DayOfMonth.beginning": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND DayOfMonth.end": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND DayOfMonth.middle": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND LateAirCraftDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "Distance.short AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND TaxiIn.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "Distance.short AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.short AND TaxiOut.medium": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND TaxiOut.short": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "Distance.short AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.short AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "Distance.short AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong AND DayOfMonth.beginning": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong AND DayOfMonth.end": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong AND TaxiIn.short": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong AND TaxiOut.medium": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryLong AND TaxiOut.short": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort AND DayOfMonth.beginning": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND DayOfMonth.end": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND DayOfMonth.middle": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND TaxiIn.medium": [
+        "None", 
+        "None"
+    ], 
+    "Distance.veryShort AND TaxiIn.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "Distance.veryShort AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "LateAirCraftDelay.long": [
+        "Some", 
+        "Some"
+    ], 
+    "LateAirCraftDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "LateAirCraftDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "SecurityDelay.none AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "SecurityDelay.none AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "SecurityDelay.none AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "SecurityDelay.none AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "SecurityDelay.none AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND CarrierDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.medium AND CarrierDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND CarrierDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.medium AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.medium AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND LateAirCraftDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.medium AND SecurityDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND TaxiOut.medium": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND TaxiOut.short": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.medium AND WeatherDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short": [
+        "Most", 
+        "Most"
+    ], 
+    "TaxiIn.short AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiIn.short AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND LateAirCraftDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiIn.short AND LateAirCraftDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiIn.short AND TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND TaxiOut.medium": [
+        "Around half", 
+        "Around half"
+    ], 
+    "TaxiIn.short AND TaxiOut.short": [
+        "Around half", 
+        "Around half"
+    ], 
+    "TaxiIn.short AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.short AND WeatherDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiIn.short AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiIn.short AND WeatherDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "TaxiIn.short AND WeatherDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.long AND CarrierDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.long AND LateAirCraftDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.long AND LateAirCraftDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.long AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.long AND WeatherDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.medium": [
+        "Around half", 
+        "Around half"
+    ], 
+    "TaxiOut.medium AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.medium AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.medium AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.medium AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.medium AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.medium AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.medium AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.medium AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.short": [
+        "Most", 
+        "Most"
+    ], 
+    "TaxiOut.short AND CarrierDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND CarrierDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND CarrierDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.short AND CarrierDelay.short": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND CarrierDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND LateAirCraftDelay.acceptable": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND LateAirCraftDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.short AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.short AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "TaxiOut.short AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.short AND WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.short AND WeatherDelay.long": [
+        "None", 
+        "None"
+    ], 
+    "TaxiOut.short AND WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "TaxiOut.short AND WeatherDelay.veryLong": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "WeatherDelay.long AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "WeatherDelay.none AND LateAirCraftDelay.acceptable": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.none AND LateAirCraftDelay.long": [
+        "Few", 
+        "Few"
+    ], 
+    "WeatherDelay.none AND LateAirCraftDelay.none": [
+        "Few", 
+        "Few"
+    ], 
+    "WeatherDelay.none AND LateAirCraftDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.none AND LateAirCraftDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "WeatherDelay.none AND SecurityDelay.none": [
+        "Some", 
+        "Some"
+    ], 
+    "WeatherDelay.short": [
+        "None", 
+        "None"
+    ], 
+    "WeatherDelay.veryLong": [
+        "Few", 
+        "Few"
+    ], 
+    "WeatherDelay.veryLong AND SecurityDelay.none": [
+        "None", 
+        "None"
+    ]
+}

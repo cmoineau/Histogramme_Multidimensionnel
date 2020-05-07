@@ -1,0 +1,699 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+
+import psycopg2
+import time
+import sys
+
+from Vocabulary import *
+from DBManager import *
+
+
+
+### gestion de segments [lo,hi[ provenant de la concaténation de bins
+
+def appendSegment(lo, hi, segments=[]):
+    """
+    Ajoute un boundary à une liste d'intervalles [lo, hi]. Le dernier boundary de la liste
+    est modifié si sa borne supérieure est égale à lo.
+    NB: les bins sont triés, donc pas besoin de chercher le segment à allonger
+
+    @param lo (float) borne inférieure
+    @param hi (float) borne supérieure
+    @param segments (list((lo,hi))) liste d'intervalles modifiée en sortie par la fonction
+    """
+    if len(segments) == 0:
+        # créer le premier segment
+        segments.append((lo, hi))
+    elif segments[-1][1] == lo:
+        # étirer le dernier segment jusqu'à hi : [a,b[ avec [b, c[ devient [a, c[
+        segments[-1] = (segments[-1][0], hi)
+    else:
+        # le précédent segment n'est pas contigu avec [lo, hi[, commencer un nouveau segment
+        segments.append((lo, hi))
+
+def removeSegment(lo, hi, segments):
+    """
+    Supprime le segment [lo,hi] de la liste segments
+
+    @param lo (float) borne inférieure
+    @param hi (float) borne supérieure
+    @param segments (list((lo,hi))) liste d'intervalles modifiée en sortie par la fonction
+    """
+    # resultat
+    new_segments = list()
+    # découper tous les segments par [lo, hi]
+    for segment in segments:
+        if lo <= segment[0]:
+            if hi <= segment[0]:
+                new_segments.append(segment)
+            elif hi < segment[1]:
+                new_segments.append((hi, segment[1]))
+            else:
+                pass
+        elif lo <= segment[1]:
+            new_segments.append((segment[0], lo))
+            if hi <= segment[1]:
+                new_segments.append((hi, segment[1]))
+        else:
+            new_segments.append(segment)
+    # remplacer les segments d'entrée par ceux de sortie
+    del segments[:]
+    for segment in new_segments:
+        segments.append(segment)
+            
+                
+def inSegment(value, segments, including_bounds=True):
+    """
+    Teste si une valeur appartient à l'un des segments de la liste
+
+    @param value
+    @param segments
+    @return True if value belongs to one of the segments
+    """
+    if including_bounds:
+        return any(map(lambda segment: segment[0] <= value and value <= segment[1], segments))
+    else:
+        return any(map(lambda segment: segment[0] < value and value < segment[1], segments))
+
+
+
+
+class Frels:
+
+    def __init__(self, dbm):
+        """ Constructor for a FRELS instance"""
+        self.dbManager = dbm
+        self.nbBuckets = 10
+
+
+    def checkCardinalityV2(self, voc, modality, query_core=False):
+        """
+        In this version of checkCardinality, one use the histograms and the most common values
+        to compute the cardinality of the core (at least its part entirely covered by the metadata)
+        and then compute the real cardinality for the transition areas
+
+        @param voc !unused! (Vocabulary) is an instance of a Vocabulary
+        @param modality (Modality) is a modality
+        @param query_core (boolean) True if core is to be counted by query, False if estimated
+        @return (float) improved estimated cardinality
+        """
+        if not modality.isTrapeziumModality():
+            raise Exception("FRELS does not handle discrete fuzzy sets defined over categorical attributes")
+
+        # variables de travail
+        relation = self.dbManager.getTableName()
+        attribute = modality.getAttribute().attname
+
+        # cardinalité estimée de chaque bin de l'histogramme
+        sigma_h = self.dbManager.getBinRelativeCardinality(attribute, True)
+        count = self.dbManager.getCount()
+
+        # segments : sortes de bins concaténés
+        transition_segments = []  # concaténation des bins des transitions de la modalité
+        core_segments = []        # concaténation des bins du noyau de la modalité
+
+        # accumulateurs
+        card_core        = 0.0
+        card_transitions = 0.0
+        card_freqvals    = 0.0
+
+        # parcourir les bins de l'histogramme qui sont dans la modalité
+        for lo, hi in self.dbManager.getBins(attribute, True):
+            # est-ce que le bin est dans le noyau ? c'est quand min(µ) = 1 sur l'boundary
+            if modality.getMinMu(lo, hi) == 1.0:
+                # cet boundary est entièrement dans le noyau, l'ajouter à checkCard
+                card_core += sigma_h
+                appendSegment(lo, hi, core_segments)
+            # sinon est-ce que cet boundary est au moins un peu dans le support ?
+            elif modality.getMaxMu(lo, hi) > 0.0:
+                # ajouter l'boundary [lo,hi[ à ceux qui seront examinés par une requête directe
+                appendSegment(lo, hi, transition_segments)
+
+        #print("core_segments", core_segments)
+        #print("transition_segments", transition_segments)
+
+        # faut-il calculer la cardinalité exacte du noyau ?
+        if query_core:
+            # nombre total de n-uplets dans la table, incluant les null (mis en cache)
+            count_all = self.dbManager.getCount(True) # estimation rapide
+
+            # s'il n'y a pas de segments dans le noyau, en créer d'après la modalité
+            if len(core_segments) == 0:
+                # modalité inversée ?
+                if modality.maxCore < modality.minCore:
+                    # ajouter deux segments
+                    appendSegment(-1e38, modality.maxCore, core_segments)
+                    appendSegment(modality.minCore, 1e38, core_segments)
+                    removeSegment(-1e38, modality.maxCore, transition_segments)
+                    removeSegment(modality.minCore, 1e38, transition_segments)
+                else:
+                    appendSegment(modality.minCore, modality.maxCore, core_segments)
+                    removeSegment(modality.minCore, modality.maxCore, transition_segments)
+                #print("core_segments", core_segments)
+                #print("transition_segments", transition_segments)
+
+            # créer la requête SQL pour sélectionner les n-uplets du noyau de la modalité
+            conditions = map(lambda segment: '(%g <= %s AND %s <= %g)'%(
+                                    segment[0], attribute, attribute, segment[1]),
+                             core_segments)
+            where = ' OR '.join(conditions)
+            sql = "SELECT COUNT(*) FROM %s WHERE %s"%(relation, where)
+            #print(sql)
+
+            # exécuter cette requête et traiter les valeurs
+            with self.dbManager.connection.cursor() as query:
+                query.execute(sql)
+                count = query.fetchone()[0]
+
+            # normaliser la somme des µ
+            card_core_real = count / count_all
+            #print("Core: real=%g est=%g"%(card_core_real, card_core))
+            card_core = card_core_real
+        #else: print("Core: est=%g"%card_core)
+
+        # est-ce qu'il y a des bins qui sont dans les transitions de la modalité ?
+        if len(transition_segments) > 0:
+            # nombre total de n-uplets dans la table, incluant les null (mis en cache)
+            count_all = self.dbManager.getCount(True) # estimation rapide
+
+            # créer la requête SQL pour sélectionner les n-uplets des transitions de la modalité
+            conditions = map(lambda segment: '(%g < %s AND %s < %g)'%(
+                                            segment[0], attribute, attribute, segment[1]),
+                             transition_segments)
+            where = ' OR '.join(conditions)
+            sql = "SELECT %s FROM %s WHERE %s"%(attribute, relation, where)
+            #print(sql)
+
+            # exécuter cette requête et traiter les valeurs une par une (lent)
+            with self.dbManager.connection.cursor() as query:
+                query.execute(sql)
+                # accumuler les µ des valeurs dans card_transition
+                for row in query.fetchall():
+                    value = float(row[0])
+                    mu = modality.getMu(value)
+                    card_transitions += mu
+
+            # normaliser la somme des µ
+            card_transitions = card_transitions / count_all
+            #print("Trans: card=%g"%card_transitions)
+
+        # prendre en compte les valeurs fréquentes qui n'ont pas été interrogées directement
+        for value,freq in self.dbManager.getMostCommonValues(attribute, True):
+            # ne pas compter celles qui sont dans le noyau s'il a été interrogé
+            if query_core and inSegment(value, core_segments): continue
+            # ne pas compter celles qui sont dans les transitions
+            if inSegment(value, transition_segments, including_bounds=False): continue
+            # degré de satisfaction
+            mu = modality.getMu(value)
+            #if mu>0: print(value, mu)
+            card_freqvals += freq * mu
+        #print("Freq: card=%g"%card_freqvals)
+
+        return card_core + card_transitions + card_freqvals
+
+
+
+    def checkCardinalityV2b(self, voc, modality):
+        """
+        In this version of checkCardinality, one use the histograms and the most common values
+        to compute the cardinality of the core (at least its part entirely covered by the metadata)
+        and then compute the real cardinality with a fast query for the transition areas
+
+        @param voc !unused! (Vocabulary) is an instance of a Vocabulary
+        @param modality (Modality) is a modality
+        @return (float) improved estimated cardinality
+        """
+        if not modality.isTrapeziumModality():
+            raise Exception("FRELS does not handle discrete fuzzy sets defined over categorical attributes")
+
+        # variables de travail
+        relation = self.dbManager.getTableName()
+        attribute = modality.getAttribute().attname
+        minS,minC,maxC,maxS = modality.minSupport, modality.minCore, modality.maxCore, modality.maxSupport
+
+        # cardinalité estimée de chaque bin de l'histogramme
+        sigma_h = self.dbManager.getBinRelativeCardinality(attribute, True)
+        count = self.dbManager.getCount()
+
+        # segments : sortes de bins concaténés
+        transition_segments = []  # concaténation des bins des transitions de la modalité
+
+        # accumulateurs
+        card_core        = 0.0
+        card_transitions = 0.0
+        card_freqvals    = 0.0
+
+        # parcourir les bins de l'histogramme qui sont dans la modalité
+        for lo, hi in self.dbManager.getBins(attribute, True):
+            # est-ce que le bin est dans le noyau ? c'est quand min(µ) = 1 sur l'boundary
+            if modality.getMinMu(lo, hi) == 1.0:
+                # cet boundary est entièrement dans le noyau, l'ajouter à checkCard
+                card_core += sigma_h
+            # sinon est-ce que cet boundary est au moins un peu dans le support ?
+            elif modality.getMaxMu(lo, hi) > 0.0:
+                # ajouter l'boundary [lo,hi[ à ceux qui seront examinés par une requête directe
+                appendSegment(lo, hi, transition_segments)
+
+        #print("transition_segments", transition_segments)
+
+        # est-ce qu'il y a des bins qui sont dans les transitions de la modalité ?
+        if len(transition_segments) > 0:
+            # nombre total de n-uplets dans la table, incluant les null (mis en cache)
+            count_all = self.dbManager.getCount(True) # estimation rapide
+
+            # condition de sélection des n-uplets des transitions de la modalité
+            conditions = map(lambda segment: '(%g < %s AND %s < %g)'%(
+                                            segment[0], attribute, attribute, segment[1]),
+                             transition_segments)
+            where = ' OR '.join(conditions)
+
+            # SQL query generation
+            sql = "SELECT SUM(mu) FROM (SELECT CASE\n"
+
+            # côté min
+            if minS != minC:
+                sql += " WHEN %g <= %s AND %s <  %g THEN (%s-(%f))/(%f)\n"%(
+                    minS, attribute, attribute, minC, attribute, minS, minC-minS)
+            
+            # côté max
+            if maxS != maxC:
+                sql += " WHEN %g <  %s AND %s <= %g THEN (%s-(%f))/(%f)\n"%(
+                    maxC, attribute, attribute, maxS, attribute, maxS, maxC-maxS)
+
+            sql += " ELSE 0.0"
+            sql += "END AS mu FROM %s WHERE %s) t"%(relation, where)
+
+            # exécuter cette requête et traiter les valeurs une par une (lent)
+            #print(sql)
+            with self.dbManager.connection.cursor() as query:
+                query.execute(sql)
+                card_transitions = float(query.fetchone()[0])
+
+            # normaliser la somme des µ
+            card_transitions = card_transitions / count_all
+            #print("Trans: card=%g"%card_transitions)
+
+        # prendre en compte les valeurs fréquentes qui n'ont pas été interrogées directement
+        for value,freq in self.dbManager.getMostCommonValues(attribute, True):
+            # ne pas compter celles qui sont dans les transitions
+            if inSegment(value, transition_segments, including_bounds=False): continue
+            # degré de satisfaction
+            mu = modality.getMu(value)
+            #if mu>0: print(value, mu)
+            card_freqvals += freq * mu
+        #print("Freq: card=%g"%card_freqvals)
+
+        return card_core + card_transitions + card_freqvals
+
+
+
+    def checkCardinalityV1(self, voc, modality):
+        """
+        In this version of checkCardinality, one separate the transitions areas
+        into several intervals (one on the core), then count the tuples in each
+        interval to better estimate the relative cardinality of the modality
+
+        @param voc !unused! (Vocabulary) is an instance of a Vocabulary
+        @param modality (Modality) is a modality
+        @return (float) improved estimated cardinality
+        """
+        if not modality.isTrapeziumModality():
+            raise Exception("FRELS does not handle discrete fuzzy sets defined over categorical attributes")
+
+        # variables de travail
+        relation = self.dbManager.getTableName()
+        attribute = modality.getAttribute().attname
+        minS,minC,maxC,maxS = modality.minSupport, modality.minCore, modality.maxCore, modality.maxSupport
+        mu = dict()
+
+        # bucket specification
+        if minC != minS :
+            bucketWidthL = (minC - minS)/self.nbBuckets
+        else:
+            bucketWidthL = None
+        if maxC != maxS :
+            bucketWidthR = (maxS - maxC)/self.nbBuckets
+        else:
+            bucketWidthR = None
+
+        # SQL query generation
+        sql = "SELECT t.range AS range, COUNT(*) AS nbOcc FROM (SELECT CASE\n"
+
+        # transition areas
+        for i in range(self.nbBuckets):
+            # left transition area
+            if bucketWidthL is not None:
+                sql += " WHEN %g <= %s AND %s <  %g THEN 'ls%d'\n"%(
+                    minS + i * bucketWidthL, attribute, attribute,
+                    minS + (i+1) * bucketWidthL, i)
+                mu_a = modality.getMu(minS + i * bucketWidthL)
+                mu_b = modality.getMu(minS + (i+1) * bucketWidthL)
+                mu_mean = (mu_a + mu_b)/2.0
+                mu['ls'+str(i)] = mu_mean
+        # core
+        #Specific treatment for round domains (e.g. hours)
+        #DepTime,night,22.3,23.0,5.3,6.3
+        if maxC < minC:
+            sql += " WHEN %g <= %s OR %s <= %g THEN 'c'\n"%(minC, attribute, attribute, maxC)         
+        else:
+            sql += " WHEN %g <= %s AND %s <= %g THEN 'c'\n"%(minC, attribute, attribute, maxC)
+        mu['c'] = 1.0
+
+        # transition areas
+        for i in range(self.nbBuckets):
+            # right transition area
+            if bucketWidthR is not None:
+                sql += " WHEN %g <  %s AND %s <= %g THEN 'rs%d'\n"%(
+                    maxC + i * bucketWidthR, attribute, attribute,
+                    maxC + (i+1) * bucketWidthR, i)
+                mu_a = modality.getMu(maxC + i * bucketWidthR)
+                mu_b = modality.getMu(maxC + (i+1) * bucketWidthR)
+                mu_mean = (mu_a + mu_b)/2.0
+                mu['rs'+str(i)] = mu_mean
+
+        if maxC < minC:
+            sql += "END AS range FROM %s WHERE %s <= %g OR %s >= %g) t GROUP BY t.range"%(
+                relation, attribute, maxS, attribute, minS)
+        else:
+            sql += "END AS range FROM %s WHERE %g <= %s AND %s <= %g) t GROUP BY t.range"%(
+                relation, minS, attribute, attribute, maxS)
+
+        # accumulation into checkCard
+        checkCard = 0.0
+
+        # exécuter la requête
+        #print(sql)
+        with self.dbManager.connection.cursor() as query:
+            query.execute(sql)
+            for row in query.fetchall():
+                #print(row)
+                mu_mean = mu[row[0]]
+                cardBucket = row[1]
+                # cardinality of bucket depends on average µ of bounds
+                checkCard += cardBucket * mu_mean
+
+        # normalisation
+        if checkCard > 0:
+            nbTuples = self.dbManager.getCount(True)
+            checkCard /= nbTuples
+
+        return checkCard
+
+
+    def checkCardinalityV1b(self, voc, modality):
+        """
+        In this version of checkCardinality, one separate the transitions areas
+        into several intervals (one on the core), then sum the cardinality in each
+        interval to better estimate the relative cardinality of the modality
+
+        @param voc !unused! (Vocabulary) is an instance of a Vocabulary
+        @param modality (Modality) is a modality
+        @return (float) improved estimated cardinality
+        """
+        if not modality.isTrapeziumModality():
+            raise Exception("FRELS does not handle discrete fuzzy sets defined over categorical attributes")
+
+        # variables de travail
+        relation = self.dbManager.getTableName()
+        attribute = modality.getAttribute().attname
+        minS,minC,maxC,maxS = modality.minSupport, modality.minCore, modality.maxCore, modality.maxSupport
+
+        # bucket specification
+        if minC != minS :
+            bucketWidthL = (minC - minS)/self.nbBuckets
+        else:
+            bucketWidthL = None
+        if maxC != maxS :
+            bucketWidthR = (maxS - maxC)/self.nbBuckets
+        else:
+            bucketWidthR = None
+
+        # SQL query generation
+        sql = "SELECT SUM(mu) FROM (SELECT CASE\n"
+
+        # transition areas
+        for i in range(self.nbBuckets):
+            # left transition area
+            if bucketWidthL is not None:
+                mu_a = modality.getMu(minS + i * bucketWidthL)
+                mu_b = modality.getMu(minS + (i+1) * bucketWidthL)
+                mu_mean = (mu_a + mu_b)/2.0
+                sql += " WHEN %g <= %s AND %s <  %g THEN %f\n"%(
+                    minS + i * bucketWidthL, attribute, attribute,
+                    minS + (i+1) * bucketWidthL, mu_mean)
+        # core
+        #Specific treatment for round domains (e.g. hours)
+        #DepTime,night,22.3,23.0,5.3,6.3
+        if maxC < minC:
+            sql += " WHEN %g <= %s OR %s <= %g THEN 1\n"%(minC, attribute, attribute, maxC)
+        else:
+            sql += " WHEN %g <= %s AND %s <= %g THEN 1\n"%(minC, attribute, attribute, maxC)
+
+        # transition areas
+        for i in range(self.nbBuckets):
+            # right transition area
+            if bucketWidthR is not None:
+                mu_a = modality.getMu(maxC + i * bucketWidthR)
+                mu_b = modality.getMu(maxC + (i+1) * bucketWidthR)
+                mu_mean = (mu_a + mu_b)/2.0
+                sql += " WHEN %g <  %s AND %s <= %g THEN %g\n"%(
+                    maxC + i * bucketWidthR, attribute, attribute,
+                    maxC + (i+1) * bucketWidthR, mu_mean)
+
+        if maxC < minC:
+            sql += "END AS mu FROM %s WHERE %s <= %g OR %s >= %g) t"%(
+                relation, attribute, maxS, attribute, minS)
+        else:
+            sql += "END AS mu FROM %s WHERE %g <= %s AND %s <= %g) t"%(
+                relation, minS, attribute, attribute, maxS)
+
+        # exécuter la requête
+        #print(sql)
+        with self.dbManager.connection.cursor() as query:
+            query.execute(sql)
+            checkCard = float(query.fetchone()[0])
+
+        # normalisation
+        if checkCard > 0:
+            nbTuples = self.dbManager.getCount(True)
+            checkCard /= nbTuples
+
+        return checkCard
+
+
+    def checkCardinalityV1c(self, voc, modality):
+        """
+        In this version of checkCardinality, one compute the cardinality
+        directly in SQL, so it returns the true cardinality.
+        It appears to be the fastest method.
+
+        @param voc !unused! (Vocabulary) is an instance of a Vocabulary
+        @param modality (Modality) is a modality
+        @return (float) improved estimated cardinality
+        """
+        if not modality.isTrapeziumModality():
+            raise Exception("FRELS does not handle discrete fuzzy sets defined over categorical attributes")
+
+        # variables de travail
+        relation = self.dbManager.getTableName()
+        attribute = modality.getAttribute().attname
+        minS,minC,maxC,maxS = modality.minSupport, modality.minCore, modality.maxCore, modality.maxSupport
+
+        # SQL query generation
+        sql = "SELECT SUM(mu) FROM (SELECT CASE\n"
+
+        # côté min
+        if minS != minC:
+            sql += " WHEN %g <= %s AND %s <  %g THEN (%s-(%f))/(%f)\n"%(
+                minS, attribute, attribute, minC, attribute, minS, minC-minS)
+        
+        # core
+        #Specific treatment for round domains (e.g. hours)
+        #DepTime,night,22.3,23.0,5.3,6.3
+        if maxC < minC:
+            sql += " WHEN %g <= %s or %s <= %g THEN 1\n"%(minC, attribute, attribute, maxC)         
+        else:
+            sql += " WHEN %g <= %s AND %s <= %g THEN 1\n"%(minC, attribute, attribute, maxC)
+
+        # côté max
+        if maxS != maxC:
+            sql += " WHEN %g <  %s AND %s <= %g THEN (%s-(%f))/(%f)\n"%(
+                maxC, attribute, attribute, maxS, attribute, maxS, maxC-maxS)
+
+        # autre
+        sql += " ELSE 0.0"
+
+        if maxC < minC:
+            sql += "END AS mu FROM %s WHERE %s <= %g OR %s >= %g) t"%(
+                relation, attribute, maxS, attribute, minS)
+        else:
+            sql += "END AS mu FROM %s WHERE %g <= %s AND %s <= %g) t"%(
+                relation, minS, attribute, attribute, maxS)
+
+        # exécuter la requête
+        #print(sql)
+        with self.dbManager.connection.cursor() as query:
+            query.execute(sql)
+            checkCard = float(query.fetchone()[0])
+
+        # normalisation
+        if checkCard > 0:
+            nbTuples = self.dbManager.getCount(True)
+            checkCard /= nbTuples
+
+        return checkCard
+
+
+
+# tests simples
+if __name__ == "__main__":
+    # Vocabulary
+    # vocFile = '../Data/FlightsVoc.txt'
+    vocFile = '../Data/flights_numerical.txt'
+    vocabulary = Vocabulary(vocFile)
+
+    # host, database and table
+    host = 'localhost'
+    database = 'flights2008'
+    table = 'flights' #_150K'
+
+    # DB connection
+    with DBManager(host, database, table) as manager:
+
+        frels = Frels(manager)
+
+        def error(v1, v2):
+            "retourne un % d'erreur de v2 par rapport à v1"
+            return (v2 - v1)/v1*100
+
+        def runTestModality(modality):
+            "lance les comparaisons du calcul de la cardinalité relative par 4 méthodes"
+            modalityname = modality.getName()
+            partition = modality.getAttribute()
+            columnname = partition.getName()
+            runTest(columnname, modalityname)
+
+        def runTest(columnname, modalityname):
+            "lance les comparaisons du calcul de la cardinalité relative par 4 méthodes"
+            # objets correspondant aux noms indiqués
+            attribute = vocabulary.getAttribute(columnname)
+            modality  = attribute.getModality(modalityname)
+            print("**********************************")
+            print("%s : %s"%(modality.getFullName(), modality.strDomain()))
+
+            # calcul de la cardinalité réelle
+            realCard = None
+            if False:
+                t_beg = time.time()
+                realCard = manager.getRealCardinalityModality(vocabulary, modality)
+                t_end = time.time()
+                print("REAL CARDINALITY FOR %s.%s = %g "%(columnname,modalityname,realCard))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 1c : calcul de µ par SQL complet
+            if True:
+                t_beg = time.time()
+                realCard = frels.checkCardinalityV1c(vocabulary, modality)
+                t_end = time.time()
+                print("FRELS CARDINALITY FOR %s.%s = %g V1c"%(columnname,modalityname,realCard))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # estimation de la cardinalité
+            if True:
+                t_beg = time.time()
+                sigma_estime, sigma_inf, sigma_sup = manager.getEstimatedCardinality(vocabulary, columnname, modalityname)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, sigma_estime)
+                else:
+                    err = ""
+                print(u"ESTIMATED CARDINALITY FOR %s.%s = %g %s IN [%g,%g]"%(columnname,modalityname,sigma_estime, err, sigma_inf, sigma_sup))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 1 : group by
+            if True:
+                t_beg = time.time()
+                frelsCardV1 = frels.checkCardinalityV1(vocabulary, modality)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, frelsCardV1)
+                else:
+                    err = ""
+                print("FRELS ESTIMATED CARDINALITY FOR %s.%s = %g %s V1"%(columnname,modalityname,frelsCardV1, err))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 1b : calcul de µ par SQL partiel
+            if True:
+                t_beg = time.time()
+                frelsCardV1b = frels.checkCardinalityV1b(vocabulary, modality)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, frelsCardV1b)
+                else:
+                    err = ""
+                print("FRELS ESTIMATED CARDINALITY FOR %s.%s = %g %s V1b"%(columnname,modalityname,frelsCardV1b, err))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 2 estimée
+            if False:
+                t_beg = time.time()
+                frelsCardV2 = frels.checkCardinalityV2(vocabulary, modality, False)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, frelsCardV2)
+                else:
+                    err = ""
+                print("FRELS ESTIMATED CARDINALITY FOR %s.%s = %g %s V2 core estimated"%(columnname,modalityname,frelsCardV2, err))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 2 requête
+            if False:
+                t_beg = time.time()
+                frelsCardV2 = frels.checkCardinalityV2(vocabulary, modality, True)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, frelsCardV2)
+                else:
+                    err = ""
+                print("FRELS ESTIMATED CARDINALITY FOR %s.%s = %g %s V2 core queried"%(columnname,modalityname,frelsCardV2, err))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            # vérification de la cardinalité, methode 2 requête
+            if True:
+                t_beg = time.time()
+                frelsCardV2b = frels.checkCardinalityV2b(vocabulary, modality)
+                t_end = time.time()
+                if realCard is not None:
+                    err = "(%.3f%% err)"%error(realCard, frelsCardV2b)
+                else:
+                    err = ""
+                print("FRELS ESTIMATED CARDINALITY FOR %s.%s = %g %s V2b core estimated, transitions queried"%(columnname,modalityname,frelsCardV2b, err))
+                print("\tElapsed time = %ss"%round(t_end-t_beg, 3))
+
+            print("**********************************\n")
+
+
+        # lancer des tests sur certaines modalités
+        if True:
+            #runTest('ArrDelay', 'onTime')
+            #runTest('DayOfWeek', 'weekend')
+            #runTest('DepTime', 'night')
+            runTest('AirTime', 'medium')
+            #runTest('DepTime', 'midday')
+            #runTest('ArrTime', 'morning')
+            #runTest('ArrTime', 'night')
+            #runTest('AirTime', 'long')
+            #runTest('AirTime', 'veryLong')
+            #runTest('Distance', 'veryLong')
+            #runTest('TaxiIn', 'long')
+            #runTest('CarrierDelay', 'acceptable')
+            #runTest('SecurityDelay', 'acceptable')
+
+        # lancer le test sur toutes les modalités
+        if False:
+            for attribute in vocabulary.getAttributes():
+                # traiter uniquement les attributs numériques
+                if attribute.isTrapeziumPartition():
+                    for modality in attribute.getModalities():
+                        runTestModality(modality)
