@@ -119,62 +119,6 @@ class Stholes(object):
         if self.estimer(c1, self.dim_name) != T1:
             self.drill(c1, T1)
 
-    def find_low_penalty(self):
-        """
-        Méthode à appeler pour trouver la plus petite pénalitée obtenue en réalisant une fusion entre un noeud père/fils
-        ou deux noeud fils.
-        :return:
-        """
-        a_effacer = -1
-        low_p = None
-        nouvelle_intervalle = None
-        intervalles_rm = []
-        changing_intervalle = None
-        nb_tuple_rm = None
-        if self.v() < epsilon and self.children != []:  # Si l'intervalle n'a plus de place, on fait une fusion père fils qu'on envoie directement
-            n_b, _ = self.merge_pc(self.children[0])
-            return 0, [self], self.father, n_b, 0, None
-        else:
-            for i_child, child in enumerate(self.children):
-                # On cherche la meilleur combinaison parent enfant =========================================================
-                n_b, p = self.merge_pc(child)
-                if low_p is None or low_p > p:
-                    low_p = p
-                    # Dans le cas de fusion parent_child, on a besoin de juste supprimer la référence du père
-                    intervalles_rm = [self]
-                    nouvelle_intervalle = n_b
-                    # On va supprimer le self de son noeud père et mettre le nouvel inervalle dans le noeud père.
-                    # Le noeud changeant est donc le noeud père.
-                    changing_intervalle = self.father
-                    a_effacer = 0
-                    nb_tuple_rm = None
-                if len(self.children) > 1 and i_child != (len(self.children) - 1):
-                    # On cherche les meilleurs combinaisons de fusion enfant enfant ========================================
-                    for i_child1 in range(i_child + 1, len(self.children)):
-                        n_b, p, to_rm, nb_tuple_to_remove = self.merge_ss(child, self.children[i_child1])
-                        if low_p is None:
-                            low_p = p
-                        if low_p >= p:
-                            low_p = p
-                            intervalles_rm = to_rm
-                            changing_intervalle = self
-                            nouvelle_intervalle = n_b
-                            a_effacer = 1
-                            nb_tuple_rm = nb_tuple_to_remove
-                # On regarde récursivement pour chaque enfant ==============================================================
-                p, n_intervalle_rm, n_changing_intervalle, n_nouvelle_intervalle, t, nb_tuple_to_remove = child.find_low_penalty()
-                if p is not None:
-                    if low_p > p:
-                        low_p = p
-                        intervalles_rm = n_intervalle_rm
-                        nouvelle_intervalle = n_nouvelle_intervalle
-                        changing_intervalle = n_changing_intervalle
-                        nb_tuple_rm = nb_tuple_to_remove
-                        a_effacer = t
-                if low_p < 0.1:  # Condition pour essayer de ne pas faire toute les combinaisons possible
-                    return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
-        return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
-
     def merge_pc(self, child):
         """
         :param child:
@@ -255,17 +199,74 @@ class Stholes(object):
 
         # Calcul du nombre de tuple ====================================================================================
         # Dans ce cas, les fils occupe tout l'espace, il faut fusionner les fils pour faire une fusion père fils plus tard
-        if self.v() == 0:  # TODO : rm ?
+        if self.v() == 0:
             raise ValueError("Drill à mal fait son travail !")
         else:
             nb_tuple_to_rm_from_p = self.nb_tuple * (vold / self.v())
             n_b.nb_tuple = nb_tuple_to_rm_from_p + child1.nb_tuple + child2.nb_tuple
             # Calcul de la pénalitée ===================================================================================
-            p1 = abs(v_ratio * (child1.nb_tuple + child2.nb_tuple) - (self.nb_tuple * ((vold/vbp) * (1 - v_ratio))))
+            p1 = abs(self.nb_tuple * (vold / self.v()) - n_b.nb_tuple * (vold / n_b.v()))
             p2 = abs(child1.nb_tuple - n_b.nb_tuple * (child1.v() / vn))
             p3 = abs(child2.nb_tuple - n_b.nb_tuple * (child2.v() / vn))
             penality = p1 + p2 + p3
+
         return n_b, penality, to_rm, nb_tuple_to_rm_from_p
+
+    def find_low_penalty(self):
+        """
+        Méthode à appeler pour trouver la plus petite pénalitée obtenue en réalisant une fusion entre un noeud père/fils
+        ou deux noeud fils.
+        :return:
+        """
+        a_effacer = -1
+        low_p = None
+        nouvelle_intervalle = None
+        intervalles_rm = []
+        changing_intervalle = None
+        nb_tuple_rm = None
+        if self.v() < epsilon and self.children != []:  # Si l'intervalle n'a plus de place, on fait une fusion père fils qu'on envoie directement
+            n_b, _ = self.merge_pc(self.children[0])
+            return 0, [self], self.father, n_b, 0, None
+        else:
+            for i_child, child in enumerate(self.children):
+                # On cherche la meilleur combinaison parent enfant =========================================================
+                n_b, p = self.merge_pc(child)
+                if low_p is None or low_p > p:
+                    low_p = p
+                    # Dans le cas de fusion parent_child, on a besoin de juste supprimer la référence du père
+                    intervalles_rm = [self]
+                    nouvelle_intervalle = n_b
+                    # On va supprimer le self de son noeud père et mettre le nouvel inervalle dans le noeud père.
+                    # Le noeud changeant est donc le noeud père.
+                    changing_intervalle = self.father
+                    a_effacer = 0
+                    nb_tuple_rm = None
+                if len(self.children) > 1 and i_child != (len(self.children) - 1):
+                    # On cherche les meilleurs combinaisons de fusion enfant enfant ========================================
+                    for i_child1 in range(i_child + 1, len(self.children)):
+                        n_b, p, to_rm, nb_tuple_to_remove = self.merge_ss(child, self.children[i_child1])
+                        if low_p is None:
+                            low_p = p
+                        if low_p >= p:
+                            low_p = p
+                            intervalles_rm = to_rm
+                            changing_intervalle = self
+                            nouvelle_intervalle = n_b
+                            a_effacer = 1
+                            nb_tuple_rm = nb_tuple_to_remove
+                # On regarde récursivement pour chaque enfant ==============================================================
+                p, n_intervalle_rm, n_changing_intervalle, n_nouvelle_intervalle, t, nb_tuple_to_remove = child.find_low_penalty()
+                if p is not None:
+                    if low_p > p:
+                        low_p = p
+                        intervalles_rm = n_intervalle_rm
+                        nouvelle_intervalle = n_nouvelle_intervalle
+                        changing_intervalle = n_changing_intervalle
+                        nb_tuple_rm = nb_tuple_to_remove
+                        a_effacer = t
+                if low_p < 0.1:  # Condition pour essayer de ne pas faire toute les combinaisons possible
+                    return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
+        return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
 
     def drill(self, zone, nb_tuple):
         """
@@ -410,8 +411,7 @@ class Stholes(object):
             """
             volume = 1
             vol_tot = 1
-            i = 0
-            while i < len(dim_a_estimer) and volume != 0:
+            for i in range(len(dim_a_estimer)):
                 id_dim = dim_name.index(dim_a_estimer[i])
                 vol_tot *= (bound1[id_dim][1] - bound1[id_dim][0])
                 if bound2[i][0] <= bound1[id_dim][0] < bound1[id_dim][1] <= bound2[i][1]:
@@ -588,8 +588,8 @@ class Stholes(object):
             # couleur = ['r', 'g', 'c', 'm', 'y', 'k', 'w']
             figure = plt.figure()
             axes = plt.axes()
-            axes.set_xlim(left=-10, right=10)
-            axes.set_ylim(bottom=-10, top=10)
+            axes.set_xlim(left=min(self.bound[0]), right=max(self.bound[0]))
+            axes.set_ylim(bottom=min(self.bound[1]), top=max(self.bound[0]))
             axes.set_xlabel(self.dim_name[0])
             axes.set_ylabel(self.dim_name[1])
             subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
