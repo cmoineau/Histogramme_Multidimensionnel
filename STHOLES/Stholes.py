@@ -72,6 +72,7 @@ class Stholes(object):
         :return:
         """
         low_p, bucket_rm, changing_bucket, new_bucket, t, nb_tuple_to_remove = self.find_low_penalty()
+        print("Pénalité de fusion : ", int(low_p))
         # L'intervalle résultant de la fusion annonce le changement de père au fils
         for child in new_bucket.children:
             child.father = new_bucket
@@ -110,7 +111,7 @@ class Stholes(object):
                 volume_requete *= (requete[0][dim][1]-requete[0][dim][0])
             x = min(v_int / volume_requete, 1)
             nb_tuple_dans_intervalle = requete[1] * x
-            if v_int < epsilon:
+            if v_int > epsilon:  # Si le volume intérieur est non nul ie si la requête ne tombe pas dans un fils
                 tab_res = [(self, nb_tuple_dans_intervalle)]
             for child in self.children:
                 tab_res += child.nb_tuple_intervalles(requete)
@@ -588,7 +589,7 @@ class Stholes(object):
     def print(self, debug_it=False):
         tab = [((self.bound[0][0], self.bound[1][0]),
                 self.bound[0][1] - self.bound[0][0],
-                self.bound[0][1] - self.bound[1][0])]
+                self.bound[1][1] - self.bound[1][0])]
         for c in self.children:
             tab += c.print()
 
@@ -596,8 +597,8 @@ class Stholes(object):
             # couleur = ['r', 'g', 'c', 'm', 'y', 'k', 'w']
             figure = plt.figure()
             axes = plt.axes()
-            axes.set_xlim(left=min(self.bound[0]), right=max(self.bound[0]))
-            axes.set_ylim(bottom=min(self.bound[1]), top=max(self.bound[0]))
+            axes.set_xlim(left=round(min(self.bound[0]))-1, right=max(self.bound[0])+1)
+            axes.set_ylim(bottom=round(min(self.bound[1]))-1, top=max(self.bound[0])+1)
             axes.set_xlabel(self.dim_name[0])
             axes.set_ylabel(self.dim_name[1])
             subplot = figure.add_subplot(111, sharex=axes, sharey=axes)

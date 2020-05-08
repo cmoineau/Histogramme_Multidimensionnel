@@ -56,18 +56,31 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    nb_intervalle = 50
-    nb_req_entrainement = 50
+    nb_intervalle = 500
+    nb_req_entrainement = 2
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
-    workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
+    # workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")
+
+    workload = []
+    t = [[[0.3, 0.8], [0.5, 1]],
+         [[0, 0.6], [0.5, 1]],
+         [[0.5, 0.9], [0.3, 0.6]]]
+
+    for bound in t:
+        nb_tuple = 0
+        for i in range(len(tab_attribut[0])):
+            point = [d[i] for d in tab_attribut]
+            if utils.est_inclus(point, bound):
+                nb_tuple += 1
+        workload += [(bound, nb_tuple)]
+    print(workload)
     # On commence avec une requête sur l'ensemble des données
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
     histogramme.BuildAndRefine(workload)
     # x = round(histogramme.estimer(intervalle_estimer, dim_estimer))
-    # print(histogramme.bound[:2])
     # x = round(histogramme.estimer(histogramme.bound[:2], histogramme.dim_name[:2]))
     # print("Résultat estimé avec STHOLES : ", x, "nb_tot_tuple", histogramme.nb_tot_tuple())
     moy = 0
@@ -85,9 +98,10 @@ def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
             print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
             print("\n")
     print("Erreur moyenne : ", moy / cpt)
-    histogramme.print()
     x = round(histogramme.estimer(histogramme.bound, histogramme.dim_name))
-    print("Résultat estimé avec STHOLES : ", x, "nb_tot_tuple", histogramme.nb_tot_tuple())
+    print("Résultat estimé avec STHOLES : ", x, "nb_tot_classe", histogramme.count_nb_bucket())
+    print(histogramme.bound)
+    histogramme.print()
     # histogramme.save('./STHoles')
 
 
