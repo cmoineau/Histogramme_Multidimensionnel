@@ -57,9 +57,9 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_intervalle = 50
-    nb_req_entrainement = 100
+    nb_req_entrainement = 50
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
     print("Création d'un set d'entraînement pour ST-Holes ...")
     workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")

@@ -38,7 +38,8 @@ class Stholes(object):
         self.nb_max_bucket = nb_max_bucket
         self.dim_name = dim_name
         self.father = None
-        self.howasicreated = None
+        self.howasicreated = None  # Seulement pour débugger, permet de savoir comment à été crée la classe
+        # 0 : Fusion ss, 1 : Fusion pc, 2 : Drill
         self.verbeux = verbeux
 
     def BuildAndRefine(self, workload):
@@ -60,53 +61,59 @@ class Stholes(object):
             while self.count_nb_bucket() > self.nb_max_bucket:
                 if self.verbeux:
                     print('Suppression ... encore ', self.count_nb_bucket() - self.nb_max_bucket, ' buckets')
-                self.supprimer_intervalle()
+                self.delete_bucket()
         if self.verbeux:
             print('Fin de la mise à jour !')
 
-    def supprimer_intervalle(self):
-        low_p, intervalle_rm, changing_intervalle, nouvelle_intervalle, t, nb_tuple_to_remove = self.find_low_penalty()
+    def delete_bucket(self):
+        """
+        Cette méthode supprime une classe de l'intervalle en fusionnant deux classes. La fusion réaslié est celle qui
+        permet de perdre le moins d'information possible !
+        :return:
+        """
+        low_p, bucket_rm, changing_bucket, new_bucket, t, nb_tuple_to_remove = self.find_low_penalty()
         # L'intervalle résultant de la fusion annonce le changement de père au fils
-        for child in nouvelle_intervalle.children:
-            child.father = nouvelle_intervalle
+        for child in new_bucket.children:
+            child.father = new_bucket
 
-        if nouvelle_intervalle.father is None:
-            self.nb_tuple = nouvelle_intervalle.nb_tuple
-            self.children = nouvelle_intervalle.children
-            for child in nouvelle_intervalle.children:
+        if new_bucket.father is None:
+            self.nb_tuple = new_bucket.nb_tuple
+            self.children = new_bucket.children
+            for child in new_bucket.children:
                 child.father = self
-            self.bound = nouvelle_intervalle.bound
+            self.bound = new_bucket.bound
             self.howasicreated = t
-            nouvelle_intervalle = None  # Pour s'assurer qu'on le détruise
+            new_bucket = None  # Pour s'assurer qu'on le détruise
         else:
             # Utilisation d'un set pour ne pas avoir deux fois le même boundary à rm
-            intervalle_rm = set(intervalle_rm)
-            for r in intervalle_rm:
-                changing_intervalle.children.remove(r)
+            bucket_rm = set(bucket_rm)
+            for r in bucket_rm:
+                changing_bucket.children.remove(r)
             if nb_tuple_to_remove is not None:
-                changing_intervalle.nb_tuple -= nb_tuple_to_remove
-            changing_intervalle.children.append(nouvelle_intervalle)
-            nouvelle_intervalle.howasicreated = t
+                changing_bucket.nb_tuple -= nb_tuple_to_remove
+            changing_bucket.children.append(new_bucket)
+            new_bucket.howasicreated = t
 
     def nb_tuple_intervalles(self, requete):
         """
-        Renvoit un tableau de tuple intervalle, nombre de tuple dans l'intervalle.
+        Renvoit la liste des classes en intersection avec la requête avec le nombre de tuple de la requête qui tomb dans
+        la classe.
+        Utilise une recherche top-down de l'arbre .
         :param requete:
         :return:
         """
         tab_res = []
-        if self.v_inter(requete[0]) > epsilon:
+        if self.vBox_inter(requete[0]) > epsilon:
             volume_requete = 1
+            v_int = self.v_inter(requete[0])
             for dim in range(len(requete[0])):
                 volume_requete *= (requete[0][dim][1]-requete[0][dim][0])
-            # Il semblerait que lors du calcul des volumes des approximations faisait que x prenait des valeurs de l'ordre
-            # de 1.00001
-            x = min(self.v_inter(requete[0]) / volume_requete, 1)
+            x = min(v_int / volume_requete, 1)
             nb_tuple_dans_intervalle = requete[1] * x
-            tab_res = [(self, nb_tuple_dans_intervalle)]
-
-        for child in self.children:
-            tab_res += child.nb_tuple_intervalles(requete)
+            if v_int < epsilon:
+                tab_res = [(self, nb_tuple_dans_intervalle)]
+            for child in self.children:
+                tab_res += child.nb_tuple_intervalles(requete)
         return tab_res
 
     def shrink_and_drill(self, bound_requete, nb_tuple):
@@ -136,6 +143,7 @@ class Stholes(object):
         for c in child.children:
             n_b.children.append(c)
         # Calcul de la pénalitée =======================================================================================
+        # TODO : améliorer le temps de calcul en utilisant une formule calculé à la main
         penality = abs(self.nb_tuple - n_b.estimer(self.bound, self.dim_name)) + \
                    abs(self.estimer(child.bound, self.dim_name) - n_b.estimer(child.bound, self.dim_name))
         return n_b, penality
@@ -286,7 +294,6 @@ class Stholes(object):
                     raise ValueError("Un des fils chevauchait-il self ?")
             self.father.children = n_b.children
             self.father.nb_tuple = n_b.nb_tuple
-            self.father.howasicreated = 3
             self.father.drill(zone, nb_tuple)
             # TODO : Remove :
             if self.father.v() < epsilon:
@@ -368,7 +375,7 @@ class Stholes(object):
                 v_trou_candidat -= child.vBox()
         v_int = self.v_inter(bound_requete)  # Volume intervalle avant le shrink
         # Le min est la pour les problèmes d'arrondi
-        x = min(v_trou_candidat / v_int, 1) # TODO : Problème ici sur le calcul du rapport de volume
+        x = min(v_trou_candidat / v_int, 1)  # TODO : Problème ici sur le calcul du rapport de volume
         T = nb_tuple * x  # Estimation du nombre de tuple dans le trou candidat
         for c in self.children:
             if c.intersect(trou_candidat) and not c.est_inclus(trou_candidat):
@@ -428,12 +435,13 @@ class Stholes(object):
             return volume, vol_tot
 
         v, vol_tot = volume_inter(self.bound, bound, dim_a_estimer, self.dim_name)
-
+        if v == 0:  # on est tombé dans le cas sans intersection
+            return 0
         for child in self.children:
             v_child, v_tot_child = volume_inter(child.bound, bound, dim_a_estimer, self.dim_name)
             v -= v_child
             vol_tot -= v_tot_child
-        if vol_tot < epsilon:
+        if vol_tot < epsilon:  # Cas bizarre où l'intervalle est entièrement occupé par ces fils.
             res = 0
         else:
             v = min(v, vol_tot)  # Il est possible que suite à un problème de virgule flotante, le vol_tot soit plus
