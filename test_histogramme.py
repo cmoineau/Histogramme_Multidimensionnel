@@ -12,8 +12,8 @@ import time
 import utils
 
 # Définition des variables =============================================================================================
-nb_tuple = 1000
-nb_req_test = 100
+nb_tuple = 10000
+nb_req_test = 1000
 
 
 def init_histogramme(data_set):
@@ -21,7 +21,7 @@ def init_histogramme(data_set):
     print("Création des histogrammes")
     # MHIST ============================================================================================================
     histo_mhist = mhist.Mhist(data_set[1], data_set[0], nb_intervalle)
-    histo_mhist.save('./histo_mhist')
+    # histo_mhist.save('./histo_mhist')
     print('MHIST initialisé !')
 
     # GENHIST ==========================================================================================================
@@ -30,7 +30,7 @@ def init_histogramme(data_set):
     xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
     alpha = (1 / 2) ** (1 / len(data_set[1]))
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
-    histo_genhist.save('./histo_genhist')
+    # histo_genhist.save('./histo_genhist')
     print('GENHIST initialisé !')
 
     # STHOLES ==========================================================================================================
@@ -44,7 +44,7 @@ def init_histogramme(data_set):
             cpt += 1
     histo_st.BuildAndRefine(workload)
     print('nb_tuple dans histo',histo_st.nb_tot_tuple(), 'nb_req != 0', cpt)
-    histo_st.save('./histo_st')
+    # histo_st.save('./histo_st')
     histo_st.print()
     # AVI ==============================================================================================================
     o_avi = avi.Avi(data_set[1])

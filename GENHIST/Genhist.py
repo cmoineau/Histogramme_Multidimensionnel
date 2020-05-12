@@ -193,6 +193,6 @@ class Genhist(object):
         return size
 
     def save(self, path):
-        f = open(path, 'wb')
+        f = open(path + '.histo', 'wb')
         dump(self, f)
         f.close()

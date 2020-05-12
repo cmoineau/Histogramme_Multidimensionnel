@@ -57,26 +57,13 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_intervalle = 500
-    nb_req_entrainement = 2
+    nb_req_entrainement = 100
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
     print("Création d'un set d'entraînement pour ST-Holes ...")
-    # workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
+    workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")
 
-    workload = []
-    t = [[[0.3, 0.8], [0.5, 1]],
-         [[0, 0.6], [0.5, 1]],
-         [[0.5, 0.9], [0.3, 0.6]]]
-
-    for bound in t:
-        nb_tuple = 0
-        for i in range(len(tab_attribut[0])):
-            point = [d[i] for d in tab_attribut]
-            if utils.est_inclus(point, bound):
-                nb_tuple += 1
-        workload += [(bound, nb_tuple)]
-    print(workload)
     # On commence avec une requête sur l'ensemble des données
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
     histogramme.BuildAndRefine(workload)
