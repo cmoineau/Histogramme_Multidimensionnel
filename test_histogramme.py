@@ -27,7 +27,7 @@ def init_histogramme(data_set):
     # GENHIST ==========================================================================================================
     # Variables pour GENHIST :
     b = 500
-    xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
+    xi = 25  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
     alpha = (1 / 2) ** (1 / len(data_set[1]))
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
     # histo_genhist.save('./histo_genhist')
@@ -42,10 +42,12 @@ def init_histogramme(data_set):
     for a in workload:
         if a[1] != 0:
             cpt += 1
-    histo_st.BuildAndRefine(workload)
+    # Initialisation en prenant l'ensemble du jeu de donnée
+    histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
+    # Raffinement à l'aide de requête généré aléatoirement
+    # histo_st.BuildAndRefine(workload)
     print('nb_tuple dans histo',histo_st.nb_tot_tuple(), 'nb_req != 0', cpt)
     # histo_st.save('./histo_st')
-    histo_st.print()
     # AVI ==============================================================================================================
     o_avi = avi.Avi(data_set[1])
     return histo_mhist, histo_genhist, histo_st, o_avi

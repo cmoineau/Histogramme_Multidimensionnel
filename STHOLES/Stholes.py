@@ -425,7 +425,7 @@ class Stholes(object):
                 if bound2[i][0] <= bound1[id_dim][0] < bound1[id_dim][1] <= bound2[i][1]:
                     volume *= (bound1[id_dim][1] - bound1[id_dim][0])
                 elif bound1[id_dim][0] <= bound2[i][0] < bound2[i][1] <= bound1[id_dim][1]:
-                    volume *= (bound2[id_dim][1] - bound2[id_dim][0])
+                    volume *= (bound2[i][1] - bound2[i][0])
                 elif bound1[id_dim][0] <= bound2[i][0] < bound1[id_dim][1]:
                     volume *= (bound1[id_dim][1] - bound2[i][0])
                 elif bound1[id_dim][0] < bound2[i][1] <= bound1[id_dim][1]:
