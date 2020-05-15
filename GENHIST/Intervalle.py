@@ -57,8 +57,10 @@ class Intervalle(object):
             if intervalle_a_estimer[d][0] < self.boundary[tab_dim[d]][0]:
                 if intervalle_a_estimer[d][1] < self.boundary[tab_dim[d]][0]:
                     return 0
-                else:
+                elif intervalle_a_estimer[d][1] < self.boundary[tab_dim[d]][1]:
                     surface_commune *= (intervalle_a_estimer[d][1] - self.boundary[tab_dim[d]][0])
+                else:
+                    surface_commune *= (self.boundary[d][1] - self.boundary[tab_dim[d]][0])
             else:
                 if intervalle_a_estimer[d][0] > self.boundary[tab_dim[d]][1]:
                     return 0

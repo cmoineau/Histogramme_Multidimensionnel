@@ -72,7 +72,7 @@ class Stholes(object):
         :return:
         """
         low_p, bucket_rm, changing_bucket, new_bucket, t, nb_tuple_to_remove = self.find_low_penalty()
-        print("Pénalité de fusion : ", int(low_p))
+        # print("Pénalité de fusion : ", int(low_p))
         # L'intervalle résultant de la fusion annonce le changement de père au fils
         for child in new_bucket.children:
             child.father = new_bucket

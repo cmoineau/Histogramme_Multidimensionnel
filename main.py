@@ -36,30 +36,74 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 
 def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     # Initialisation des paramètres ====================================================================================
-    b = 10
-    xi = 10  # Qu'elle est une valeur classique ?
+    b = 100
+    xi = 30  # Qu'elle est une valeur classique ?
     alpha = (1/2)**(1/len(tab_data))
-    tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'boundary sous la forme d'une liste
+    tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
 
     # Création de l'histogramme ========================================================================================
-    histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+    # histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
 
     # Test =============================================================================================================
-    x = round(histogramme.estimate(dim_estimer, intervalle_estimer))
-    print("Résultat estimé avec GENHIST : ", x, len(histogramme.tab_intervalle))
+    workload = w.create_workload(tab_data, 0.1, 200)
+    test_b = []
+    for b in range(25, 200):
+        histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+        moy = 0
+        cpt = 0
+        # workload = w.create_workload(tab_attribut, 0.05, 500)
+        for r in workload:
+            est = histogramme.estimate(histogramme.dim_name, r[0])
+            if r[1] != 0:
+                err = (abs(est - r[1]) / r[1])
+                # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+                # print("\n")
+                moy += err
+                cpt += 1
+            # else:
+            #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+            #     print("\n")
+        # print("Erreur moyenne : ", moy / cpt)
+        test_b.append(moy / cpt)
+    plt.plot(test_b)
+    plt.show()
+
+    # test_xi = []
+    # b = 20
+    # val_xi = range(5, 50)
+    # for xi in val_xi:
+    #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+    #     moy = 0
+    #     cpt = 0
+    #     # workload = w.create_workload(tab_attribut, 0.05, 500)
+    #     for r in workload:
+    #         est = histogramme.estimate(histogramme.dim_name, r[0])
+    #         if r[1] != 0:
+    #             err = (abs(est - r[1]) / r[1])
+    #             # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+    #             # print("\n")
+    #             moy += err
+    #             cpt += 1
+    #         # else:
+    #         #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+    #         #     print("\n")
+    #     # print("Erreur moyenne : ", moy / cpt)
+    #     test_xi.append(moy / cpt)
+    # plt.plot(test_xi)
+    # plt.show()
 
     # Affichage de l'histogramme =======================================================================================
-    histogramme.print()
-    plt.scatter(tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][0]],
-                tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][1]])
-    plt.show()
+    # histogramme.print()
+    # plt.scatter(tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][0]],
+    #             tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][1]])
+    # plt.show()
 
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_intervalle = 500
     nb_req_entrainement = 100
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
     workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")
@@ -141,7 +185,7 @@ if __name__ == '__main__':
     print("Résultat réel :                 " + str(round(res)) + ' calculé en ' + str(time.time() - t) + ' s')
 
     # test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    # test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
     # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 

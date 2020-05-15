@@ -17,7 +17,7 @@ nb_req_test = 1000
 
 
 def init_histogramme(data_set):
-    nb_intervalle = 500
+    nb_intervalle = 5
     print("Création des histogrammes")
     # MHIST ============================================================================================================
     histo_mhist = mhist.Mhist(data_set[1], data_set[0], nb_intervalle)
@@ -26,8 +26,8 @@ def init_histogramme(data_set):
 
     # GENHIST ==========================================================================================================
     # Variables pour GENHIST :
-    b = 500
-    xi = 25  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
+    b = 1000
+    xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
     alpha = (1 / 2) ** (1 / len(data_set[1]))
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
     # histo_genhist.save('./histo_genhist')
@@ -45,8 +45,8 @@ def init_histogramme(data_set):
     # Initialisation en prenant l'ensemble du jeu de donnée
     histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
     # Raffinement à l'aide de requête généré aléatoirement
-    # histo_st.BuildAndRefine(workload)
-    print('nb_tuple dans histo',histo_st.nb_tot_tuple(), 'nb_req != 0', cpt)
+    histo_st.BuildAndRefine(workload)
+    print('nb_tuple dans histo', histo_st.nb_tot_tuple(), 'nb_req != 0', cpt)
     # histo_st.save('./histo_st')
     # AVI ==============================================================================================================
     o_avi = avi.Avi(data_set[1])

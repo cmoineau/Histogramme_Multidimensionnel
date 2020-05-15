@@ -181,8 +181,7 @@ class Genhist(object):
     def estimate(self, tab_attribut, boundary):
         card = 0
         for intervalle in self.tab_intervalle:
-            t = (intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n)
-            card += t
+            card += intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n
         return card
 
     def get_size(self):
