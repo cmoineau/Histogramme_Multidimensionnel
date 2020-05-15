@@ -11,12 +11,11 @@ Définitions :
 """
 
 from sys import getsizeof
-import time
 from copy import deepcopy, copy
 from utils import epsilon
 from pickle import dump
-import matplotlib.pyplot as plt
-from matplotlib import patches
+# import matplotlib.pyplot as plt
+# from matplotlib import patches
 from random import random
 
 

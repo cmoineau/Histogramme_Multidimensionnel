@@ -6,8 +6,8 @@
 """
 from GENHIST import Intervalle as intervalle
 import random
-from matplotlib import patches
-import matplotlib.pyplot as plt
+# from matplotlib import patches
+# import matplotlib.pyplot as plt
 from sys import getsizeof
 import numpy as np
 from utils import est_inclus, epsilon
