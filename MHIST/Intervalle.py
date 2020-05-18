@@ -11,7 +11,7 @@ class Intervalle(object):
     def __init__(self, boundaries, joint_distribution):
         self.boundaries = boundaries
         self.joint_distribution = joint_distribution
-        self.max_diff, self.max_dim, self.max_point = self.max_aera_diff()
+        self.max_diff, self.max_dim = self.max_aera_diff()
         self.nb_tuple = []
         self.nb_distinct_value = []
 
@@ -54,9 +54,8 @@ class Intervalle(object):
                                                                                      marginal_distribution))])
                 if v > max_diff:
                     max_diff = v
-                    max_point = (marginal_distribution[nb_dim][k + 1][0] + marginal_distribution[nb_dim][k][0]) / 2
                     max_dim = nb_dim
-        return max_diff, max_dim, max_point
+        return max_diff, max_dim
 
     def split(self):
         if self.max_diff != 0:
@@ -64,9 +63,10 @@ class Intervalle(object):
             joint_distribution_1 = []
             joint_distribution_2 = []
             for it in self.joint_distribution:
-                if self.boundaries[self.max_dim][0] <= it[0][self.max_dim] < self.max_point:
+                new_bound = (self.boundaries[self.max_dim][0] + self.boundaries[self.max_dim][1]) / 2
+                if self.boundaries[self.max_dim][0] <= it[0][self.max_dim] < new_bound:
                     joint_distribution_1.append(it)
-                if self.max_point <= it[0][self.max_dim] <= self.boundaries[self.max_dim][1]:
+                if new_bound <= it[0][self.max_dim] <= self.boundaries[self.max_dim][1]:
                     joint_distribution_2.append(it)
             # Séaparation des frontières ===============================================================================
             boundaries_1 = list(self.boundaries)

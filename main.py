@@ -24,6 +24,23 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     histogramme = mhist.Mhist(tab_attribut, nom_dim, nombre_intervalle)
 
     # Test =============================================================================================================
+
+    moy = 0
+    cpt = 0
+    workload = w.create_workload(tab_attribut, 0.05, 500)
+    for r in workload:
+        est = histogramme.estimate(histogramme.dim_name, r[0])
+        if r[1] != 0:
+            err = (abs(est - r[1]) / r[1])
+            print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+            print("\n")
+            moy += err
+            cpt += 1
+        else:
+            print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+            print("\n")
+    print("Erreur moyenne : ", moy / cpt)
+
     x = round(histogramme.estimate(dim_estimer, intervalle_estimer))
     print("Résultat estimé avec MHIST :   ", x)
 
@@ -195,6 +212,6 @@ if __name__ == '__main__':
 
     # test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
     # test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 
