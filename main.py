@@ -36,42 +36,27 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 
 def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     # Initialisation des paramètres ====================================================================================
-    b = 100
+    b = 500
     xi = 30  # Qu'elle est une valeur classique ?
     alpha = (1/2)**(1/len(tab_data))
     tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
 
     # Création de l'histogramme ========================================================================================
-    # histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+    histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
 
     # Test =============================================================================================================
-    workload = w.create_workload(tab_data, 0.1, 200)
-    test_b = []
-    for b in range(25, 200):
-        histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
-        moy = 0
-        cpt = 0
-        # workload = w.create_workload(tab_attribut, 0.05, 500)
-        for r in workload:
-            est = histogramme.estimate(histogramme.dim_name, r[0])
-            if r[1] != 0:
-                err = (abs(est - r[1]) / r[1])
-                # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-                # print("\n")
-                moy += err
-                cpt += 1
-            # else:
-            #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-            #     print("\n")
-        # print("Erreur moyenne : ", moy / cpt)
-        test_b.append(moy / cpt)
-    plt.plot(test_b)
-    plt.show()
 
-    # test_xi = []
-    # b = 20
-    # val_xi = range(5, 50)
-    # for xi in val_xi:
+    # print('nb_tot de tuple : ', histogramme.estimate(histogramme.dim_name, [[min(d), max(d)] for d in tab_data]))
+    # print('Résultat estimé : ', histogramme.estimate(dim_estimer, intervalle_estimer))
+
+                                #########################################
+                                # TEST POUR TROUVER MEILLEUR XI ET B    #
+                                #########################################
+
+    workload = w.create_workload(tab_data, 0.1, 200)
+
+    # test_b = []
+    # for b in range(25, 200):
     #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
     #     moy = 0
     #     cpt = 0
@@ -88,9 +73,33 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     #         #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
     #         #     print("\n")
     #     # print("Erreur moyenne : ", moy / cpt)
-    #     test_xi.append(moy / cpt)
-    # plt.plot(test_xi)
+    #     test_b.append(moy / cpt)
+    # plt.plot(test_b)
     # plt.show()
+
+    test_xi = []
+    b = 80
+    val_xi = range(5, 50)
+    for xi in val_xi:
+        histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+        moy = 0
+        cpt = 0
+        # workload = w.create_workload(tab_attribut, 0.05, 500)
+        for r in workload:
+            est = histogramme.estimate(histogramme.dim_name, r[0])
+            if r[1] != 0:
+                err = (abs(est - r[1]) / r[1])
+                # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+                # print("\n")
+                moy += err
+                cpt += 1
+            # else:
+            #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+            #     print("\n")
+        # print("Erreur moyenne : ", moy / cpt)
+        test_xi.append(moy / cpt)
+    plt.plot(test_xi)
+    plt.show()
 
     # Affichage de l'histogramme =======================================================================================
     # histogramme.print()
