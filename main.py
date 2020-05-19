@@ -126,8 +126,8 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    nb_intervalle = 500
-    nb_req_entrainement = 100
+    nb_intervalle = 200
+    nb_req_entrainement = 1000
     # Création de l'histogramme ========================================================================================
     histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
@@ -144,20 +144,20 @@ def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     cpt = 0
     # workload = w.create_workload(tab_attribut, 0.05, 500)
     for r in workload:
-        est = histogramme.estimer(r[0], histogramme.dim_name)
+        est = histogramme.estimer(r[0], histogramme.attributes_name)
         if r[1] != 0:
             err = (abs(est - r[1]) / r[1])
-            print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-            print("\n")
+            # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+            # print("\n")
             moy += err
             cpt += 1
-        else:
-            print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-            print("\n")
+        # else:
+        #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+        #     print("\n")
     print("Erreur moyenne : ", moy / cpt)
-    x = round(histogramme.estimer(histogramme.bound, histogramme.dim_name))
+    x = round(histogramme.estimer(histogramme.intervalles, histogramme.attributes_name))
     print("Résultat estimé avec STHOLES : ", x, "nb_tot_classe", histogramme.count_nb_bucket())
-    print(histogramme.bound)
+    print(histogramme.intervalles)
     histogramme.print()
     # histogramme.save('./STHoles')
 
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     print("Résultat réel :                 " + str(round(res)) + ' calculé en ' + str(time.time() - t) + ' s')
 
     # test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    # test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
     # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 
