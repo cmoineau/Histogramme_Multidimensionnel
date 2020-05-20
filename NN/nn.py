@@ -33,7 +33,7 @@ if __name__ == '__main__':
     optimizer = Adam
     print('Loading data ...\n')
 
-    path = "./DATA/fake_data.txt"
+    path = "../DATA/fake_data.txt"
     att1 = []
     att2 = []
     att3 = []
@@ -45,23 +45,24 @@ if __name__ == '__main__':
             att3.append(float(line[2]))
     tab_attribut = np.array([att1, att2])
     workload = w.create_workload(tab_attribut, 0.1, 200)
-    X = []
+    X = [[],[]]
     Y = []
     for k in workload:
-        X.append(k[0])
+        X[0].append(k[0][0])
+        X[1].append(k[0][1])
         Y.append(k[1])
+
     print('End of loading !\nCreating train and test data !')
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=training_size)
-    print('Size of the training input : (' + str(len(X_train)) + ", " + str(len(X_train[0])) + ", "
-          + str(len(X_train[0][0])) + ", " + str(len(X_train[0][0][0])) + ')')
+    print('Size of the training input : (' + str(len(X_train)) + ", " + str(len(X_train[0])) + ')')
     print('Data are ready !')
 
     print("Creating model")
     m = Sequential()
 
-    m.add(Dense(16, kernel_size=(3, 3), strides=1, input_shape=(len(X_train[0]), len(X_train[0][0]),
-                                                                len(X_train[0][0][0]))))
-    m.add(Dense(4, activation='softmax'))  # Here we create our output
+    m.add(Dense(16, input_shape=(len(X_train[0]), len(X_train[0][0]))))
+    m.add(Dense(1, activation='relu'))
+    m.add(Dense(1, activation='softmax'))  # Here we create our output
     opt = optimizer(lr=learning_rate)
     m.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
