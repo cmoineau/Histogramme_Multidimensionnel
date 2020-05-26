@@ -46,6 +46,10 @@ class Stholes(object):
         self.howasicreated = None  # Seulement pour débugger, permet de savoir comment à été crée la classe
                                    # 0 : Fusion ss, 1 : Fusion pc, 2 : Drill
         self.verbeux = verbeux
+        self.penalities= {}  # Dictionnaire clef = classe
+                             #              valeur = [classe_meilleur_fusion, penalité]
+        # Note : Le tableau des pénalités ne teste que la classe père et les classes "soeur", on ne test pas les fils
+        # car ils testent leur père ce qui suffit grâce à la symétrie de la fusion.
 
     def BuildAndRefine(self, workload):
         """
@@ -94,14 +98,68 @@ class Stholes(object):
         if self.verbeux:
             print('Fin de la mise à jour !')
 
+    def test_in(self, c):
+        if self is c:
+            return True
+        elif self.children:
+            for child in self.children:
+                if child.test_in(c):
+                    return True
+        return False
+
+    def test_pres(self):
+        if self in self.penalities or self.father is None:
+            for c in self.children:
+                if not c.test_pres:
+                    return False
+            return True
+        else:
+             return False
+
     def delete_bucket(self):
         """
-        Cette méthode supprime une classe de l'intervalle en fusionnant deux classes. La fusion réaslié est celle qui
+        Cette méthode supprime une classe de l'intervalle en fusionnant deux classes. La fusion réalisé est celle qui
         permet de perdre le moins d'information possible !
         :return:
         """
         t =time.time()
-        low_p, bucket_rm, changing_bucket, new_bucket, howasicreated, nb_tuple_to_remove = self.find_low_penalty()
+        for key, value in self.penalities.items():
+            if not self.test_in(key):
+                raise ValueError("Un élément du tableau pas dans l'histogramme")
+            if not self.test_in(value[0]):
+                raise ValueError("Un élément du tableau pas dans l'histogramme")
+        if not self.test_pres():
+            raise ValueError('Une classe pas présente dans le dictionnaire !')
+
+        # Recherche de la plus faible pénalité =========================================================================
+        # INITIALISATION
+        min_p = None
+        b1 = None
+        b2 = None
+        fusion_pc = False
+        # DEBUT
+        for key, value in self.penalities.items():
+            if min_p is None or value[1] < min_p:
+                min_p = value[1]
+                b1 = key
+                b2 = value[0]
+        # CAS FUSION PC
+        if b1.father is b2:  # Cas où b2 est le père de b1
+            fusion_pc = True
+            new_bucket, _ = b2.merge_pc(b1)
+            nb_tuple_to_remove = None
+            bucket_rm = [b2]
+            changing_bucket = b2.father
+        # CAS FUSION SS
+        elif b1 in b2.father.children and b2 in b1.father.children:  # Cas où b1 et b2 sont frère
+            n_b, penality, to_rm, nb_tuple_rm = b1.father.merge_ss(b1, b2)
+            bucket_rm = to_rm
+            changing_bucket = b1.father
+            new_bucket = n_b
+            nb_tuple_to_remove = nb_tuple_rm
+        else:
+            raise ValueError("L'on n'est ni dans un cas pc ni ss erreur d'attribution de fils à un père ?")
+
         global time_find_lc
         time_find_lc = time.time() - t
         # L'intervalle résultant de la fusion annonce le changement de père au fils
@@ -109,21 +167,72 @@ class Stholes(object):
             child.father = new_bucket
 
         if new_bucket.father is None:
-            # Dans ce cas on à fait une fusion avec la racine, on e la supprime pas mais on la màj
+            print('PC racine')
+            # Dans ce cas on à fait une fusion avec la racine, on ne la supprime pas mais on la màj
+            del self.penalities[b1]  # On supprime le fils qui a fusionné
             self.nb_tuple = new_bucket.nb_tuple
             self.children = new_bucket.children
             for child in new_bucket.children:
                 child.father = self
             self.intervalles = new_bucket.intervalles
-            self.howasicreated = howasicreated
+            self.howasicreated = new_bucket.howasicreated
             new_bucket = None  # Pour s'assurer qu'on le détruise (necessaire ?)
+            # On màj les classes qui avaient une meilleure fusion avec b1 (le fils fussioné)
+            for classe in self.children:
+                #  Ici on regarde les anciens fères de b1
+                if self.penalities[classe][0] is b1:
+                    classe.update_penalities()
+            for classe in b1.children:
+                #  Ici on regarde les anciens fils de b1
+                if self.penalities[classe][0] is b1:
+                    classe.update_penalities()
         else:
+            del self.penalities[b1]
+            del self.penalities[b2]
             for r in bucket_rm:
                 changing_bucket.children.remove(r)
             if nb_tuple_to_remove is not None:
                 changing_bucket.nb_tuple -= nb_tuple_to_remove
             changing_bucket.children.append(new_bucket)
-            new_bucket.howasicreated = howasicreated
+            new_bucket.update_penalities()
+            if fusion_pc:
+                print('PC')
+                for c in changing_bucket.children:
+                    # Maj des frère de b2 qui pointaient vers b2
+                    if c is not b2 and self.penalities[c][0] is b2:
+                        c.update_penalities()
+                for c in b1.children:
+                    # Màj des fils de b1 qui pointaient vers b1
+                    if self.penalities[c][0] is b1:
+                        c.update_penalities()
+                for c in b2.children:
+                    # Màj des frères de b1 qui pointaient vers b1
+                    if c is not b1 and self.penalities[c][0] is b1:
+                        c.update_penalities()
+                    # Màj des fils de b2 qui pointaient vers b2
+                    if c is not b1 and self.penalities[c][0] is b2:
+                        self.penalities[c][0] = new_bucket
+            else:
+                print('SS')
+                for c in new_bucket.children:
+                    #  On regarde si les enfants n'étaient pas rattaché à leur ancien père ou aux classes qui ont servis
+                    #  à la fusion.
+                    if self.penalities[c][0] is changing_bucket \
+                            or self.penalities[c][0] is b1 \
+                            or self.penalities[c][0] is b2:
+                        c.update_penalities()
+                    # on màj si des anciens frères se retrouvent séparé
+                    for c0 in changing_bucket.children:
+                        if self.penalities[c][0] is c0:
+                            c.update_penalities()
+                for c in changing_bucket.children:
+                    #  On regarde si les enfants n'étaient pas rattachés aux classes qui ont servis à la fusion.
+                    if self.penalities[c][0] is b1 \
+                       or self.penalities[c][0] is b2:
+                        c.update_penalities()
+                    for c0 in new_bucket.children:
+                        if self.penalities[c][0] is c0:
+                            c.update_penalities()
 
     def nb_tuple_intervalles(self, requete):
         """
@@ -168,9 +277,11 @@ class Stholes(object):
         t = time.time()
         # Creation du nouvel intervalle ================================================================================
         n_b = Stholes(self.attributes_name, self.nb_max_classes)
+        n_b.penalities = self.penalities
         n_b.nb_tuple = self.nb_tuple + child.nb_tuple
         n_b.father = self.father
         n_b.intervalles = self.intervalles
+        n_b.howasicreated = 1
         for c in self.children:
             if c is not child:
                 n_b.children.append(c)
@@ -197,9 +308,11 @@ class Stholes(object):
 
         # Création du nouvelle intervalle ==============================================================================
         n_b = Stholes(self.attributes_name, self.nb_max_classes)
+        n_b.penalities = self.penalities
         n_b.father = child1.father
         n_b.intervalles = [[min(child1.intervalles[dim][0], child2.intervalles[dim][0]), max(child1.intervalles[dim][1], child2.intervalles[dim][1])]
                            for dim in range(len(self.intervalles))]
+        n_b.howasicreated = 0
         for c in child1.children:
             n_b.children.append(c)
         for c in child2.children:
@@ -273,62 +386,22 @@ class Stholes(object):
 
         return n_b, penality, to_rm, nb_tuple_to_rm_from_p
 
-    def find_low_penalty(self):
-        """
-        Méthode à appeler pour trouver la plus petite pénalitée obtenue en réalisant une fusion entre un noeud père/fils
-        ou deux noeud fils.
-        :return:
-        """
-        a_effacer = -1
-        low_p = None
-        nouvelle_intervalle = None
-        intervalles_rm = []
-        changing_intervalle = None
-        nb_tuple_rm = None
-        # Si la classe à un volume nul, on fait une fusion père fils qu'on envoie directement.
-        if self.v() < epsilon and self.children != []:
-            n_b, _ = self.merge_pc(self.children[0])
-            return 0, [self], self.father, n_b, 0, None
-        else:
-            for i_child, child in enumerate(self.children):
-                # On cherche la meilleur combinaison parent enfant =====================================================
-                n_b, p = self.merge_pc(child)
-                if low_p is None or low_p > p:
-                    low_p = p
-                    # Dans le cas de fusion parent_child, on a besoin de juste supprimer la référence du père
-                    intervalles_rm = [self]
-                    nouvelle_intervalle = n_b
-                    # On va supprimer le self de son noeud père et mettre le nouvel inervalle dans le noeud père.
-                    # Le noeud changeant est donc le noeud père.
-                    changing_intervalle = self.father
-                    a_effacer = 0
-                    nb_tuple_rm = None
-                if len(self.children) > 1 and i_child != (len(self.children) - 1):
-                    # On cherche les meilleurs combinaisons de fusion enfant enfant ====================================
-                    for i_child1 in range(i_child + 1, len(self.children)):
-                        n_b, p, to_rm, nb_tuple_to_remove = self.merge_ss(child, self.children[i_child1])
-                        if low_p is None:
-                            low_p = p
-                        if low_p >= p:
-                            low_p = p
-                            intervalles_rm = to_rm
-                            changing_intervalle = self
-                            nouvelle_intervalle = n_b
-                            a_effacer = 1
-                            nb_tuple_rm = nb_tuple_to_remove
-                # On regarde récursivement pour chaque enfant ==============================================================
-                p, n_intervalle_rm, n_changing_intervalle, n_nouvelle_intervalle, t, nb_tuple_to_remove = child.find_low_penalty()
-                if p is not None:
-                    if low_p > p:
-                        low_p = p
-                        intervalles_rm = n_intervalle_rm
-                        nouvelle_intervalle = n_nouvelle_intervalle
-                        changing_intervalle = n_changing_intervalle
-                        nb_tuple_rm = nb_tuple_to_remove
-                        a_effacer = t
-                if low_p < 0.1:  # Condition pour essayer de ne pas faire toute les combinaisons possible
-                    return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
-        return low_p, intervalles_rm, changing_intervalle, nouvelle_intervalle, a_effacer, nb_tuple_rm
+    def update_penalities(self):
+        if self.father is not None:
+            if self not in self.father.children:
+                raise ValueError("F")
+            _, penality = self.father.merge_pc(self)
+            best_p = penality
+            best_c = self.father
+            for c in self.father.children:
+                if c is not self:
+                    if c.father is not self.father:
+                        raise ValueError("F")
+                    _, penality, _, _ = self.father.merge_ss(self, c)
+                    if best_p is None or penality < best_p:
+                        best_p = penality
+                        best_c = c
+            self.penalities[self] = [best_c, best_p]
 
     def drill(self, zone, nb_tuple):
         """
@@ -348,6 +421,17 @@ class Stholes(object):
                     raise ValueError("Un des fils chevauchait-il self ?")
             self.father.children = n_b.children
             self.father.nb_tuple = n_b.nb_tuple
+            del self.penalities[self]
+            for child in self.father.children:
+                # On ne met pas à jour les fils qui pointaient vers le père car le père est souvent très proche  du
+                # résultat de la fusion.
+                if self.penalities[child][0] is self:
+                    # On màj les frères qui pointaient sur self
+                    child.update_penalities()
+            for child in self.children:
+                if self.penalities[child][0] is self:
+                    # On màj les fils de self qui pointaient sur self
+                    child.update_penalities()
             self.father.drill(zone, nb_tuple)
             # TODO : Remove :
             if self.father.v() < epsilon:
@@ -359,17 +443,27 @@ class Stholes(object):
             b_n.intervalles = deepcopy(zone)
             b_n.father = self
             b_n.howasicreated = 2
+            b_n.penalities = self.penalities
+            tab_class_to_update = []
             if not self.contient(zone):
                 raise ValueError("Le nouvel intervalle n'est pas inclus dans le père !")
             for child in reversed(self.children):
                 if child.est_inclus(b_n.intervalles):
                     child.father = b_n  # Bien penser à réassocier les fils au bon père !
                     b_n.children.append(child)
+                    tab_class_to_update.append(child)
                     self.children.remove(child)
                 elif child.intersect(b_n.intervalles):
                     raise ValueError("Un des fils coupe la zone à creuser !")
+            tmp = copy(tab_class_to_update)
             self.children.append(b_n)
             self.nb_tuple = max(0, self.nb_tuple - nb_tuple)
+            b_n.update_penalities()
+            for child in self.children:
+                if self.penalities[child][0] in tmp:
+                    tab_class_to_update.append(child)
+            for c in tab_class_to_update:
+                c.update_penalities()
 
     def shrink(self, bound_requete, nb_tuple):
         """
@@ -564,7 +658,7 @@ class Stholes(object):
         while current_bucket.father is not None:  # On cherche l'boundary racine
             current_bucket = current_bucket.father
         # On utilise une fonction récursive pour compter le nombre d'boundary crée juqu'à maintenant
-        return current_bucket.count_your_child()
+        return current_bucket.count_your_child() + 1
 
     def count_your_child(self):
         """
@@ -607,6 +701,7 @@ class Stholes(object):
         size_node = getsizeof(self.nb_tuple)
         size_node += getsizeof(self.attributes_name)
         size_node += getsizeof(self.intervalles)
+        size_node += getsizeof(self.penalities)
         for child in self.children:
             size_node += child.get_size()
         return size_node
