@@ -17,11 +17,14 @@ nb_req_test = 1000
 
 
 def init_histogramme(data_set):
-    nb_intervalle = 5
+    t_time= []
+    nb_intervalle = 500
     print("Création des histogrammes")
+    t = time.time()
     # MHIST ============================================================================================================
     histo_mhist = mhist.Mhist(data_set[1], data_set[0], nb_intervalle)
     # histo_mhist.save('./histo_mhist')
+    t_time.append(time.time()-t)
     print('MHIST initialisé !')
 
     # GENHIST ==========================================================================================================
@@ -29,35 +32,41 @@ def init_histogramme(data_set):
     b = 1000
     xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
     alpha = (1 / 2) ** (1 / len(data_set[1]))
+    t = time.time()
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
     # histo_genhist.save('./histo_genhist')
+    t_time.append(time.time() - t)
     print('GENHIST initialisé !')
 
     # STHOLES ==========================================================================================================
     nb_requete = 1000
     print("len data-set", len(data_set[1][0]))
-    histo_st = st.Stholes(data_set[0], nb_intervalle, verbeux=False)
+    histo_st = st.Stholes(data_set[0], nb_intervalle, verbeux=True)
     workload = w.create_workload(data_set[1], 0.1, nb_requete)
     cpt = 0
     for a in workload:
         if a[1] != 0:
             cpt += 1
     # Initialisation en prenant l'ensemble du jeu de donnée
+    t = time.time()
     histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
     # Raffinement à l'aide de requête généré aléatoirement
     histo_st.BuildAndRefine(workload)
-    print('nb_tuple dans histo', histo_st.nb_tot_tuple(), 'nb_req != 0', cpt)
+    t_time.append(time.time() - t)
     # histo_st.save('./histo_st')
     # AVI ==============================================================================================================
     o_avi = avi.Avi(data_set[1])
-    return histo_mhist, histo_genhist, histo_st, o_avi
+    return histo_mhist, histo_genhist, histo_st, o_avi, t_time
 
 
 def test_data_set(data_set, tab_intervalles_est):
-    histo_mhist, histo_genhist, histo_st, o_avi = init_histogramme(data_set)
+    histo_mhist, histo_genhist, histo_st, o_avi, t_time = init_histogramme(data_set)
     dict_data = {'size': {'MHIST': histo_mhist.get_size(),
                           'GENHIST': histo_genhist.get_size(),
-                          'STHOLE': histo_st.get_size()}}
+                          'STHOLE': histo_st.get_size()},
+                 'time': {'MHIST': t_time[0],
+                          'GENHIST': t_time[1],
+                          'STHOLE': t_time[2]}}
     cpt_nb_intervalle = 0
     for intervalle in tab_intervalles_est:
         # Initialisation du dictionnaire de résultat

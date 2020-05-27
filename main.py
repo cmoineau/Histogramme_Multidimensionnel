@@ -9,6 +9,7 @@ import MHIST.Mhist as mhist
 import GENHIST.Genhist as genhist
 import AVI.avi as avi
 import STHOLES.Stholes as st
+import STHOLES.old_sthole as o_st
 import utils
 from STHOLES import Workload as w
 import matplotlib.pyplot as plt
@@ -129,37 +130,29 @@ def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_intervalle = 100
     nb_req_entrainement = 500
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
+    o_histogramme = o_st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
-    workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
+    train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")
 
     # On commence avec une requête sur l'ensemble des données
+    t = time.time()
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
-    histogramme.BuildAndRefine(workload)
-    # x = round(histogramme.estimer(intervalle_estimer, dim_estimer))
-    # x = round(histogramme.estimer(histogramme.bound[:2], histogramme.dim_name[:2]))
-    # print("Résultat estimé avec STHOLES : ", x, "nb_tot_tuple", histogramme.nb_tot_tuple())
-    moy = 0
-    cpt = 0
-    # workload = w.create_workload(tab_attribut, 0.05, 500)
-    for r in workload:
+    histogramme.BuildAndRefine(train_workload)
+    print("Temps initialisation new ", time.time() - t)
+
+    t = time.time()
+    o_histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
+    o_histogramme.BuildAndRefine(train_workload)
+    print("Temps initialisation old ", time.time() - t)
+
+    test_workload = w.create_workload(tab_attribut, 0.05, 100)
+    for r in test_workload:
+        o_est = o_histogramme.estimer(r[0], histogramme.attributes_name)
         est = histogramme.estimer(r[0], histogramme.attributes_name)
-        if r[1] != 0:
-            err = (abs(est - r[1]) / r[1])
-            # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-            # print("\n")
-            moy += err
-            cpt += 1
-        # else:
-        #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-        #     print("\n")
-    print("Erreur moyenne : ", moy / cpt)
-    x = round(histogramme.estimer(histogramme.intervalles, histogramme.attributes_name))
-    print("Résultat estimé avec STHOLES : ", x, "nb_tot_classe", histogramme.count_nb_bucket())
-    print(histogramme.intervalles)
-    histogramme.print()
-    # histogramme.save('./STHoles')
+        print('old_est ', o_est, 'new_est', est, 'real', r[1])
+
 
 
 def test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
