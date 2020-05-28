@@ -6,8 +6,8 @@
 """
 from GENHIST import Intervalle as intervalle
 import random
-# from matplotlib import patches
-# import matplotlib.pyplot as plt
+from matplotlib import patches
+import matplotlib.pyplot as plt
 from sys import getsizeof
 import numpy as np
 from utils import est_inclus, epsilon
@@ -182,6 +182,8 @@ class Genhist(object):
         card = 0
         for intervalle in self.tab_intervalle:
             card += intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n
+        if card < 0:
+            raise ValueError('Cardinalité négative ...')
         return card
 
     def get_size(self):

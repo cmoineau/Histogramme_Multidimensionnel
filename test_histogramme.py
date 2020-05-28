@@ -18,7 +18,7 @@ nb_req_test = 1000
 
 def init_histogramme(data_set):
     t_time= []
-    nb_intervalle = 500
+    nb_intervalle = 400
     print("Création des histogrammes")
     t = time.time()
     # MHIST ============================================================================================================
@@ -30,7 +30,8 @@ def init_histogramme(data_set):
     # GENHIST ==========================================================================================================
     # Variables pour GENHIST :
     b = 1000
-    xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
+    xi = 50  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
+             # (Devrait être aux alentours de 100)
     alpha = (1 / 2) ** (1 / len(data_set[1]))
     t = time.time()
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
@@ -42,16 +43,13 @@ def init_histogramme(data_set):
     nb_requete = 1000
     print("len data-set", len(data_set[1][0]))
     histo_st = st.Stholes(data_set[0], nb_intervalle, verbeux=True)
-    workload = w.create_workload(data_set[1], 0.1, nb_requete)
-    cpt = 0
-    for a in workload:
-        if a[1] != 0:
-            cpt += 1
+    # workload = w.create_workload(data_set[1], 0.01, nb_requete)
+
     # Initialisation en prenant l'ensemble du jeu de donnée
     t = time.time()
     histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
     # Raffinement à l'aide de requête généré aléatoirement
-    histo_st.BuildAndRefine(workload)
+    # histo_st.BuildAndRefine(workload)
     t_time.append(time.time() - t)
     # histo_st.save('./histo_st')
     # AVI ==============================================================================================================

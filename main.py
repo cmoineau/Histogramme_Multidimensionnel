@@ -55,7 +55,7 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     # Initialisation des paramètres ====================================================================================
     b = 500
-    xi = 30  # Qu'elle est une valeur classique ?
+    xi = 100  # Qu'elle est une valeur classique ?
     alpha = (1/2)**(1/len(tab_data))
     tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
 
@@ -71,8 +71,20 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
                                 # TEST POUR TROUVER MEILLEUR XI ET B    #
                                 #########################################
 
-    workload = w.create_workload(tab_data, 0.1, 200)
-
+    workload = w.create_workload(tab_data, 0.05, 1000)
+    moy = 0
+    cpt = 0
+    for r in workload:
+        est = histogramme.estimate(histogramme.dim_name, r[0])
+        if r[1] != 0:
+            err = (abs(est - r[1]) / r[1])
+            print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+            moy += err
+            cpt += 1
+        else:
+            print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+    print("Erreur moyenne : ", moy / cpt)
+    print('Estimation nombre total de tuple :', histogramme.estimate(histogramme.dim_name, [[min(d), max(d)] for d in tab_data]))
     # test_b = []
     # for b in range(25, 200):
     #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
@@ -94,30 +106,30 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     #     test_b.append(moy / cpt)
     # plt.plot(test_b)
     # plt.show()
-
-    test_xi = []
-    b = 80
-    val_xi = range(5, 50)
-    for xi in val_xi:
-        histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
-        moy = 0
-        cpt = 0
-        # workload = w.create_workload(tab_attribut, 0.05, 500)
-        for r in workload:
-            est = histogramme.estimate(histogramme.dim_name, r[0])
-            if r[1] != 0:
-                err = (abs(est - r[1]) / r[1])
-                # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-                # print("\n")
-                moy += err
-                cpt += 1
-            # else:
-            #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-            #     print("\n")
-        # print("Erreur moyenne : ", moy / cpt)
-        test_xi.append(moy / cpt)
-    plt.plot(test_xi)
-    plt.show()
+    #
+    # test_xi = []
+    # b = 80
+    # val_xi = range(5, 50)
+    # for xi in val_xi:
+    #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+    #     moy = 0
+    #     cpt = 0
+    #     # workload = w.create_workload(tab_attribut, 0.05, 500)
+    #     for r in workload:
+    #         est = histogramme.estimate(histogramme.dim_name, r[0])
+    #         if r[1] != 0:
+    #             err = (abs(est - r[1]) / r[1])
+    #             # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
+    #             # print("\n")
+    #             moy += err
+    #             cpt += 1
+    #         # else:
+    #         #     print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
+    #         #     print("\n")
+    #     # print("Erreur moyenne : ", moy / cpt)
+    #     test_xi.append(moy / cpt)
+    # plt.plot(test_xi)
+    # plt.show()
 
     # Affichage de l'histogramme =======================================================================================
     # histogramme.print()
@@ -128,7 +140,7 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_intervalle = 100
-    nb_req_entrainement = 500
+    nb_req_entrainement = 350
     # Création de l'histogramme ========================================================================================
     histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     o_histogramme = o_st.Stholes(nom_dim, nb_intervalle, verbeux=False)
@@ -179,8 +191,8 @@ if __name__ == '__main__':
     att1_square = np.array(att1).copy() ** 2
     att2_lin = np.array(att1).copy() * 2
 
-    tab_attribut = np.array([att1, att2])
-    nom_dim = ['x', 'y']
+    tab_attribut = np.array([att1, att2, att3, att1_square, att2_lin])
+    nom_dim = ['x', 'y', 'z', 't', 'r']
 
     intervalle_estimer = [(-1, 1), (-1, 1)]
     dim_estimer = ['x', 'y']
