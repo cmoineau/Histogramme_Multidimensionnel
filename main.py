@@ -139,31 +139,31 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    nb_intervalle = 100
-    nb_req_entrainement = 350
+    nb_intervalle = 500
+    nb_req_entrainement = 500
     # Création de l'histogramme ========================================================================================
     histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
-    o_histogramme = o_st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
     train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     print("Lancement de la construction de St-Holes !")
-
+    o_avi = avi.Avi(tab_attribut)
     # On commence avec une requête sur l'ensemble des données
     t = time.time()
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
     histogramme.BuildAndRefine(train_workload)
     print("Temps initialisation new ", time.time() - t)
-
-    t = time.time()
-    o_histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
-    o_histogramme.BuildAndRefine(train_workload)
-    print("Temps initialisation old ", time.time() - t)
-
-    test_workload = w.create_workload(tab_attribut, 0.05, 100)
+    nb_validation_q = 1000
+    test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
+    av_err = 0
+    av_avi_err = 0
     for r in test_workload:
-        o_est = o_histogramme.estimer(r[0], histogramme.attributes_name)
         est = histogramme.estimer(r[0], histogramme.attributes_name)
-        print('old_est ', o_est, 'new_est', est, 'real', r[1])
+        print('est', est, 'real', r[1])
+        av_err += abs(est - r[1])
+        av_avi_err += abs(o_avi.estimation(range(len(tab_attribut)), r[0]) - r[1])
+    print("Average Error :", av_err / nb_validation_q)
+    print("Normalized Absolute Error :", av_err / av_avi_err)
+
 
 
 
