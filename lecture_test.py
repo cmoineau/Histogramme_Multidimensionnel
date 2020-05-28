@@ -10,13 +10,15 @@ if __name__ == '__main__':
         genhist_err = 0
         stholes_err = 0
         quotient_norm = 0
+        cpt = 0
         for k, v in resultats["Resultat"].items():
             if k != "time" and k != "size":
+                cpt +=1
                 reel = v["reel"]["resultat"]
-                mhist_err = abs(v["MHIST"]["resultat"] - reel)
-                genhist_err = abs(v["GENHIST"]["resultat"] - reel)
-                stholes_err = abs(v["STHOLES"]["resultat"] - reel)
-                quotient_norm = abs(v["AVI"]["resultat"] - reel)
+                mhist_err += abs(v["MHIST"]["resultat"] - reel)
+                genhist_err += abs(v["GENHIST"]["resultat"] - reel)
+                stholes_err += abs(v["STHOLES"]["resultat"] - reel)
+                quotient_norm += abs(v["AVI"]["resultat"] - reel)
         print('Normalized Absolute Error :', '\n',
               'MHIST :', mhist_err / quotient_norm, '\n',
               'GENHIST :', genhist_err / quotient_norm, '\n',
