@@ -16,13 +16,6 @@ from utils import epsilon
 from pickle import dump
 import matplotlib.pyplot as plt
 from matplotlib import patches
-import time
-
-time_find_lc = 0
-time_merge_ss = 0
-time_merge_pc = 0
-nb_call_ss = 0
-nb_call_pc = 0
 
 
 class Stholes(object):
@@ -68,32 +61,13 @@ class Stholes(object):
             for intervalle in tab:
                 intervalle[0].shrink_and_drill(requete[0], intervalle[1])
 
+
             # Suppression des intervalles excedentaire =================================================================
             while self.count_nb_bucket() > self.nb_max_classes:
                 if self.verbeux:
                     print('Suppression ... encore ', self.count_nb_bucket() - self.nb_max_classes, ' buckets')
-                t = time.time()
-
-                global time_find_lc, time_merge_ss, time_merge_pc, nb_call_pc, nb_call_ss
-                time_find_lc = 0
-                time_merge_ss = 0
-                time_merge_pc = 0
-                nb_call_ss = 0
-                nb_call_pc = 0
-
                 self.delete_bucket()
 
-                # print('Temps pour supprimer un intervalle :', time.time() - t)
-                # print('Temps pour trouver low cost :', time_find_lc)
-                # print('Temps passé dans la fusion ss :', time_merge_ss)
-                # print('Temps passé dans la fusion pc :', time_merge_pc)
-                # print('Nb call pc ', nb_call_pc)
-                # print("Nb call ss", nb_call_ss)
-                time_find_lc = 0
-                time_merge_ss = 0
-                time_merge_pc = 0
-                nb_call_ss = 0
-                nb_call_pc = 0
 
         if self.verbeux:
             print('Fin de la mise à jour !')
@@ -104,7 +78,6 @@ class Stholes(object):
         permet de perdre le moins d'information possible !
         :return:
         """
-        t = time.time()
         # Recherche de la plus faible pénalité =========================================================================
         # INITIALISATION
         min_p = None
@@ -134,8 +107,6 @@ class Stholes(object):
         else:
             raise ValueError("L'on n'est ni dans un cas pc ni ss erreur d'attribution de fils à un père ?")
 
-        global time_find_lc
-        time_find_lc = time.time() - t
         # L'intervalle résultant de la fusion annonce le changement de père au fils
         for child in new_bucket.children:
             child.father = new_bucket
@@ -243,9 +214,6 @@ class Stholes(object):
         :return: Renvoit l'intervalle qu'on obtiendrait en fusionnant un père (self) avec l'un de ses fils. Ainsi que la
         pénalité associée à cette fusion.
         """
-        global nb_call_pc
-        nb_call_pc += 1
-        t = time.time()
         # Creation du nouvel intervalle ================================================================================
         n_b = Stholes(self.attributes_name, self.nb_max_classes)
         n_b.penalities = self.penalities
@@ -259,11 +227,10 @@ class Stholes(object):
         for c in child.children:
             n_b.children.append(c)
         # Calcul de la pénalitée =======================================================================================
-        # TODO : améliorer le temps de calcul en utilisant une formule calculé à la main
-        penality = abs(self.nb_tuple - n_b.estimer(self.intervalles, self.attributes_name)) + \
-                   abs(self.estimer(child.intervalles, self.attributes_name) - n_b.estimer(child.intervalles, self.attributes_name))
-        global time_merge_pc
-        time_merge_pc += time.time() - t
+        # penality = abs(self.nb_tuple - n_b.estimer(self.intervalles, self.attributes_name)) + \
+        #            abs(self.estimer(child.intervalles, self.attributes_name) - n_b.estimer(child.intervalles, self.attributes_name))
+        penality = abs(self.nb_tuple - n_b.nb_tuple * (self.v() / n_b.v()) +
+                       abs(child.nb_tuple - n_b.nb_tuple * (child.v() / n_b.v())))
         return n_b, penality
 
     def merge_ss(self, child1, child2):
@@ -273,10 +240,6 @@ class Stholes(object):
         à cette fusion et une liste d'intervalle appartenant à self qui appartiendrait à l'intervalle obtenu suite à la
         fusion.
         """
-        global nb_call_ss
-        nb_call_ss += 1
-        t = time.time()
-
         if self.v() == 0:
             # Dans ce cas, les fils occupent tout l'espace, il faut fusionner les fils pour faire une fusion père fils plus tard
             return None, None, None, None
@@ -350,10 +313,6 @@ class Stholes(object):
         # Pénalité dû à l'estimation du fils 2
         p3 = abs(child2.nb_tuple - n_b.nb_tuple * (child2.v() / vn))
         penality = p1 + p2 + p3
-
-        global time_merge_ss
-        time_merge_ss += time.time() - t
-
         return n_b, penality, to_rm, nb_tuple_to_rm_from_p
 
     def update_penalities(self):
@@ -704,10 +663,19 @@ class Stholes(object):
         dump(self, f)
         f.close()
 
-    def print(self, debug_it=False):
-        tab = [((self.intervalles[0][0], self.intervalles[1][0]),
-                self.intervalles[0][1] - self.intervalles[0][0],
-                self.intervalles[1][1] - self.intervalles[1][0])]
+    def print(self, debug_it=False, tab_attribut=None):
+        """
+        Méthode permettant d'afficher l'histogramme.
+        Si vous voulez print un noeud de l'histogramme qui n'est pas le noeud père, il faut passer debug_it à true.
+        :param tab_attribut:
+        :param debug_it: Boolean pour afficher un noeud qui n'est pas la racine.
+        :return: Figure matplotlib du noeud courant et de ces fils.
+        """
+
+        tab = [((self.intervalles[0][0], self.intervalles[1][0]),   # Point en bas à gauche
+                self.intervalles[0][1] - self.intervalles[0][0],    # Largeur
+                self.intervalles[1][1] - self.intervalles[1][0],    # Hauteur
+                round(self.nb_tuple))]                                     # Nombre de tuple (pour label)
         for c in self.children:
             tab += c.print()
 
@@ -722,6 +690,9 @@ class Stholes(object):
             subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
             for t in tab:
                 subplot.add_patch(patches.Rectangle(t[0], t[1], t[2], linewidth=1, fill=False))
+                plt.annotate(str(t[3]), t[0])
+            if tab_attribut is not None:
+                plt.scatter(tab_attribut[0], tab_attribut[1], marker='+')
             plt.show()
         else:
             return tab

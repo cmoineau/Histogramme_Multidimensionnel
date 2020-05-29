@@ -44,9 +44,9 @@ def print_workload(requetes):
     axes.set_ylim(bottom=-10, top=10)
     subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
     for r in requetes:
-        bound = [r[0][i] - (r[1][i]/2) for i in range(len(r[0]))]
-        w = r[1][0]
-        h = r[1][1]
+        r = r[0]
+        bound = (r[0][0], r[1][0])
+        w = r[0][1] - r[0][0]
+        h = r[1][1] - r[1][0]
         subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
-    plt.plot()
     plt.show()

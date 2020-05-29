@@ -139,32 +139,44 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
 
 def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    nb_intervalle = 500
-    nb_req_entrainement = 500
+    nb_intervalle = 50
+    nb_req_entrainement = 100
     # Création de l'histogramme ========================================================================================
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
+    # histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
+    # train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
+    # full_training = train_workload
+    # full_training = []
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
+
+    histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
+    # while histogramme.estimer([[min(a), max(a)] for a in tab_attribut], nom_dim) < 198:
     train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
+    histogramme.BuildAndRefine(train_workload)
+        # full_training += train_workload
+    histogramme.print(tab_attribut=tab_attribut)
+    # w.print_workload(train_workload)
     print("Lancement de la construction de St-Holes !")
     o_avi = avi.Avi(tab_attribut)
     # On commence avec une requête sur l'ensemble des données
     t = time.time()
-    histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
-    histogramme.BuildAndRefine(train_workload)
+    # histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
+
     print("Temps initialisation new ", time.time() - t)
-    nb_validation_q = 1000
-    test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
+    nb_validation_q = nb_req_entrainement
+    test_workload = train_workload
+    # test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
     av_err = 0
     av_avi_err = 0
     for r in test_workload:
-        est = histogramme.estimer(r[0], histogramme.attributes_name)
-        print('est', est, 'real', r[1])
+        est = round(histogramme.estimer(r[0], histogramme.attributes_name))
+        est_avi = o_avi.estimation(range(len(tab_attribut)), r[0])
+        print('est', est, 'avi', est_avi, 'real', r[1])
         av_err += abs(est - r[1])
-        av_avi_err += abs(o_avi.estimation(range(len(tab_attribut)), r[0]) - r[1])
+        av_avi_err += abs(est_avi - r[1])
     print("Average Error :", av_err / nb_validation_q)
     print("Normalized Absolute Error :", av_err / av_avi_err)
-
-
+    print(histogramme.estimer(histogramme.intervalles, histogramme.attributes_name))
 
 
 def test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
@@ -175,7 +187,7 @@ def test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 
 if __name__ == '__main__':
     # Lecture des données ==============================================================================================
-    path = "./DATA/fake_data.txt"
+    path = "./DATA/small_data.txt"
     att1 = []
     att2 = []
     att3 = []
@@ -191,8 +203,8 @@ if __name__ == '__main__':
     att1_square = np.array(att1).copy() ** 2
     att2_lin = np.array(att1).copy() * 2
 
-    tab_attribut = np.array([att1, att2, att3, att1_square, att2_lin])
-    nom_dim = ['x', 'y', 'z', 't', 'r']
+    tab_attribut = np.array([att1, att2])
+    nom_dim = ['x', 'y']
 
     intervalle_estimer = [(-1, 1), (-1, 1)]
     dim_estimer = ['x', 'y']

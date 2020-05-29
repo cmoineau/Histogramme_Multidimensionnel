@@ -6,11 +6,11 @@
 """
 from random import gauss, uniform
 
-path = "./DATA/fake_data.txt"
+path = "./DATA/small_data.txt"
 
 
 def create_data(path):
-    nb_tuple = 10000
+    nb_tuple = 200
     att1 = [round(gauss(0, 1), 1) for i in range(nb_tuple)]
     att2 = [round(gauss(0, 1), 1) for i in range(nb_tuple)]
     att3 = [round(uniform(-4, 4), 1) for i in range(nb_tuple)]
