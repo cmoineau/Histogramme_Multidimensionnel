@@ -19,28 +19,25 @@ import numpy as np
 
 def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     # Initialisation des paramètres ====================================================================================
-    nombre_intervalle = 500
+    nombre_intervalle = 80
 
     # Création de l'histogramme ========================================================================================
     histogramme = mhist.Mhist(tab_attribut, nom_dim, nombre_intervalle)
-
+    print('Hey')
     # Test =============================================================================================================
-
-    moy = 0
-    cpt = 0
-    workload = w.create_workload(tab_attribut, 0.05, 500)
+    o_avi = avi.Avi(tab_attribut)
+    av_err = 0
+    av_avi_err = 0
+    nb_validation_q = 500
+    workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
     for r in workload:
         est = histogramme.estimate(histogramme.dim_name, r[0])
-        if r[1] != 0:
-            err = (abs(est - r[1]) / r[1])
-            print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-            print("\n")
-            moy += err
-            cpt += 1
-        else:
-            print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-            print("\n")
-    print("Erreur moyenne : ", moy / cpt)
+        est_avi = o_avi.estimation(range(len(tab_attribut)), r[0])
+        print('est', est, 'avi', est_avi, 'real', r[1])
+        av_err += abs(est - r[1])
+        av_avi_err += abs(est_avi - r[1])
+    print("Average Error :", av_err / nb_validation_q)
+    print("Normalized Absolute Error :", av_err / av_avi_err)
 
     x = round(histogramme.estimate(dim_estimer, intervalle_estimer))
     print("Résultat estimé avec MHIST :   ", x)
@@ -55,7 +52,7 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     # Initialisation des paramètres ====================================================================================
     b = 500
-    xi = 100  # Qu'elle est une valeur classique ?
+    xi = 20  # Qu'elle est une valeur classique ?
     alpha = (1/2)**(1/len(tab_data))
     tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
 
@@ -70,21 +67,19 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
                                 #########################################
                                 # TEST POUR TROUVER MEILLEUR XI ET B    #
                                 #########################################
-
-    workload = w.create_workload(tab_data, 0.05, 1000)
-    moy = 0
-    cpt = 0
-    for r in workload:
-        est = histogramme.estimate(histogramme.dim_name, r[0])
-        if r[1] != 0:
-            err = (abs(est - r[1]) / r[1])
-            print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
-            moy += err
-            cpt += 1
-        else:
-            print("Estimation :", est, " Reel :", r[1], " Bound :", r[0])
-    print("Erreur moyenne : ", moy / cpt)
-    print('Estimation nombre total de tuple :', histogramme.estimate(histogramme.dim_name, [[min(d), max(d)] for d in tab_data]))
+    o_avi = avi.Avi(tab_attribut)
+    nb_validation_q = 500
+    test_workload = w.create_workload(tab_data, 0.05, nb_validation_q)
+    av_err = 0
+    av_avi_err = 0
+    for r in test_workload:
+        est = round(histogramme.estimate(histogramme.dim_name, r[0]))
+        est_avi = o_avi.estimation(range(len(tab_attribut)), r[0])
+        print('est', est, 'avi', est_avi, 'real', r[1])
+        av_err += abs(est - r[1])
+        av_avi_err += abs(est_avi - r[1])
+    print("Average Error :", av_err / nb_validation_q)
+    print("Normalized Absolute Error :", av_err / av_avi_err)
     # test_b = []
     # for b in range(25, 200):
     #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
@@ -138,23 +133,18 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
     # plt.show()
 
 
-def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    nb_intervalle = 50
-    nb_req_entrainement = 100
+def test_st(tab_attribut, nom_dim):
+    nb_intervalle = 500
+    nb_req_entrainement = 50
     # Création de l'histogramme ========================================================================================
-    # histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
     print("Création d'un set d'entraînement pour ST-Holes ...")
-    # train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
-    # full_training = train_workload
-    # full_training = []
-    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=False)
 
+    histogramme = st.Stholes(nom_dim, nb_intervalle, verbeux=True)
+    train_workload = w.create_workload_full(tab_attribut, 0.01, nb_req_entrainement)
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
-    # while histogramme.estimer([[min(a), max(a)] for a in tab_attribut], nom_dim) < 198:
-    train_workload = w.create_workload(tab_attribut, 0.01, nb_req_entrainement)
     histogramme.BuildAndRefine(train_workload)
-        # full_training += train_workload
-    histogramme.print(tab_attribut=tab_attribut)
+    histogramme.print(tab_attribut=tab_attribut)  # tab attribut permet d'afficher les points du jeu de donnée (2D)
+
     # w.print_workload(train_workload)
     print("Lancement de la construction de St-Holes !")
     o_avi = avi.Avi(tab_attribut)
@@ -164,8 +154,8 @@ def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
 
     print("Temps initialisation new ", time.time() - t)
     nb_validation_q = nb_req_entrainement
-    test_workload = train_workload
-    # test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
+    # test_workload = train_workload
+    test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
     av_err = 0
     av_avi_err = 0
     for r in test_workload:
@@ -177,7 +167,7 @@ def test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     print("Average Error :", av_err / nb_validation_q)
     print("Normalized Absolute Error :", av_err / av_avi_err)
     print(histogramme.estimer(histogramme.intervalles, histogramme.attributes_name))
-
+    histogramme.save('test_st')
 
 def test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     o_avi = avi.Avi(tab_attribut)
@@ -196,39 +186,51 @@ if __name__ == '__main__':
             line = line.split(',')
             att1.append(float(line[0]))
             att2.append(float(line[1]))
-            att3.append(float(line[2]))
+    #         att3.append(float(line[2]))
+
+    path = './DOCKER/BaseDeDonnee/2008.csv'
+    h_dep = []
+    h_arr = []
+    dist = []
+    ret_dep = []
+    ret_arr = []
+    nb_tuple = 1000
+    with open(path, 'r') as file:
+        header = True
+        cpt = 0
+        for line in file:
+            if header:
+                header = False
+            else:
+                line = line.split(',')
+                if (line[4] != 'NA' and line[6] != 'NA' and line[18] != 'NA' and \
+                        line[14] != 'NA' and line[15] != 'NA') and nb_tuple > cpt:
+                    h_dep.append(int(line[4]))
+                    h_arr.append(int(line[6]))
+                    dist.append(int(line[18]))
+                    ret_dep.append(int(line[14]))
+                    ret_arr.append(int(line[15]))
+                    cpt += 1
+    data_set = [['heure_depart', 'heure_arrive', 'distance', 'retard_depart', 'retard_arrive'],
+                [h_dep, h_arr, dist, ret_dep, ret_arr]]
 
     # Paramètres =======================================================================================================
 
-    att1_square = np.array(att1).copy() ** 2
-    att2_lin = np.array(att1).copy() * 2
+    # att1_square = np.array(att1).copy() ** 2
+    # att2_lin = np.array(att1).copy() * 2
+    #
+    # tab_attribut = np.array([att1, att2])
+    # nom_dim = ['x', 'y']
 
-    tab_attribut = np.array([att1, att2])
-    nom_dim = ['x', 'y']
+    tab_attribut = np.array(data_set[1][:2])
 
-    intervalle_estimer = [(-1, 1), (-1, 1)]
-    dim_estimer = ['x', 'y']
-
-    # Calcul des coefficients de corrélation ===========================================================================
-    # correl.calcul_des_correlations(tab_attribut)
-    utils.coef_correlation(tab_attribut)
+    nom_dim = data_set[0][:2]
+    print(nom_dim)
 
     # Lancement des tests ==============================================================================================
     print('===============================================TEST======================================================')
-
-    print("On veut estimer le nombre de tuple dans l'intervalle : ", dim_estimer, intervalle_estimer)
-
-    # Affichage des vraies valeurs à estimer ===========================================================================
-    nb_tuple = len(tab_attribut[0])
-    res = 0
-    t = time.time()
-    for i in range(nb_tuple):
-        if utils.est_inclus([att[i] for cpt, att in enumerate(tab_attribut) if (nom_dim[cpt] in dim_estimer)], intervalle_estimer):
-            res += 1
-    print("Résultat réel :                 " + str(round(res)) + ' calculé en ' + str(time.time() - t) + ' s')
-
     # test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    test_st(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    test_st(tab_attribut, nom_dim)
     # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
     # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 

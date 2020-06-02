@@ -32,9 +32,39 @@ def create_workload(data, volume, nb_query):
     return requetes
 
 
-def print_workload(requetes):
+def create_workload_full(data, volume, nb_query):
+    requetes = create_workload(data, volume, nb_query)
+
+    for i in range(len(data[0])):
+        print(i, '/', len(data[0]))
+        flag = True
+        r = 0
+        while flag and r < len(requetes):
+            point = [d[i] for d in data]
+            if est_inclus(point, requetes[r][0]):
+                flag = False
+            r += 1
+        if flag:
+            centres = point
+            longueurs = []
+            centres.append(point)
+            for d in data:
+                longueurs.append(random.random() * (max(d) - min(d)) * (volume ** (1 / len(data))))
+            bound = [[(centres[dim] - (longueurs[dim] / 2)), (centres[dim] + (longueurs[dim] / 2))] for dim in
+                     range(len(data))]
+            nb_tuple = 0
+            for y in range(len(data[0])):
+                point = [d[y] for d in data]
+                if est_inclus(point, bound):
+                    nb_tuple += 1
+            requetes.append((bound, nb_tuple))
+    print(len(requetes))
+    return requetes
+
+
+def print_workload(requetes, data=None):
     """
-    Affciche sous forme de rectangle les requêtes généré aléatoirement
+    Affiche sous forme de rectangle les requêtes généré aléatoirement
     :param requetes:
     :return:
     """
@@ -45,8 +75,12 @@ def print_workload(requetes):
     subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
     for r in requetes:
         r = r[0]
+        print(r)
         bound = (r[0][0], r[1][0])
         w = r[0][1] - r[0][0]
         h = r[1][1] - r[1][0]
         subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
+    if data is not None:
+        plt.scatter(data[0], data[1])
+    plt.plot()
     plt.show()

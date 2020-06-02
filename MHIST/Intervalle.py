@@ -128,7 +128,7 @@ class Intervalle(object):
 
         # Test pour ne pas considérer un intervalle_estimer vide ou bien si l'on ne peut pas juste éviter tout calcul ==
         if not flag_inter_completement_inclus:
-            # On regarde si l'intervalle_estimer intersectionne l'boundary à estimer =================================
+            # On regarde si l'intervalle_estimer intersectionne l'intervalle à estimer =================================
             if self.intersection_intervalle(intervalle_a_estimer, tab_dim):
                 F = 0  # Sommes des fréquences estimées
                 D = 1  # Estimation du nombre de valeurs distincts dans l'intervalle_estimer

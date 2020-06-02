@@ -4,8 +4,8 @@
 :last_change_date : 18/02/20
 :description : Définition d'un histogramme MHIST.
 """
-# from matplotlib import patches
-# import matplotlib.pyplot as plt
+from matplotlib import patches
+import matplotlib.pyplot as plt
 import MHIST.Intervalle as Intervalle
 from collections import Counter
 from sys import getsizeof
@@ -41,19 +41,19 @@ class Mhist(object):
         joint_distribution = sorted(joint_distribution.items(), key=lambda t: t[0])
 
         # Initialisation des attributs =================================================================================
-        # Création du premier boundary
+        # Création du premier intervalle
         fi = Intervalle.Intervalle([(min(data[j]), max(data[j])) for j in range(nb_dim)], joint_distribution)
         self.verbeux = verbeux
         self.tab_intervalle = []
         self.tab_intervalle.append(fi)
         self.nb_max_intervalle = nb_max_intervalle
         self.dim_name = dim_name
-        # On lance l'algorithme qui va séparer successivement le premier boundary
+        # On lance l'algorithme qui va séparer successivement le premier intervalle
         self.build()
 
     def trouver_intervalle_critique(self):
         """
-        Renvoit l'index de l'boundary qui a le plus besoin d'être partitionné.
+        Renvoit l'index de l'intervalle qui a le plus besoin d'être partitionné.
         :return: int: index
         """
         max_diff = 0
@@ -66,7 +66,7 @@ class Mhist(object):
 
     def build(self):
         """
-        Fonction qui va séparer successivement le premier boundary selon les dimensions critiques.
+        Fonction qui va séparer successivement le premier intervalle selon les dimensions critiques.
         :return: None
         """
         impossible_de_split = False
@@ -76,12 +76,12 @@ class Mhist(object):
             index_intervalle_crit = self.trouver_intervalle_critique()
             it1, it2 = self.tab_intervalle[index_intervalle_crit].split()
             if (it1, it2) != (-1, -1):
-                # On retire le vieille boundary et on le remplace par les deux nouveaux.
+                # On retire l'ancien intervalle et on le remplace par les deux nouveaux.
                 del self.tab_intervalle[index_intervalle_crit]
                 self.tab_intervalle.append(it1)
                 self.tab_intervalle.append(it2)
             else:
-                # On arrive ici si l'on dépasse le nombre de valeur distinct avec le nombre d'boundary
+                # On arrive ici si l'on dépasse le nombre de valeur distinct avec le nombre d'intervalle
                 impossible_de_split = True
         for it in self.tab_intervalle:
             # Une fois que l'on à terminé, je supprime les distributions marginale des intervalles.

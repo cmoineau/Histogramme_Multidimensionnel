@@ -61,13 +61,13 @@ class Stholes(object):
             for intervalle in tab:
                 intervalle[0].shrink_and_drill(requete[0], intervalle[1])
 
-
+            # print('Nb tuple dans la requête :', requete[1])
+            # self.print()
             # Suppression des intervalles excedentaire =================================================================
             while self.count_nb_bucket() > self.nb_max_classes:
                 if self.verbeux:
                     print('Suppression ... encore ', self.count_nb_bucket() - self.nb_max_classes, ' buckets')
                 self.delete_bucket()
-
 
         if self.verbeux:
             print('Fin de la mise à jour !')
@@ -667,7 +667,8 @@ class Stholes(object):
         """
         Méthode permettant d'afficher l'histogramme.
         Si vous voulez print un noeud de l'histogramme qui n'est pas le noeud père, il faut passer debug_it à true.
-        :param tab_attribut:
+        :param tab_attribut: Tableau de l'ensemble des points [[x], [y]] permet d'afficher les points du jeu de donnée.
+        (2D seulement)
         :param debug_it: Boolean pour afficher un noeud qui n'est pas la racine.
         :return: Figure matplotlib du noeud courant et de ces fils.
         """
@@ -690,7 +691,8 @@ class Stholes(object):
             subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
             for t in tab:
                 subplot.add_patch(patches.Rectangle(t[0], t[1], t[2], linewidth=1, fill=False))
-                plt.annotate(str(t[3]), t[0])
+                if t[3] != 0.0:  # On n'affiche plus si c'est 0.0 pour plus de lisibilité
+                    plt.annotate(str(t[3]), t[0])
             if tab_attribut is not None:
                 plt.scatter(tab_attribut[0], tab_attribut[1], marker='+')
             plt.show()
