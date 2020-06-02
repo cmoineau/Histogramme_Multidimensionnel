@@ -68,6 +68,8 @@ class Intervalle(object):
                     joint_distribution_1.append(it)
                 if new_bound <= it[0][self.max_dim] <= self.boundaries[self.max_dim][1]:
                     joint_distribution_2.append(it)
+            if joint_distribution_1 == [] or joint_distribution_2 == []:
+                return -1, -1
             # Séaparation des frontières ===============================================================================
             boundaries_1 = list(self.boundaries)
             boundaries_2 = list(self.boundaries)
