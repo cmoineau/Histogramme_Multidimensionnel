@@ -39,6 +39,7 @@ def create_workload_full(data, volume, nb_query):
         print(i, '/', len(data[0]))
         flag = True
         r = 0
+        point = [d[0] for d in data]
         while flag and r < len(requetes):
             point = [d[i] for d in data]
             if est_inclus(point, requetes[r][0]):
