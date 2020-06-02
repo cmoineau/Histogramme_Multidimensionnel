@@ -60,20 +60,24 @@ class Intervalle(object):
                 elif intervalle_a_estimer[d][1] < self.boundary[tab_dim[d]][1]:
                     surface_commune *= (intervalle_a_estimer[d][1] - self.boundary[tab_dim[d]][0])
                 else:
-                    surface_commune *= (self.boundary[d][1] - self.boundary[tab_dim[d]][0])
+                    surface_commune *= (self.boundary[tab_dim[d]][1] - self.boundary[tab_dim[d]][0])
             else:
-                if intervalle_a_estimer[d][0] > self.boundary[tab_dim[d]][1]:
+                if intervalle_a_estimer[d][0] >= self.boundary[tab_dim[d]][1]:
                     return 0
                 elif intervalle_a_estimer[d][1] < self.boundary[tab_dim[d]][1]:
                     surface_commune *= (intervalle_a_estimer[d][1] - intervalle_a_estimer[d][0])
                 elif intervalle_a_estimer[d][1] > self.boundary[tab_dim[d]][1]:
                     surface_commune *= (self.boundary[tab_dim[d]][1] - intervalle_a_estimer[d][0])
-        return (surface_commune/self.surface()) * self.densite
+        return (surface_commune/self.surface(tab_dim=tab_dim)) * self.densite
 
-    def surface(self):
+    def surface(self, tab_dim=None):
         res = 1
-        for i, j in self.boundary:
-            res *= (j - i)
+        if tab_dim is None:
+            for i, j in self.boundary:
+                res *= (j - i)
+        else:
+            for d in tab_dim:
+                res *= (self.boundary[d][1] - self.boundary[d][0])
         return res
 
     def get_size(self):
