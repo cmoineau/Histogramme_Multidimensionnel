@@ -47,9 +47,10 @@ def generate_req(nb_req, data_set):
     for _ in range(nb_req):
         tab_attribut = []
         tab_bound = []
-        while not tab_attribut:  # On vérifie qu'on ait pas rien par malchance
+        while len(tab_attribut) <= 2:  # On vérifie qu'on ait au minimum 2 attributs car 1 attributs = précision
+                                       # parfaite pour AVI
             for i in range(len(data_set[0])):
-                if random.random() > 0.5:
+                if random.random() > 0.5 and data_set[0][i] not in tab_attribut:
                     tab_attribut.append(data_set[0][i])
                     centre = random.randrange(int(tab_min_max[i][0]), int(tab_min_max[i][1]), 1)
                     demi_largeur = random.random() * (tab_min_max[i][1] - tab_min_max[i][0]) / 2

@@ -169,10 +169,17 @@ def test_st(tab_attribut, nom_dim):
     print(histogramme.estimer(histogramme.intervalles, histogramme.attributes_name))
     histogramme.save('test_st')
 
-def test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
-    o_avi = avi.Avi(tab_attribut)
-    x = round(o_avi.estimation([nom_dim.index(d_e) for d_e in dim_estimer], intervalle_estimer))
-    print("Résultat estimé avec AVI :     ", x)
+
+def test_avi(tab_attribut, nom_dim):
+    o_avi = avi.Avi(tab_attribut, nom_dim)
+    nb_validation_q = 500
+    test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
+    erreur = 0
+    for r in test_workload:
+        x = round(o_avi.estimation(nom_dim, r[0]))
+        erreur += abs(x - r[1])
+        print("reel:", r[1], " estimé:", x, " erreur ")
+    print("Erreur absolus moyenne", erreur/nb_validation_q )
 
 
 if __name__ == '__main__':
@@ -188,49 +195,48 @@ if __name__ == '__main__':
             att2.append(float(line[1]))
     #         att3.append(float(line[2]))
 
-    path = './DOCKER/BaseDeDonnee/2008.csv'
-    h_dep = []
-    h_arr = []
-    dist = []
-    ret_dep = []
-    ret_arr = []
-    nb_tuple = 1000
-    with open(path, 'r') as file:
-        header = True
-        cpt = 0
-        for line in file:
-            if header:
-                header = False
-            else:
-                line = line.split(',')
-                if (line[4] != 'NA' and line[6] != 'NA' and line[18] != 'NA' and \
-                        line[14] != 'NA' and line[15] != 'NA') and nb_tuple > cpt:
-                    h_dep.append(int(line[4]))
-                    h_arr.append(int(line[6]))
-                    dist.append(int(line[18]))
-                    ret_dep.append(int(line[14]))
-                    ret_arr.append(int(line[15]))
-                    cpt += 1
-    data_set = [['heure_depart', 'heure_arrive', 'distance', 'retard_depart', 'retard_arrive'],
-                [h_dep, h_arr, dist, ret_dep, ret_arr]]
+    # path = './DOCKER/BaseDeDonnee/2008.csv'
+    # h_dep = []
+    # h_arr = []
+    # dist = []
+    # ret_dep = []
+    # ret_arr = []
+    # nb_tuple = 1000
+    # with open(path, 'r') as file:
+    #     header = True
+    #     cpt = 0
+    #     for line in file:
+    #         if header:
+    #             header = False
+    #         else:
+    #             line = line.split(',')
+    #             if (line[4] != 'NA' and line[6] != 'NA' and line[18] != 'NA' and \
+    #                     line[14] != 'NA' and line[15] != 'NA') and nb_tuple > cpt:
+    #                 h_dep.append(int(line[4]))
+    #                 h_arr.append(int(line[6]))
+    #                 dist.append(int(line[18]))
+    #                 ret_dep.append(int(line[14]))
+    #                 ret_arr.append(int(line[15]))
+    #                 cpt += 1
+    # data_set = [['heure_depart', 'heure_arrive', 'distance', 'retard_depart', 'retard_arrive'],
+    #             [h_dep, h_arr, dist, ret_dep, ret_arr]]
 
     # Paramètres =======================================================================================================
 
     # att1_square = np.array(att1).copy() ** 2
-    # att2_lin = np.array(att1).copy() * 2
+    att2_lin = np.array(att1).copy() * 2
     #
-    # tab_attribut = np.array([att1, att2])
-    # nom_dim = ['x', 'y']
+    tab_attribut = np.array([att1, att2])
+    nom_dim = ['x', 'y']
 
-    tab_attribut = np.array(data_set[1][:2])
+    # tab_attribut = np.array(data_set[1][:2])
+    # nom_dim = data_set[0][:2]
 
-    nom_dim = data_set[0][:2]
-    print(nom_dim)
 
     # Lancement des tests ==============================================================================================
     print('===============================================TEST======================================================')
-    # test_avi(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    test_st(tab_attribut, nom_dim)
+    test_avi(tab_attribut, nom_dim)
+    # test_st(tab_attribut, nom_dim)
     # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
     # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 

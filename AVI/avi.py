@@ -4,43 +4,63 @@
 :last_change_date : 20/02/20
 :description : Estimation en utilisant l'hypothèse indépendance des variables entre chaque attributs.
 """
-
-from collections import Counter
 import numpy as np
+from scipy.stats.mstats import mquantiles
 
 
 class Avi(object):
-    def __init__(self, data):
+    def __init__(self, data, attributs):
+        nb_intervalle = 100
         self.nb_tuple = len(data[0])
+        self.frequence = self.nb_tuple / nb_intervalle
         self.nb_dim = len(data)
-        self.tab_count = [Counter(attribut) for attribut in data]  # On compte le nombre d'apparition de chaque élément
-        self.tab_count = [sorted(k.items(), key=lambda x: x[0]) for k in self.tab_count]  # On le stock dans un tableau
+        self.attributs = attributs
+        self.intervalles = [mquantiles(d, [i/nb_intervalle for i in range(100)]) for d in data]
 
-    def estimation(self, tab_dim, intervalle_estimer):
+    def estimation(self, tab_dim, intervalles_estimer):
         '''
         Estimation en utilisant l'hypothèse d'indépendance des attributs
         :param tab_dim: A tab of the id attributes of which we want to estimate the cardinality.
-        :param intervalle_estimer: The interval we want to estimate
+        :param intervalle_estimer: The intervalle we want to estimate
         :return: The number of element in the multi-dim interval.
         '''
-
-        # On calcule la distribution marginale selon chaque dimension de l'intervalle_estimer a estimer ================
-        marginal_distribution = []
-        for i in range(len(tab_dim)):
-            marginal_distribution.append([])
-            for valeur_distinct in self.tab_count[tab_dim[i]]:
-                if intervalle_estimer[i][0] <= valeur_distinct[0] <= intervalle_estimer[i][1]:
-                    marginal_distribution[i].append(valeur_distinct[1])
-
-        #  On construit le tab_estim en projettant à chaque fois sur une nouvelle dim, pour augmenter sa dimension =====
-        tab_estim = np.array(marginal_distribution[0])  # On commence sur la première dimension
-
-        for i in range(len(marginal_distribution) - 1):
-            # Pour chaque nouvelle dimension, on fait le produit matriciel de tab_estim actuelle et de la distribution
-            # marginale de la nouvelle dimension
-            tab_estim = np.array([(tab_estim * e / self.nb_tuple) for e in marginal_distribution[i + 1]])
-        res = float(tab_estim.sum())
-        tab_estim = None
-        marginal_distribution = None
-        # Après avoir crée le tableau des cardinalités estimé, on sommes les cardinalités de toutes les dimensions =====
+        nb_tuple = []
+        for dim in tab_dim:
+            index_dim = self.attributs.index(dim)
+            intervalle = self.intervalles[index_dim]
+            nb_ds_dim = 0
+            recherche_premier_pivot = True
+            recherche_deuxieme_pivot = True
+            intervalle_estimer = intervalles_estimer[index_dim]
+            for i in range(len(intervalle)):  # TODO : Boucle while pour optimisation ?
+                borne = intervalle[i]
+                if recherche_premier_pivot:
+                    if borne > intervalle_estimer[0]:
+                        if borne > intervalle_estimer[1]:  # Es-ce que le deuxième pivot dépasse la borne ?
+                            # si non
+                            if i != 0:  # On test si on était à la première borne
+                                # Si non alors on à trouvé les deux pivots
+                                nb_ds_dim += ((intervalle_estimer[1] - intervalle_estimer[0]) / (borne - intervalle[i-1])) * self.frequence
+                                recherche_deuxieme_pivot = False
+                            else:
+                                # Si on était à la première borne, on est en dehors de la zone des données, on revoit 0
+                                return 0
+                        else:
+                            # Le deuxième pivot est plus loins que la brone courante
+                            if i != 0:
+                                # Si on n'est pas à la première borne
+                                nb_ds_dim += ((borne - intervalle_estimer[0]) / (borne - intervalle[i - 1])) * self.frequence
+                            # Dans le cas else, on ne fait rien.
+                        recherche_premier_pivot = False
+                elif recherche_deuxieme_pivot:
+                    if borne > intervalle_estimer[1]:
+                        nb_ds_dim += ((intervalle_estimer[1] - intervalle[i - 1]) / (borne - intervalle[i - 1])) * self.frequence
+                        recherche_deuxieme_pivot = False
+                    else:
+                        nb_ds_dim += self.frequence
+            nb_tuple.append(nb_ds_dim)
+        res = 1
+        for n in nb_tuple:
+            res *= n
+        res *= (1/self.nb_tuple) ** (len(tab_dim)-1)
         return res

@@ -1,5 +1,8 @@
 import json
-path = './DATA/test_random.json'
+# path = './DATA/test_random.json'
+# path = './DATA/test_artificial_3D.json'
+# path = './DATA/test_artificial_hyper_2D.json'
+path = './DATA/test_flight_3D.json'
 # path = 'TEST_1.json'
 # path = 'TEST_2.json'
 
@@ -13,7 +16,7 @@ if __name__ == '__main__':
         cpt = 0
         for k, v in resultats["Resultat"].items():
             if k != "time" and k != "size":
-                cpt +=1
+                cpt += 1
                 reel = v["reel"]["resultat"]
                 mhist_err += abs(v["MHIST"]["resultat"] - reel)
                 genhist_err += abs(v["GENHIST"]["resultat"] - reel)
