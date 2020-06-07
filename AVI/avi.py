@@ -25,13 +25,15 @@ class Avi(object):
         :return: The number of element in the multi-dim interval.
         '''
         nb_tuple = []
+        cpt = 0
         for dim in tab_dim:
             index_dim = self.attributs.index(dim)
             intervalle = self.intervalles[index_dim]
             nb_ds_dim = 0
             recherche_premier_pivot = True
             recherche_deuxieme_pivot = True
-            intervalle_estimer = intervalles_estimer[index_dim]
+            intervalle_estimer = intervalles_estimer[cpt]
+            cpt += 1
             for i in range(len(intervalle)):  # TODO : Boucle while pour optimisation ?
                 borne = intervalle[i]
                 if recherche_premier_pivot:

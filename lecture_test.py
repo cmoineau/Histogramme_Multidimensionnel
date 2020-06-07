@@ -1,8 +1,12 @@
 import json
 # path = './DATA/test_random.json'
+# path = './DATA/test_artificial_2D.json'
+# path = './DATA/test_flight_2D.json'
 # path = './DATA/test_artificial_3D.json'
-# path = './DATA/test_artificial_hyper_2D.json'
-path = './DATA/test_flight_3D.json'
+# path = './DATA/test_flight_hyper_2D.json'
+path = './DATA/test_flight_hyper.json'
+# path = './DATA/test_flight_hyper.json'
+# path = './DATA/test_flight_3D.json'
 # path = 'TEST_1.json'
 # path = 'TEST_2.json'
 

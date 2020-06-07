@@ -17,7 +17,7 @@ nb_req_test = 1000
 
 
 def init_histogramme(data_set):
-    t_time= []
+    t_time = []
     nb_intervalle = 500
     print("Création des histogrammes")
     t = time.time()
@@ -29,29 +29,31 @@ def init_histogramme(data_set):
 
     # GENHIST ==========================================================================================================
     # Variables pour GENHIST :
-    b = 200
-    xi = 50  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
+    b = 50
+    xi = 10  # nombre d'intervalle selon une dimension pour les partition régulière de l'espace
              # (Devrait être aux alentours de 100)
     alpha = (1 / 2) ** (1 / len(data_set[1]))
     t = time.time()
     histo_genhist = genhist.Genhist(data_set[1], data_set[0], b, xi, alpha, verbeux=False)
+    print(len(histo_genhist.tab_intervalle))
     # histo_genhist.save('./histo_genhist')
     t_time.append(time.time() - t)
     print('GENHIST initialisé !')
 
     # STHOLES ==========================================================================================================
-    nb_requete = 50
+    nb_requete = 700
     histo_st = st.Stholes(data_set[0], nb_intervalle, verbeux=True)
     t = time.time()
     workload = w.create_workload_full(data_set[1], 0.01, nb_requete)
     # Initialisation en prenant l'ensemble du jeu de donnée
-    histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
+    # histo_st.BuildAndRefine([([[min(a), max(a)] for a in data_set[1]], len(data_set[1][0]))])
     # Raffinement à l'aide de requête généré aléatoirement
     histo_st.BuildAndRefine(workload)
     t_time.append(time.time() - t)
+    histo_st.print()
     # histo_st.save('./histo_st')
     # AVI ==============================================================================================================
-    o_avi = avi.Avi(data_set[1])
+    o_avi = avi.Avi(data_set[1], data_set[0])
     return histo_mhist, histo_genhist, histo_st, o_avi, t_time
 
 
@@ -95,7 +97,7 @@ def test_data_set(data_set, tab_intervalles_est):
 
         # Estimation avec AVI ==========================================================================================
         t = time.time()
-        res = round(o_avi.estimation([data_set[0].index(d_e) for d_e in intervalle[0]], intervalle[1]))
+        res = round(o_avi.estimation(intervalle[0], intervalle[1]))
         dic_intervalle['AVI'] = {'resultat': res, 'temps': time.time() - t}
 
         dict_data[cpt_nb_intervalle] = dic_intervalle
@@ -105,7 +107,7 @@ def test_data_set(data_set, tab_intervalles_est):
 
 def create_artificial_data_set():
     # CREATION DU JEU DE DONNÉES ARTIFICIEL ============================================================================
-    path = "./DATA/small_data.txt"
+    path = "./DATA/fake_data.txt"
     att1 = []
     att2 = []
     att3 = []
@@ -118,7 +120,7 @@ def create_artificial_data_set():
             att2.append(float(line[1]))
             att3.append(float(line[2]))
             att4.append(float(line[0]) * 2)
-            att5.append(float(line[1]) ** 2)
+            att5.append(float(line[1]) + float(line[0]))
     data_set = (['x', 'y', 'z', 'x2', 'y2'], [att1, att2, att3, att4, att5])
     return data_set
 
@@ -161,7 +163,7 @@ def compute_correlation(data_set):
     return dict_corell
 
 
-def test_hyper_2D():
+def test_hyper_5D():
     """
     Dans ce test, les histogrammes sont en 2D, les requêtes à estimer sont des hyper-cubes.
     :return:
@@ -169,10 +171,10 @@ def test_hyper_2D():
     print("Création du jeu de données ...")
 
     data_set = create_flight_data_set()
-    nom_fichier_test = "test_flight_hyper_2D.json"
+    nom_fichier_test = "test_flight_hyper.json"
     # data_set = create_artificial_data_set()
     # nom_fichier_test = "test_artificial_hyper_2D.json"
-    data_set = [data_set[0][:2], data_set[1][:2]]
+    data_set = [data_set[0], data_set[1]]
     # data_set = [[data_set[0][0], data_set[0][3]], [data_set[1][0], data_set[1][3]]]
     print('Calcul des corrélations ...')
     dict_data = {'nb_tuple': len(data_set[1][0]),
@@ -190,6 +192,62 @@ def test_hyper_2D():
         f.write(json.dumps(dict_data, indent=4))
 
 
+def test_hyper_2D():
+    """
+    Dans ce test, les histogrammes sont en 2D, les requêtes à estimer sont des hyper-cubes.
+    :return:
+    """
+    print("Création du jeu de données ...")
+
+    # data_set = create_flight_data_set()
+    # nom_fichier_test = "test_flight_hyper_2D.json"
+    data_set = create_artificial_data_set()
+    nom_fichier_test = "test_artificial_hyper_2D.json"
+    # data_set = [data_set[0][:2], data_set[1][:2]]
+    data_set = [[data_set[0][0], data_set[0][2]], [data_set[1][0], data_set[1][2]]]
+    print('Calcul des corrélations ...')
+    dict_data = {'nb_tuple': len(data_set[1][0]),
+                 'correlation': compute_correlation(data_set)
+                 }
+
+    print('Génération des requêtes ...')
+    tab_intervalles_est = w.create_workload(data_set[1], 0.01, nb_req_test)
+    tab_intervalles_est = [(data_set[0], i[0]) for i in tab_intervalles_est]
+    print("Début des tests !")
+    dict_data['Resultat'] = test_data_set(data_set, tab_intervalles_est)
+
+    print('Écriture des résultats ...')
+    with open('./DATA/' + nom_fichier_test, 'w') as f:
+        f.write(json.dumps(dict_data, indent=4))
+
+
+def test_5D():
+    """
+    Dans ce test, les histogrammes sont en 2D, les requêtes sont aléatoire et ne portent pas necessairement sur tous les
+    attributs.
+    :return:
+    """
+    print("Création du jeu de données ...")
+    data_set = create_flight_data_set()
+    nom_fichier_test = "test_flight.json"
+    # data_set = create_artificial_data_set()
+    # nom_fichier_test = "test_artificial.json"
+    data_set = [data_set[0], data_set[1]]
+    print('Calcul des corrélations ...')
+    dict_data = {'nb_tuple': len(data_set[1][0]),
+                 'correlation': compute_correlation(data_set)
+                 }
+
+    print('Génération des requêtes ...')
+    tab_intervalles_est = utils.generate_req(nb_req_test, data_set)
+    print("Début des tests !")
+    dict_data['Resultat'] = test_data_set(data_set, tab_intervalles_est)
+
+    print('Écriture des résultats ...')
+    with open('./DATA/'+nom_fichier_test, 'w') as f:
+        f.write(json.dumps(dict_data, indent=4))
+
+
 def test_2D():
     """
     Dans ce test, les histogrammes sont en 2D, les requêtes sont aléatoire et ne portent pas necessairement sur tous les
@@ -197,10 +255,10 @@ def test_2D():
     :return:
     """
     print("Création du jeu de données ...")
-    # data_set = create_flight_data_set()
-    # nom_fichier_test = "test_flight_2D.json"
-    data_set = create_artificial_data_set()
-    nom_fichier_test = "test_artificial_2D.json"
+    data_set = create_flight_data_set()
+    nom_fichier_test = "test_flight_2D.json"
+    # data_set = create_artificial_data_set()
+    # nom_fichier_test = "test_artificial_2D.json"
     data_set = [data_set[0][:2], data_set[1][:2]]
     print('Calcul des corrélations ...')
     dict_data = {'nb_tuple': len(data_set[1][0]),
@@ -209,7 +267,6 @@ def test_2D():
 
     print('Génération des requêtes ...')
     tab_intervalles_est = utils.generate_req(nb_req_test, data_set)
-    print(tab_intervalles_est)
     print("Début des tests !")
     dict_data['Resultat'] = test_data_set(data_set, tab_intervalles_est)
 
@@ -237,7 +294,6 @@ def test_3D():
 
     print('Génération des requêtes ...')
     tab_intervalles_est = utils.generate_req(nb_req_test, data_set)
-    print(tab_intervalles_est)
     print("Début des tests !")
     dict_data['Resultat'] = test_data_set(data_set, tab_intervalles_est)
 
@@ -247,5 +303,5 @@ def test_3D():
 
 
 if __name__ == '__main__':
-    # test_hyper_2D()
-    test_3D()
+    test_hyper_5D()
+    # test_2D()

@@ -32,7 +32,7 @@ def est_inclus(point, bound):
     if len(point) != len(bound):
         raise ValueError("Il faut que les deux objets aient la même dimension !")
     inclus = True
-    dim =0
+    dim = 0
     while dim < len(bound) and inclus:
         if bound[dim][0] - epsilon <= point[dim] <= bound[dim][1] + epsilon:
             dim += 1
@@ -47,8 +47,7 @@ def generate_req(nb_req, data_set):
     for _ in range(nb_req):
         tab_attribut = []
         tab_bound = []
-        while len(tab_attribut) <= 2:  # On vérifie qu'on ait au minimum 2 attributs car 1 attributs = précision
-                                       # parfaite pour AVI
+        while not tab_attribut:  # On vérifie qu'on ait au minimum 1 attribut
             for i in range(len(data_set[0])):
                 if random.random() > 0.5 and data_set[0][i] not in tab_attribut:
                     tab_attribut.append(data_set[0][i])
