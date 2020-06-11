@@ -143,9 +143,9 @@ def test_st(tab_attribut, nom_dim):
     train_workload = w.create_workload_full(tab_attribut, 0.01, nb_req_entrainement)
     histogramme.BuildAndRefine([([[min(a), max(a)] for a in tab_attribut], len(tab_attribut[0]))])
     histogramme.BuildAndRefine(train_workload)
-    histogramme.print(tab_attribut=tab_attribut)  # tab attribut permet d'afficher les points du jeu de donnée (2D)
+    # histogramme.print(tab_attribut=tab_attribut)  # tab attribut permet d'afficher les points du jeu de donnée (2D)
     nf_histogramme.BuildAndRefine(train_workload)
-    nf_histogramme.print(tab_attribut=tab_attribut)  # tab attribut permet d'afficher les points du jeu de donnée (2D)
+    # nf_histogramme.print(tab_attribut=tab_attribut)  # tab attribut permet d'afficher les points du jeu de donnée (2D)
 
     # w.print_workload(train_workload)
     print("Lancement de la construction de St-Holes !")
@@ -189,7 +189,7 @@ def test_avi(tab_attribut, nom_dim):
 
 if __name__ == '__main__':
     # Lecture des données ==============================================================================================
-    path = "./DATA/small_data.txt"
+    path = "./DATA/fake_data.txt"
     att1 = []
     att2 = []
     att3 = []
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     # dist = []
     # ret_dep = []
     # ret_arr = []
-    # nb_tuple = 1000
+    # nb_tuple = 10000
     # with open(path, 'r') as file:
     #     header = True
     #     cpt = 0
@@ -226,22 +226,27 @@ if __name__ == '__main__':
     # data_set = [['heure_depart', 'heure_arrive', 'distance', 'retard_depart', 'retard_arrive'],
     #             [h_dep, h_arr, dist, ret_dep, ret_arr]]
 
+    plt.scatter(att1, [a*2 for a in att1], marker='+')
+    plt.xlabel('X')
+    plt.ylabel('2.X')
+    plt.show()
+
     # Paramètres =======================================================================================================
-
-    # att1_square = np.array(att1).copy() ** 2
-    att2_lin = np.array(att1).copy() * 2
     #
-    tab_attribut = np.array([att1, att3])
-    nom_dim = ['x', 'y']
-
-    # tab_attribut = np.array(data_set[1][:2])
-    # nom_dim = data_set[0][:2]
-
-
-    # Lancement des tests ==============================================================================================
-    print('===============================================TEST======================================================')
-    # test_avi(tab_attribut, nom_dim)
-    test_st(tab_attribut, nom_dim)
-    # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    # # att1_square = np.array(att1).copy() ** 2
+    # att2_lin = np.array(att1).copy() * 2
+    # #
+    # tab_attribut = np.array([att1, att3])
+    # nom_dim = ['x', 'y']
+    #
+    # # tab_attribut = np.array(data_set[1][:2])
+    # # nom_dim = data_set[0][:2]
+    #
+    #
+    # # Lancement des tests ==============================================================================================
+    # print('===============================================TEST======================================================')
+    # # test_avi(tab_attribut, nom_dim)
+    # test_st(tab_attribut, nom_dim)
+    # # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    # # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
 
