@@ -518,7 +518,8 @@ class Stholes(object):
             v_child, v_tot_child = volume_inter(child.intervalles, bound, dim_a_estimer, self.attributes_name)
             v -= v_child
             vol_tot -= v_tot_child
-        if vol_tot < epsilon:  # Cas bizarre où l'intervalle est entièrement occupé par ces fils.
+        if vol_tot < epsilon:  # Cas spécial où l'intervalle est entièrement occupé par ces fils.
+            # Il faut le traiter à part pour éviter une division par zéro
             res = 0
         else:
             v = min(v, vol_tot)  # Il est possible que suite à un problème de virgule flotante, le vol_tot soit plus

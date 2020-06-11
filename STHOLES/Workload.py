@@ -32,6 +32,27 @@ def create_workload(data, volume, nb_query):
     return requetes
 
 
+def create_workload_data(data, volume, nb_query):
+    requetes=[]
+    for _ in range(nb_query):
+        i = random.randint(0, len(data[0]))
+        point = [d[i] for d in data]
+        centres = point
+        longueurs = []
+        centres.append(point)
+        for d in data:
+            longueurs.append(random.random() * (max(d) - min(d)) * (volume ** (1 / len(data))))
+        bound = [[(centres[dim] - (longueurs[dim] / 2)), (centres[dim] + (longueurs[dim] / 2))] for dim in
+                 range(len(data))]
+        nb_tuple = 0
+        for y in range(len(data[0])):
+            point = [d[y] for d in data]
+            if est_inclus(point, bound):
+                nb_tuple += 1
+        requetes.append((bound, nb_tuple))
+    return requetes
+
+
 def create_workload_full(data, volume, nb_query):
     requetes = create_workload(data, volume, nb_query)
 
@@ -59,7 +80,6 @@ def create_workload_full(data, volume, nb_query):
                 if est_inclus(point, bound):
                     nb_tuple += 1
             requetes.append((bound, nb_tuple))
-    print(len(requetes))
     return requetes
 
 

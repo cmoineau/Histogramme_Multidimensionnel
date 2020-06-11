@@ -52,7 +52,7 @@ def generate_req(nb_req, data_set):
                 if random.random() > 0.5 and data_set[0][i] not in tab_attribut:
                     tab_attribut.append(data_set[0][i])
                     centre = random.randrange(int(tab_min_max[i][0]), int(tab_min_max[i][1]), 1)
-                    demi_largeur = random.random() * (tab_min_max[i][1] - tab_min_max[i][0]) / 2
+                    demi_largeur = random.random() * (tab_min_max[i][1] - tab_min_max[i][0]) * 0.1 / 2
                     tab_bound.append([centre - demi_largeur, centre + demi_largeur])
         tab_req.append((tab_attribut, tab_bound))
     return tab_req
