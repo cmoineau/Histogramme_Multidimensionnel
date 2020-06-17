@@ -3,7 +3,9 @@ DATA/
 # Folder used for test puroposes atm
 DOCKER/
 # Binary files
-*.histo
+*.mhist
+*.genhist
+*.stholes
 
 
 

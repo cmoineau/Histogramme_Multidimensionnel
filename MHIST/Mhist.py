@@ -102,7 +102,7 @@ class Mhist(object):
                 bound, w, h = i.print([self.dim_name.index(dim_names[0]), self.dim_name.index(dim_names[1])])
                 subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
 
-    def estimate(self, attributs_a_estimer, intervalle_a_estimer):
+    def estimer(self, attributs_a_estimer, intervalle_a_estimer):
         card = 0
         for intervalle in self.tab_intervalle:
             card += intervalle.estimate_card([self.dim_name.index(att) for att in attributs_a_estimer],
@@ -118,6 +118,6 @@ class Mhist(object):
         return size
 
     def save(self, path):
-        f = open(path + '.histo', 'wb')
+        f = open(path, 'wb')
         dump(self, f)
         f.close()

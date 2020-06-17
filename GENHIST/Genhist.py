@@ -178,7 +178,7 @@ class Genhist(object):
             bound, w, h = i.print()
             subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
 
-    def estimate(self, tab_attribut, boundary):
+    def estimer(self, tab_attribut, boundary):
         card = 0
         for intervalle in self.tab_intervalle:
             card += intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n
@@ -194,6 +194,6 @@ class Genhist(object):
         return size
 
     def save(self, path):
-        f = open(path + '.histo', 'wb')
+        f = open(path, 'wb')
         dump(self, f)
         f.close()

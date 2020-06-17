@@ -478,7 +478,7 @@ class Stholes(object):
                 if requete[0][dim][1] > self.intervalles[dim][1]:
                     self.intervalles[dim] = [self.intervalles[dim][0], requete[0][dim][1]]
 
-    def estimer(self, bound, dim_a_estimer):
+    def estimer(self, dim_a_estimer, bound):
         """
         Renvoie une estimation du nombre d'éléments dans la zone délimitée par bound. Les dimensions de l'intervalle à
         estimer doivent être décris dans le paramètre dim_a_estimer.
@@ -660,7 +660,7 @@ class Stholes(object):
         return True
 
     def save(self, path):
-        f = open(path+'.histo', 'wb')
+        f = open(path, 'wb')
         dump(self, f)
         f.close()
 

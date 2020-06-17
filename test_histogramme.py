@@ -88,17 +88,17 @@ def test_data_set(data_set, tab_intervalles_est):
 
         # Estimation avec MHIST ========================================================================================
         t = time.time()
-        res = histo_mhist.estimate(intervalle[0], intervalle[1])
+        res = histo_mhist.estimer(intervalle[0], intervalle[1])
         dic_intervalle['MHIST'] = {'resultat': res, 'temps': time.time() - t}
 
         # Estimation avec GENHIST ======================================================================================
         t = time.time()
-        res = histo_genhist.estimate(intervalle[0], intervalle[1])
+        res = histo_genhist.estimer(intervalle[0], intervalle[1])
         dic_intervalle['GENHIST'] = {'resultat': res, 'temps': time.time() - t}
 
         # Estimation avec STHOLES ======================================================================================
         t = time.time()
-        res = histo_st.estimer(intervalle[1], intervalle[0])
+        res = histo_st.estimer(intervalle[0], intervalle[1])
         dic_intervalle['STHOLES'] = {'resultat': res, 'temps': time.time() - t}
 
         # Estimation avec AVI ==========================================================================================
