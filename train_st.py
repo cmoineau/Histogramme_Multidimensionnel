@@ -13,9 +13,10 @@ if __name__ == '__main__':
     data = [att1, att2]
     attributes_name = ("x", "y")
     wrapper = wrapper.Histogramme_wrapper()
-    wrapper.create_MHIST(data, attributes_name, "./here")
+    # wrapper.create_STHoles(attributes_name, "./here")
 
-    wrapper.load_histogramme("./here.mhist")
+    wrapper.load_histogramme("./here.stholes")
+    # wrapper.train_STHoles(data, 100)
     print(wrapper.estimer(["x"], [[-1, 1]]))
     # nb_validation_q = 500
     # test_workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)

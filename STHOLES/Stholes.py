@@ -205,7 +205,7 @@ class Stholes(object):
         :return:
         """
         c1, T1 = self.shrink(bound_requete, nb_tuple)
-        if self.estimer(c1, self.attributes_name) != T1:
+        if self.estimer(self.attributes_name, c1) != T1:
             self.drill(c1, T1)
 
     def merge_pc(self, child):
@@ -526,7 +526,7 @@ class Stholes(object):
             # petit que v, on essaie de pallier à ce problème ne forçant l'égalité en cas de problème
             res = self.nb_tuple * (v/vol_tot)
         for child in self.children:
-            res += child.estimer(bound, dim_a_estimer)
+            res += child.estimer(dim_a_estimer, bound)
         return res
 
     def vBox(self):
