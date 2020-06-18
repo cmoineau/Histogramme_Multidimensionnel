@@ -23,7 +23,7 @@ def coef_correlation(tab_attribut):
         Sys += (tab_attribut[1][i] ** 2)
         Sxy += (tab_attribut[1][i] * tab_attribut[0][i])
         n += 1
-    Up = (Sxy / n) - (Sx / n) * (Sy / n)  # tab_intervalle(XY)-tab_intervalle(X)tab_intervalle(Y)
+    Up = (Sxy / n) - (Sx / n) * (Sy / n)  # tab_classe(XY)-tab_classe(X)tab_classe(Y)
     Down = sqrt((Sxs / n) - (Sx / n) ** 2) * sqrt((Sys / n) - (Sy / n) ** 2)  # sigma_x.sigma_y
     return round(float(Up/Down), 3)
 

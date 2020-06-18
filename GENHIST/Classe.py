@@ -8,7 +8,7 @@ from sys import getsizeof
 from copy import deepcopy
 
 
-class Intervalle(object):
+class Classe(object):
     def __init__(self, intervalle, densite=0):
         self.boundary = intervalle
         self.densite = densite
@@ -19,7 +19,7 @@ class Intervalle(object):
         Renvoit une copie de l'intervalle
         :return:
         """
-        return Intervalle(deepcopy(self.boundary), densite=self.densite)
+        return Classe(deepcopy(self.boundary), densite=self.densite)
 
     def print(self):
         """
@@ -34,7 +34,7 @@ class Intervalle(object):
     def intersection_intervalle(self, intervalle, tab_dimension):
         """
         Méthode pour savoir si l'intervalle intersectionne l'intervalle
-        :param intervalle: Intervalle sous forme [(x1, y1), ... ,(xn, yn)]
+        :param intervalle: Classe sous forme [(x1, y1), ... ,(xn, yn)]
         :param tab_dimension:
         :return:
         """

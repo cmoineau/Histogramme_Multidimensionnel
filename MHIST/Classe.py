@@ -7,7 +7,7 @@
 from sys import getsizeof
 
 
-class Intervalle(object):
+class Classe(object):
     def __init__(self, boundaries, joint_distribution):
         self.boundaries = boundaries
         self.joint_distribution = joint_distribution
@@ -79,8 +79,8 @@ class Intervalle(object):
                                           max([i[0][self.max_dim] for i in joint_distribution_2]))
 
             # Création des deux nouveaux intervalles ===================================================================
-            intervalle_1 = Intervalle(boundaries_1, joint_distribution_1)
-            intervalle_2 = Intervalle(boundaries_2, joint_distribution_2)
+            intervalle_1 = Classe(boundaries_1, joint_distribution_1)
+            intervalle_2 = Classe(boundaries_2, joint_distribution_2)
 
             return intervalle_1, intervalle_2
         else:

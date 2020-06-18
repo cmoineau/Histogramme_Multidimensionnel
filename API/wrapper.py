@@ -23,7 +23,7 @@ class Histogramme_wrapper(object):
         histo = Mhist.Mhist(data, attributes_name, max_classes)
         histo.save(path+".mhist")
 
-    def create_GENIST(self, data, attributes_name, path, b=2, xi=10):
+    def create_GENHIST(self, data, attributes_name, path, b=50, xi=10):
         alpha = (1 / 2) ** (1 / len(data))
         histo = Genhist.Genhist(data, attributes_name, b, xi, alpha)
         histo.save(path+".genhist")
@@ -44,3 +44,7 @@ class Histogramme_wrapper(object):
         self.histogramme.BuildAndRefine(workload)
         self.histogramme.save(self.path)
 
+    def show_hist(self):
+        if self.histogramme is None:
+            raise ValueError("Il faut d'abord charger un histogramme !")
+        self.histogramme.print()

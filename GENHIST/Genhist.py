@@ -4,7 +4,7 @@
 :last_change_date : 07/04/20
 :description : Définition d'un histogramme GENHIST.
 """
-from GENHIST import Intervalle as intervalle
+from GENHIST import Classe as intervalle
 import random
 from matplotlib import patches
 import matplotlib.pyplot as plt
@@ -30,11 +30,11 @@ class Genhist(object):
         # Note: deepcopy ne fonctionne pas à cause d'une erreur de récursion
         data_set = np.array(data_set).copy()
         data_set = [list(d) for d in data_set]
-
+        self.min_max = [(min(a), max(a)) for a in data_set]
         self.verbeux = verbeux
         self.n = len(data_set[0])  # On définit le nombre de tuple
         self.dim_name = dim_name
-        self.tab_intervalle = []
+        self.tab_classe = []
         self.tot_nb_point_remove = 0
 
         construction_in_progress = True
@@ -50,16 +50,16 @@ class Genhist(object):
                 if inter.densite > moyenne:
                     data_set = self.supprimer_elts(inter, moyenne, data_set)
                     inter.densite = (inter.densite - moyenne)
-                    self.tab_intervalle.append(inter.copy())
+                    self.tab_classe.append(inter.copy())
 
             tmp = (len(data_set[0]) / (len(data_set[0]) + self.tot_nb_point_remove)) ** (1/len(data_set))
             xi = int(min(tmp, alpha) * xi)  # On veut la partie entière du nombre
             if len(data_set[0]) == 0:
                 construction_in_progress = False
             elif xi <= 1:
-                self.tab_intervalle.append(
-                    intervalle.Intervalle([(min(data_set[d]), max(data_set[d])) for d in range(len(data_set))]
-                                          , densite=len(data_set[0])/self.n))
+                self.tab_classe.append(
+                    intervalle.Classe([(min(data_set[d]), max(data_set[d])) for d in range(len(data_set))]
+                                      , densite=len(data_set[0])/self.n))
                 construction_in_progress = False
 
     def supprimer_elts(self, inter, densite_moyenne, data_set):
@@ -102,7 +102,7 @@ class Genhist(object):
         terminaison = False  # Boolean pour simuler une boucle do-while
         while not terminaison:
             new_boundary = [[tab_avancement[i], tab_avancement[i] + tab_pas[i]] for i in range(nb_dim)]
-            tab_intervalle.append(intervalle.Intervalle(new_boundary))
+            tab_intervalle.append(intervalle.Classe(new_boundary))
             dim = 0
             maj_pas = True
             while maj_pas:
@@ -160,27 +160,34 @@ class Genhist(object):
             inter.densite = inter.densite / self.n
         return tab_intervalle
 
-    def print(self, tab_intervalle=-1):
+    def print(self):
         """
         Affiche l'histogramme GENHIST
         :param tab_intervalle: Correpond aux dimensions à afficher
         :return:
         """
-        if tab_intervalle == -1:
-            tab_intervalle = self.tab_intervalle
+
         figure = plt.figure()
         axes = plt.axes()
-        axes.set_xlim(left=-10, right=10)
-        axes.set_ylim(bottom=-10, top=10)
+
+        min_1 = self.min_max[0][0]
+        min_2 = self.min_max[1][0]
+
+        max_1 = self.min_max[0][1]
+        max_2 = self.min_max[1][1]
+
+        axes.set_xlim(left=min_1, right=max_1)
+        axes.set_ylim(bottom=min_2, top=max_2)
 
         subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
-        for i in tab_intervalle:
+        for i in self.tab_classe:
             bound, w, h = i.print()
             subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
+        plt.show()
 
     def estimer(self, tab_attribut, boundary):
         card = 0
-        for intervalle in self.tab_intervalle:
+        for intervalle in self.tab_classe:
             card += intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n
         if card < 0:
             raise ValueError('Cardinalité négative ...')
@@ -188,7 +195,7 @@ class Genhist(object):
 
     def get_size(self):
         size = 0
-        for intervalle in self.tab_intervalle:
+        for intervalle in self.tab_classe:
             size += intervalle.get_size()
         size += getsizeof(self.dim_name)
         return size

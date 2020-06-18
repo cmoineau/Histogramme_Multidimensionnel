@@ -49,7 +49,7 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     plt.show()
 
 
-def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
+def test_genhist(tab_data, nom_dim):
     # Initialisation des paramètres ====================================================================================
     b = 500
     xi = 20  # Qu'elle est une valeur classique ?
@@ -58,6 +58,7 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
 
     # Création de l'histogramme ========================================================================================
     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
+    histogramme.print()
 
     # Test =============================================================================================================
 
@@ -67,19 +68,8 @@ def test_genhist(tab_data, nom_dim, dim_estimer, intervalle_estimer):
                                 #########################################
                                 # TEST POUR TROUVER MEILLEUR XI ET B    #
                                 #########################################
-    o_avi = avi.Avi(tab_attribut)
-    nb_validation_q = 500
-    test_workload = w.create_workload(tab_data, 0.05, nb_validation_q)
-    av_err = 0
-    av_avi_err = 0
-    for r in test_workload:
-        est = round(histogramme.estimate(histogramme.dim_name, r[0]))
-        est_avi = o_avi.estimation(range(len(tab_attribut)), r[0])
-        print('est', est, 'avi', est_avi, 'real', r[1])
-        av_err += abs(est - r[1])
-        av_avi_err += abs(est_avi - r[1])
-    print("Average Error :", av_err / nb_validation_q)
-    print("Normalized Absolute Error :", av_err / av_avi_err)
+
+
     # test_b = []
     # for b in range(25, 200):
     #     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
@@ -226,21 +216,16 @@ if __name__ == '__main__':
     # data_set = [['heure_depart', 'heure_arrive', 'distance', 'retard_depart', 'retard_arrive'],
     #             [h_dep, h_arr, dist, ret_dep, ret_arr]]
 
-    plt.scatter(att1, [a*2 for a in att1], marker='+')
-    plt.xlabel('X')
-    plt.ylabel('2.X')
-    plt.show()
-
     # Paramètres =======================================================================================================
     #
     # # att1_square = np.array(att1).copy() ** 2
     # att2_lin = np.array(att1).copy() * 2
     # #
-    # tab_attribut = np.array([att1, att3])
-    # nom_dim = ['x', 'y']
+    tab_attribut = np.array([att1, att3])
+    nom_dim = ['x', 'y']
     #
-    # # tab_attribut = np.array(data_set[1][:2])
-    # # nom_dim = data_set[0][:2]
+    # tab_attribut = np.array(data_set[1][:2])
+    # nom_dim = data_set[0][:2]
     #
     #
     # # Lancement des tests ==============================================================================================
@@ -248,5 +233,5 @@ if __name__ == '__main__':
     # # test_avi(tab_attribut, nom_dim)
     # test_st(tab_attribut, nom_dim)
     # # test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
-    # # test_genhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer)
+    test_genhist(tab_attribut, nom_dim)
 

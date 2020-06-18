@@ -5,5 +5,5 @@ Fonctionnalités du wrapper:
     -[X] STHoles
 -[X] Faire une estimation à partir d'un histogramme
 -[ ] Obtenir la liste des attributs d'un histogramme
--[ ] Affichage graphique d'un histogramme
+-[X] Affichage graphique d'un histogramme
 -[X] Pour STHoles (màj l'histogramme)
