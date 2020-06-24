@@ -13,11 +13,11 @@ from pickle import dump
 
 
 class Mhist(object):
-    def __init__(self, data, dim_name,  nb_max_intervalle, verbeux=False):
+    def __init__(self, data, attributes_name, nb_max_intervalle, verbeux=False):
         """
         Initialisation d'un histogramme
         :param data: list[list] Les données que doit estimer l'histogramme.
-        :param dim_name: list[string] Noms donné aux attributs. Utile pour l'estimation.
+        :param attributes_name: list[string] Noms donné aux attributs. Utile pour l'estimation.
         :param nb_max_intervalle: int: Définis le nombre maximum d'intervalle.
         :param verbeux: boolean: permet l'affichage de certain print.
         """
@@ -27,7 +27,7 @@ class Mhist(object):
         for d in range(nb_dim):
             if len(data[d]) != nb_tuple:
                 raise ValueError('ERREUR : Tous les attributs doivent posséder le même nombre d\'élement !')
-        if nb_dim != len(dim_name):
+        if nb_dim != len(attributes_name):
             raise ValueError('ERREUR : Vous devez nommer tous les attributs !')
 
         # Pour l'affichage
@@ -50,7 +50,7 @@ class Mhist(object):
         self.tab_classe = []
         self.tab_classe.append(fi)
         self.nb_max_intervalle = nb_max_intervalle
-        self.dim_name = dim_name
+        self.attributes_name = attributes_name
         # On lance l'algorithme qui va séparer successivement le premier intervalle
         self.build()
 
@@ -91,7 +91,7 @@ class Mhist(object):
             it.freeze()
 
     def print(self):
-        dim_names = self.dim_name[:2]
+        dim_names = self.attributes_name[:2]
         figure = plt.figure()
         axes = plt.axes()
         min_1 = self.min_max[0][0]
@@ -106,14 +106,14 @@ class Mhist(object):
         axes.set_ylabel(dim_names[1])
         subplot = figure.add_subplot(111, sharex=axes, sharey=axes)
         for i in self.tab_classe:
-            bound, w, h = i.print([self.dim_name.index(dim_names[0]), self.dim_name.index(dim_names[1])])
+            bound, w, h = i.print([self.attributes_name.index(dim_names[0]), self.attributes_name.index(dim_names[1])])
             subplot.add_patch(patches.Rectangle(bound, w, h, linewidth=1, fill=False))
         plt.show()
 
     def estimer(self, attributs_a_estimer, intervalle_a_estimer):
         card = 0
         for intervalle in self.tab_classe:
-            card += intervalle.estimate_card([self.dim_name.index(att) for att in attributs_a_estimer],
+            card += intervalle.estimate_card([self.attributes_name.index(att) for att in attributs_a_estimer],
                                              intervalle_a_estimer)
         return card
 
@@ -122,10 +122,15 @@ class Mhist(object):
         size += getsizeof(self.nb_max_intervalle)
         for intervalle in self.tab_classe:
             size += intervalle.get_size()
-        size += getsizeof(self.dim_name)
+        size += getsizeof(self.attributes_name)
         return size
 
     def save(self, path):
+        """
+        Sérialise l'objet histogramme en utilisant la librairie pickle.
+        :param path:
+        :return:
+        """
         f = open(path, 'wb')
         dump(self, f)
         f.close()

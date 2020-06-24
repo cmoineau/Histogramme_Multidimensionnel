@@ -460,7 +460,7 @@ class Stholes(object):
         Renvoie une estimation du nombre d'éléments dans la zone délimitée par bound. Les dimensions de l'intervalle à
         estimer doivent être décris dans le paramètre dim_a_estimer.
         exemple : bound = ([0,1]) dim_a_estimer = ([x])
-        Le nom des dimensions doit correspondre aux noms donné dans la variable self.dim_name
+        Le nom des dimensions doit correspondre aux noms donné dans la variable self.attributes_name
                 :param bound:
         :return:
         """
@@ -647,7 +647,7 @@ class Stholes(object):
             tab += c.print()
 
         if self.father is None or debug_it:
-            # couleur = ['r', 'g', 'c', 'm', 'y', 'k', 'w']
+            # couleur = ['here.mhist', 'g', 'c', 'm', 'y', 'k', 'w']
             figure = plt.figure()
             axes = plt.axes()
             axes.set_xlim(left=round(min(self.intervalles[0])) - 1, right=max(self.intervalles[0]) + 1)

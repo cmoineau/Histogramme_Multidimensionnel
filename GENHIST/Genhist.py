@@ -15,11 +15,11 @@ from pickle import dump
 
 
 class Genhist(object):
-    def __init__(self, data_set, dim_name, b, xi, alpha, verbeux=False):
+    def __init__(self, data_set, attributes_name, b, xi, alpha, verbeux=False):
         """
         Initialisation d'un histogramme genhist
         :param data_set: list /!\ Cette variable va subir des modifications, on en fait une copie au début du script /!\
-        :param dim_name: list liste des noms des attributs pour pouvoir faire les estimations
+        :param attributes_name: list liste des noms des attributs pour pouvoir faire les estimations
         :param b:
         :param xi: Fixe le nombre d'intervalle obtenue lors des partitionnements (intervalle temporaire permettant la
         création de l'histogramme. Si xi trop grand (ie: xi^nb_dim), alors on risque de faire exploser la complexité.
@@ -33,7 +33,7 @@ class Genhist(object):
         self.min_max = [(min(a), max(a)) for a in data_set]
         self.verbeux = verbeux
         self.n = len(data_set[0])  # On définit le nombre de tuple
-        self.dim_name = dim_name
+        self.attributes_name = attributes_name
         self.tab_classe = []
         self.tot_nb_point_remove = 0
 
@@ -148,7 +148,7 @@ class Genhist(object):
             if self.verbeux:
                 print('Mise à jour de la densité :', i, '/', len(data[0]))
             # TODO : Ici on parcourt linéairement nos intervalles partitionné, or justement ils partitionnent l'espace,
-            #  on devrait utiliser cette propriétés pour trouver plus rapidement à quelle boundary appartient le point.
+            #  on pourrait utiliser cette propriétés pour trouver plus rapidement à quelle boundary appartient le point.
             maj_pas = True
             cpt_intervalle = 0
             while maj_pas:
@@ -163,10 +163,8 @@ class Genhist(object):
     def print(self):
         """
         Affiche l'histogramme GENHIST
-        :param tab_intervalle: Correpond aux dimensions à afficher
         :return:
         """
-
         figure = plt.figure()
         axes = plt.axes()
 
@@ -186,21 +184,37 @@ class Genhist(object):
         plt.show()
 
     def estimer(self, tab_attribut, boundary):
+        """
+        Fonction pour estimer la cardinalité d'une zone
+        :param tab_attribut: Tableau des attributs à estimer (doivent correspondre à ceux définis dans self.attributes_name
+        :param boundary:
+        :return:
+        """
         card = 0
         for intervalle in self.tab_classe:
-            card += intervalle.estimate_card([self.dim_name.index(att) for att in tab_attribut], boundary) * self.n
+            card += intervalle.estimate_card([self.attributes_name.index(att) for att in tab_attribut], boundary) * self.n
         if card < 0:
             raise ValueError('Cardinalité négative ...')
         return card
 
     def get_size(self):
+        """
+        Renvoit la taille en mémoire de l'histogramme.
+        /!\ Fiabilité ?
+        :return:
+        """
         size = 0
         for intervalle in self.tab_classe:
             size += intervalle.get_size()
-        size += getsizeof(self.dim_name)
+        size += getsizeof(self.attributes_name)
         return size
 
     def save(self, path):
+        """
+        Sérialise l'objet histogramme en utilisant la librairie pickle.
+        :param path:
+        :return:
+        """
         f = open(path, 'wb')
         dump(self, f)
         f.close()

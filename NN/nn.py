@@ -37,7 +37,7 @@ if __name__ == '__main__':
     att1 = []
     att2 = []
     att3 = []
-    with open(path, "r") as f:
+    with open(path, "here.mhist") as f:
         for line in f:
             line = line.split(',')
             att1.append(float(line[0]))

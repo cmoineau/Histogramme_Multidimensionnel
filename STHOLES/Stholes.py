@@ -19,14 +19,14 @@ from matplotlib import patches
 
 
 class Stholes(object):
-    def __init__(self, dim_name, nb_max_bucket, verbeux=False):
+    def __init__(self, attributes_name, nb_max_bucket, verbeux=False):
         """
         Un histogramme ST-Holes est un histogramme qui peut se définir comme un arbre. Une classe correspond à un
         histogramme St-Holes. On retrouve des notions tel que celle d'boundary (i.e: noeud) fils ou père.
         Cet histogramme est particulier car il se construit sans regarder les données.
         Ce constructeur produit un histogramme vide, il conviendra d'utiliser la fonction 'BuildAndRefine' et
         'build_and_refine' pour le mettre à jour.
-        :param dim_name:
+        :param attributes_name:
         :param nb_max_bucket:
         :param verbeux:
         """
@@ -34,7 +34,7 @@ class Stholes(object):
         self.children = []  # Liste des enfants (classe inclus dans la classe courante)
         self.intervalles = []  # liste des intervalles qui définis la classe (forme un hyperplan)
         self.nb_max_classes = nb_max_bucket  # nombre de classe a ne pas dépasser dans l'histogramme
-        self.attributes_name = dim_name  # Un tableau listant le nom des attributs
+        self.attributes_name = attributes_name  # Un tableau listant le nom des attributs
         self.father = None  # Lien vers le père de la classe courante (None pour la racine)
         self.howasicreated = None  # Seulement pour débugger, permet de savoir comment à été crée la classe
                                    # 0 : Fusion ss, 1 : Fusion pc, 2 : Drill
@@ -483,7 +483,7 @@ class Stholes(object):
         Renvoie une estimation du nombre d'éléments dans la zone délimitée par bound. Les dimensions de l'intervalle à
         estimer doivent être décris dans le paramètre dim_a_estimer.
         exemple : bound = ([0,1]) dim_a_estimer = ([x])
-        Le nom des dimensions doit correspondre aux noms donné dans la variable self.dim_name
+        Le nom des dimensions doit correspondre aux noms donné dans la variable self.attributes_name
                 :param bound:
         :return:
         """
@@ -660,6 +660,11 @@ class Stholes(object):
         return True
 
     def save(self, path):
+        """
+        Sérialise l'objet histogramme en utilisant la librairie pickle.
+        :param path:
+        :return:
+        """
         f = open(path, 'wb')
         dump(self, f)
         f.close()
@@ -682,7 +687,7 @@ class Stholes(object):
             tab += c.print()
 
         if self.father is None or debug_it:
-            # couleur = ['r', 'g', 'c', 'm', 'y', 'k', 'w']
+            # couleur = ['here.mhist', 'g', 'c', 'm', 'y', 'k', 'w']
             figure = plt.figure()
             axes = plt.axes()
             axes.set_xlim(left=round(min(self.intervalles[0])) - 1, right=max(self.intervalles[0]) + 1)
