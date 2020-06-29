@@ -31,7 +31,7 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     nb_validation_q = 500
     workload = w.create_workload(tab_attribut, 0.05, nb_validation_q)
     for r in workload:
-        est = histogramme.estimate(histogramme.dim_name, r[0])
+        est = histogramme.estimer(histogramme.attributes_name, r[0])
         est_avi = o_avi.estimation(range(len(tab_attribut)), r[0])
         print('est', est, 'avi', est_avi, 'real', r[1])
         av_err += abs(est - r[1])
@@ -39,11 +39,11 @@ def test_mhist(tab_attribut, nom_dim, dim_estimer, intervalle_estimer):
     print("Average Error :", av_err / nb_validation_q)
     print("Normalized Absolute Error :", av_err / av_avi_err)
 
-    x = round(histogramme.estimate(dim_estimer, intervalle_estimer))
+    x = round(histogramme.estimer(histogramme.attributes_name, r[0]))
     print("Résultat estimé avec MHIST :   ", x)
 
     # Affichage de l'histogramme =======================================================================================
-    histogramme.print(nom_dim[:2])
+    histogramme.print()
     plt.scatter(tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][0]],
                 tab_attribut[[nom_dim.index(d_e) for d_e in dim_estimer][1]])
     plt.show()
@@ -77,7 +77,7 @@ def test_genhist(tab_data, nom_dim):
     #     cpt = 0
     #     # workload = w.create_workload(tab_attribut, 0.05, 500)
     #     for r in workload:
-    #         est = histogramme.estimate(histogramme.dim_name, r[0])
+    #         est = histogramme.estimer(histogramme.attributes_name, r[0])
     #         if r[1] != 0:
     #             err = (abs(est - r[1]) / r[1])
     #             # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
@@ -101,7 +101,7 @@ def test_genhist(tab_data, nom_dim):
     #     cpt = 0
     #     # workload = w.create_workload(tab_attribut, 0.05, 500)
     #     for r in workload:
-    #         est = histogramme.estimate(histogramme.dim_name, r[0])
+    #         est = histogramme.estimer(histogramme.attributes_name, r[0])
     #         if r[1] != 0:
     #             err = (abs(est - r[1]) / r[1])
     #             # print("Estimation :", est, " Reel :", r[1], "Erreur :", err, " Bound :", r[0])
@@ -152,7 +152,7 @@ def test_st(tab_attribut, nom_dim):
     nf_av_err = 0
     av_avi_err = 0
     for r in test_workload:
-        est = round(histogramme.estimer(r[0], histogramme.attributes_name))
+        est = round(histogramme.estimer(histogramme.attributes_name, r[0]))
         nf_est = round(nf_histogramme.estimer(r[0], histogramme.attributes_name))
 
         est_avi = o_avi.estimation(histogramme.attributes_name, r[0])

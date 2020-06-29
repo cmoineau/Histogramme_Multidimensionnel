@@ -205,11 +205,11 @@ def test_hyper_2D():
     print("Création du jeu de données ...")
 
     data_set = create_flight_data_set()
-    nom_fichier_test = "test_flight_hyper_2D.json"
+    nom_fichier_test = "test_flight_hyper_2D_nc.json"
     # data_set = create_artificial_data_set()
     # nom_fichier_test = "test_artificial_hyper_2D.json"
-    data_set = [data_set[0][:2], data_set[1][:2]]
-    # data_set = [[data_set[0][0], data_set[0][3]], [data_set[1][0], data_set[1][3]]]
+    # data_set = [data_set[0][:2], data_set[1][:2]]
+    data_set = [[data_set[0][0], data_set[0][3]], [data_set[1][0], data_set[1][3]]]
     print('Calcul des corrélations ...')
     dict_data = {'nb_tuple': len(data_set[1][0]),
                  'correlation': compute_correlation(data_set)
@@ -282,5 +282,5 @@ def test_2D():
 
 
 if __name__ == '__main__':
-    # test_hyper_2D()
-    test_5D()
+    test_hyper_2D()
+    # test_5D()
