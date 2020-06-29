@@ -47,11 +47,23 @@ class Classe(object):
         return flag_intersect
 
     def intersection_une_dimension(self, intervalle, dimension):
+        """
+        Méthode intermédiaire pour "intersection_intervalle".
+        :param intervalle:
+        :param dimension:
+        :return:
+        """
         borne_inf_in = self.boundary[dimension][0] <= intervalle[dimension][0] <= self.boundary[dimension][1]
         borne_sup_in = self.boundary[dimension][0] <= intervalle[dimension][1] <= self.boundary[dimension][1]
         return borne_inf_in or borne_sup_in
 
     def estimate_card(self, tab_dim, intervalle_a_estimer):
+        """
+        Renvoit une estimation de la cardinalité dans la zone délimité
+        :param tab_dim:
+        :param intervalle_a_estimer:
+        :return:
+        """
         surface_commune = 1
         for d in range(len(tab_dim)):
             if intervalle_a_estimer[d][0] < self.boundary[tab_dim[d]][0]:
@@ -71,6 +83,11 @@ class Classe(object):
         return (surface_commune/self.surface(tab_dim=tab_dim)) * self.densite
 
     def surface(self, tab_dim=None):
+        """
+        Calcul la surface de la classe.
+        :param tab_dim:
+        :return:
+        """
         res = 1
         if tab_dim is None:
             for i, j in self.boundary:
@@ -81,6 +98,10 @@ class Classe(object):
         return res
 
     def get_size(self):
+        """
+        Revnoit l'espace de stockage necessaire pour la classe.
+        :return:
+        """
         size = 0
         size += getsizeof(self.boundary)
         size += getsizeof(self.densite)

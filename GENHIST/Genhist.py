@@ -121,7 +121,6 @@ class Genhist(object):
 
         # Mis à jour des voisins =======================================================================================
         '''
-        Précédemment, j'ai crée un tableau d'intervalle de tel sorte à ce qu'il ressemble à ceci :
                 a b c
                 d e f   => [a, b, c, d, e, f, g, h, i]
                 g h i
@@ -185,10 +184,12 @@ class Genhist(object):
 
     def estimer(self, tab_attribut, boundary):
         """
-        Fonction pour estimer la cardinalité d'une zone
-        :param tab_attribut: Tableau des attributs à estimer (doivent correspondre à ceux définis dans self.attributes_name
-        :param boundary:
-        :return:
+        Réalise un estimation de cardinalité dans une zone.
+        :param attributs_a_estimer: Liste d'attribut (sous forme de str, doit correspondre aux noms donnés dans
+        self.attributes_name)
+        :param intervalle_a_estimer: Liste d'intervalle [min, max] pour chaque attribut, doit correspondre à l'ordre de
+        la liste "attribut_a_estimer"
+        :return: cardinalité (float)
         """
         card = 0
         for intervalle in self.tab_classe:
@@ -200,7 +201,6 @@ class Genhist(object):
     def get_size(self):
         """
         Renvoit la taille en mémoire de l'histogramme.
-        /!\ Fiabilité ?
         :return:
         """
         size = 0
