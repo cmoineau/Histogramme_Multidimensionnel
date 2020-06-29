@@ -9,6 +9,11 @@ from sys import getsizeof
 
 class Classe(object):
     def __init__(self, boundaries, joint_distribution):
+        """
+        Initialisation d'une classe de l'histogramme MHIST.
+        :param boundaries:
+        :param joint_distribution:
+        """
         self.boundaries = boundaries
         self.joint_distribution = joint_distribution
         self.max_diff, self.max_dim = self.max_aera_diff()
@@ -16,9 +21,14 @@ class Classe(object):
         self.nb_distinct_value = []
 
     def joint_to_marginal(self, joint):
+        """
+        Calcul la distribution jointe à partir des distributions marginales.
+        :param joint:
+        :return:
+        """
         nb_dim = len(self.boundaries)
         marginal = []
-        # Anciennement, cette boucle était un simple marginal = [{}] * nb_dim le problème est qu'en faisant cela,
+        # Anciennement, cette boucle était un simple "marginal = [{}] * nb_dim" le problème est qu'en faisant cela,
         # python crée un tableau de pointeur vers un seul dictionnaire d'où des erreures ...
         for i in range(nb_dim):
             marginal.append({})
@@ -32,17 +42,41 @@ class Classe(object):
         return marginal
 
     def freq(self, dim, k, marginal_distribution):
+        """
+        Calcul de la valeur critique "frequence".
+        :param dim: dimension à étudier.
+        :param k: Index de la valeur distinct.
+        :param marginal_distribution: distribution marginale des données.
+        :return: Nombre d'apparition dans le jeu de données de la kième valeur distinct de la dim-ième dimension
+        """
         return marginal_distribution[dim][k][1]
 
     def spread(self, dim, k, marginal_distribution):
+        """
+        Calcul de la valeur critique "écartement".
+        :param dim: dimension à étudier.
+        :param k: Index de la valeur distinct.
+        :param marginal_distribution: distribution marginale des données.
+        :return: Différence entre la kième valeur distinct et la k+1ième valeur distinct de la dim-ième dimension
+        """
         return marginal_distribution[dim][k + 1][0] - marginal_distribution[dim][k][0]
 
     def aera(self, dim, k, marginal_distribution):
+        """
+        Calcul de la valeur critique "surface".
+        :param dim: dimension à étudier.
+        :param k: Index de la valeur distinct.
+        :param marginal_distribution: distribution marginale des données.
+        :return: Produit de la fréquence et de l'écartement.
+        """
         return self.freq(dim, k, marginal_distribution) * self.spread(dim, k, marginal_distribution)
 
     def max_aera_diff(self):
+        """
+        Renvoit la valeur maximal de "surface" ainsi que la dimension où l'on peut la trouver
+        :return:
+        """
         max_diff = 0
-        max_point = 0
         max_dim = 0
         marginal_distribution = self.joint_to_marginal(self.joint_distribution)
 
@@ -58,6 +92,10 @@ class Classe(object):
         return max_diff, max_dim
 
     def split(self):
+        """
+        Séparation d'une classe en deux.
+        :return: Deux classes. (-1, -1) s'il n'est pas possible de séparer la classe en deux.
+        """
         if self.max_diff != 0:
             # Séparation de la distribution jointe =====================================================================
             joint_distribution_1 = []
@@ -87,6 +125,10 @@ class Classe(object):
             return -1, -1
 
     def freeze(self):
+        """
+        Enlève de la mémoire la distribution jointe qui à permis l'initialisation.
+        :return:
+        """
         marginal = self.joint_to_marginal(self.joint_distribution)
         nb_tuples = 0
         nb_distinct_values = []
@@ -100,11 +142,24 @@ class Classe(object):
         self.joint_distribution = None
 
     def print(self, dims):
+        """
+        Affichage de la classe projetté sur les 2 attributs définis dans dims
+        :param dims:
+        :return:
+        """
         return ((self.boundaries[dims[0]][0], self.boundaries[dims[1]][0]),
                 self.boundaries[dims[0]][1] - self.boundaries[dims[0]][0],
                 self.boundaries[dims[1]][1] - self.boundaries[dims[1]][0])
 
     def intersection_intervalle(self, intervalle, tab_dimension):
+        """
+        Fonction permettant de savoir si la classe intersectionne une zone.
+        :param intervalle: Liste d'intervalle [min, max] pour chaque attribut, doit correspondre à l'ordre de
+        la liste "attribut_a_estimer"
+        :param tab_dimension: Liste d'attribut (sous forme de str, doit correspondre aux noms donnés dans
+        self.attributes_name)
+        :return:
+        """
         it = 0
         flag_intersect = True
         while it < len(tab_dimension) and flag_intersect:
@@ -114,11 +169,23 @@ class Classe(object):
         return flag_intersect
 
     def intersection_une_dimension(self, intervalle1D, dimension):
+        """
+        Méthode intermédiaire à la méthode  "intersection_intervalle".
+        :param intervalle1D:
+        :param dimension:
+        :return:
+        """
         borne_inf_in = self.boundaries[dimension][0] <= intervalle1D[0] <= self.boundaries[dimension][1]
         borne_sup_in = self.boundaries[dimension][0] <= intervalle1D[1] <= self.boundaries[dimension][1]
         return borne_inf_in or borne_sup_in
 
     def estimate_card(self, tab_dim, intervalle_a_estimer):
+        """
+        Réalise un estimation de cardinalité dans une zone.
+        :param tab_dim:
+        :param intervalle_a_estimer:
+        :return:
+        """
         card_estim = 0
         # On vérifie si notre intervalle_estimer n'est pas complètement inclus dans la conjonction =====================
         flag_inter_completement_inclus = True
@@ -154,6 +221,10 @@ class Classe(object):
         return card_estim
 
     def get_size(self):
+        """
+        Renvoit l'espace de stockage necessaire pour la classe.
+        :return:
+        """
         res = 0
         res += getsizeof(self.boundaries)
         res += getsizeof(self.nb_tuple)

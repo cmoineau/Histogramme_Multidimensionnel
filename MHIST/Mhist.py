@@ -91,6 +91,10 @@ class Mhist(object):
             it.freeze()
 
     def print(self):
+        """
+        Affiche l'histogramme multidimensionnel en le projettant sur les deux premiers attributs.
+        :return:
+        """
         dim_names = self.attributes_name[:2]
         figure = plt.figure()
         axes = plt.axes()
@@ -111,6 +115,14 @@ class Mhist(object):
         plt.show()
 
     def estimer(self, attributs_a_estimer, intervalle_a_estimer):
+        """
+        Réalise un estimation de cardinalité dans une zone.
+        :param attributs_a_estimer: Liste d'attribut (sous forme de str, doit correspondre aux noms donnés dans
+        self.attributes_name)
+        :param intervalle_a_estimer: Liste d'intervalle [min, max] pour chaque attribut, doit correspondre à l'ordre de
+        la liste "attribut_a_estimer"
+        :return: cardinalité (float)
+        """
         card = 0
         for intervalle in self.tab_classe:
             card += intervalle.estimate_card([self.attributes_name.index(att) for att in attributs_a_estimer],
@@ -118,6 +130,10 @@ class Mhist(object):
         return card
 
     def get_size(self):
+        """
+        Renvoit l'espace de stockage necessaire pour l'histogramme.
+        :return:
+        """
         size = 0
         size += getsizeof(self.nb_max_intervalle)
         for intervalle in self.tab_classe:
