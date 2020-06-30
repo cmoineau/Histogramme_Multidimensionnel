@@ -53,12 +53,12 @@ def test_genhist(tab_data, nom_dim):
     b = 500
     xi = 20  # Qu'elle est une valeur classique ?
     alpha = (1/2)**(1/len(tab_data))
-    tab_data = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
+    test = tab_data.copy().tolist()  # Je fais une copie du tableau d'intervalle sous la forme d'une liste
 
     # Création de l'histogramme ========================================================================================
     histogramme = genhist.Genhist(tab_data, nom_dim, b, xi, alpha, verbeux=False)
-    histogramme.print()
-
+    # histogramme.print()
+    print(histogramme.estimer(['x'], [[-1, 1]]))
     # Test =============================================================================================================
 
     # print('nb_tot de tuple : ', histogramme.estimate(histogramme.dim_name, [[min(d), max(d)] for d in tab_data]))

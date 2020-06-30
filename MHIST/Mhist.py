@@ -6,8 +6,8 @@
 :last_change_date : 18/02/20
 :description : Définition d'un histogramme MHIST.
 """
-from matplotlib import patches
-import matplotlib.pyplot as plt
+# from matplotlib import patches
+# import matplotlib.pyplot as plt
 from MHIST import Classe
 from collections import Counter
 from sys import getsizeof

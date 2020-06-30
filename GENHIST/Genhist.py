@@ -8,10 +8,10 @@
 """
 from GENHIST import Classe as intervalle
 import random
-from matplotlib import patches
-import matplotlib.pyplot as plt
+# from matplotlib import patches
+# import matplotlib.pyplot as plt
 from sys import getsizeof
-import numpy as np
+from copy import deepcopy
 from utils import est_inclus, epsilon
 from pickle import dump
 
@@ -30,7 +30,7 @@ class Genhist(object):
         """
         # On fait une copie du jeu de données car nous aurons besoin de le maniuler dans la suite
         # Note: deepcopy ne fonctionne pas à cause d'une erreur de récursion
-        data_set = np.array(data_set).copy()
+        data_set = deepcopy(data_set)
         data_set = [list(d) for d in data_set]
         self.min_max = [(min(a), max(a)) for a in data_set]
         self.verbeux = verbeux

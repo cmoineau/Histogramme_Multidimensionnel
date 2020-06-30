@@ -15,8 +15,8 @@ from sys import getsizeof
 from copy import deepcopy, copy
 from utils import epsilon
 from pickle import dump
-import matplotlib.pyplot as plt
-from matplotlib import patches
+# import matplotlib.pyplot as plt
+# from matplotlib import patches
 
 
 class Stholes(object):
