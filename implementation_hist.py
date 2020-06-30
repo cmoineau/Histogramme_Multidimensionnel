@@ -2,14 +2,13 @@
 :author : Cyril MOINEAU
 :creation_date : 12/02/20
 :last_change_date : 17/03/20
-:description : Script principale permettant de tester les différents histogrammes.
+:description : Script pour tester les histogrammes lors de l'implémentation.
 """
 
 import MHIST.Mhist as mhist
 import GENHIST.Genhist as genhist
 import AVI.avi as avi
 import STHOLES.Stholes as st
-import STHOLES.old_sthole as o_st
 import utils
 from STHOLES import Workload as w
 import matplotlib.pyplot as plt

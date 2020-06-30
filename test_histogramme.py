@@ -1,5 +1,8 @@
-"""
+# -*- coding: UTF-8 -*-
 
+"""
+:author : Cyril MOINEAU
+:description : Script pour tester les histogrammes. Potentiellement plus à jour /!\
 """
 import json
 import MHIST.Mhist as mhist

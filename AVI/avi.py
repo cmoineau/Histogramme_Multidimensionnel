@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 """
 :author : Cyril MOINEAU
 :creation_date : 20/02/20

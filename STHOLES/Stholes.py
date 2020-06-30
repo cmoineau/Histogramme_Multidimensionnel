@@ -1,7 +1,8 @@
+# -*- coding: UTF-8 -*-
 """
 :author : Cyril MOINEAU
 :creation_date : 02/03/20
-:last_change_date : 23/04/20
+:last_change_date : 11/06/20
 :description : Définition d'un histogramme ST-Holes.
 
 Définitions :

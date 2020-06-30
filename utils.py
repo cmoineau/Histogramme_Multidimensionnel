@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from numpy import sqrt
 import random
 
