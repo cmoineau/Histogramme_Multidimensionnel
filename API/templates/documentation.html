@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Documentation</title>
+	</head>
+
+	<body>
+		<h1>API Histogramme Multidimensionnel</h1>
+		Si vous êtes arrivé ici, c'est sûrement que vous avez essayé d'accéder à une ressource qui n'existe pas.
+		<h2>POST :</h2>
+			<h3>creer/stholes/ :</h3>
+			<ul>
+				<li>Description : Créer un histogramme stholes.</li>
+				<li>Entrée : un json contenant les champ : nom_attributs, nom_histogrammes.</li>
+				<li>Sortie : un json avec le champ : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/stholes/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto"}'</li>
+			</ul>
+			<h3>creer/mhist/ :</h3>
+			<ul>
+				<li>Description : Créer un histogramme mhist.</li>
+				<li>Entrées :  un json contenant les champ : nom_attributs, nom_histogrammes, donnee.</li>
+				<li>Sortie : un json avec le champ : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/mhist/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto", "donnee": [[1, 2, 3, 4, 5, 6 ,1]]}'</li>
+			</ul>
+			<h3>creer/genhist/ :</h3>
+			<ul>
+				<li>Description : Créer un histogramme genhist.</li>
+				<li>Entrée : Un json contenant les champs : nom_attributs, nom_histogrammes, donnee.</li>
+				<li>Sortie : un json avec le champs : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/genhist/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto", "donnee": [[1, 2, 3, 4, 5, 6 ,1]]}'</li>
+			</ul>
+			<h3>&lt;nom_histogramme&gt;/estimer/ :</h3>
+			<ul>
+				<li>Description : Permet de réaliser une estimation d’une zone avec l’histogramme &lt;nom_histogramme&gt;. Pour obtenir le nom de l’histogramme de référer à la méthode lister.</li>
+				<li>Entrée : Un json : contenant les champs : nom_attributs,  zone.</li>
+				<li>Sortie : un json avec le champs : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête, resultat : résultat de l’estimation.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:5000/test.genhist/estimer' --data '{"nom_attributs": ["x"], "zone":[[-1, 1]]}'</li>
+			</ul>
+
+		<h2>GET :</h2>
+			<h3>lister_histogrammes/ :</h3>
+			<ul>
+				<li>Description : Renvoit la liste des histogrammes sérialisés.</li>
+				<li>Entrée : Un json : contenant les champs : nom_attributs,  zone.</li>
+				<li>Sortie : un json avec le champs : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête, resultat : résultat de l’estimation.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:5000/test.genhist/estimer' --data '{"nom_attributs": ["x"], "zone":[[-1, 1]]}'</li>
+			</ul>
+			<h3><&lt;nom_histogramme&gt;/attributs :</h3>
+			<ul>
+				<li>Description : Renvoit la liste des attributs de l’histogramme &lt;nom_histogramme&gt;.</li>
+				<li>Entrée : None.</li>
+				<li>Sortie : un json avec le champs : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête, resultat : liste des attribut.</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:5000/test.genhist/estimer' --data '{"nom_attributs": ["x"], "zone":[[-1, 1]]}'</li>
+			</ul>
+		</ul>
+		<h2>DELETE :</h2>
+			<h3>&lt;nom_histogramme &gt;/ :</h3>
+			<ul>
+				<li>Description : Permet de supprimer côté serveur un histogramme sérialisé</li>
+				<li>Entrée : None</li>
+				<li>Sortie : un json avec le champs : status : indique si la requête c’est bien déroulée, message : Description du déroulement de la requête</li>
+				<li>Exemple d’entrée :
+				curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:5000/test.genhist/estimer' --data '{"nom_attributs": ["x"], "zone":[[-1, 1]]}'</li>
+			</ul>
+	</body>
+
+</html>
