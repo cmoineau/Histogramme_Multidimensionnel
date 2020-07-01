@@ -1,8 +1,14 @@
 # -*- coding: UTF-8 -*-
+"""
+:author : Cyril MOINEAU
+:creation_date : 26/06/20
+:last_change_date : 01/07/20
+:description : API permettant de gérer des histogrammes multidimensionnel.
+"""
 import sys
 sys.path.append('../')
 from API import wrapper
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
@@ -12,6 +18,7 @@ wrapper = wrapper.Histogramme_wrapper()
 @app.route('/creer/STHoles/', methods=['POST'])
 def creer_stholes():
     """
+    Permet de créer un histogramme STHoles
     Exemple de requête :
     curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/stholes/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto"}'
     :return:
@@ -32,6 +39,7 @@ def creer_stholes():
 @app.route('/creer/mhist/', methods=['POST'])
 def creer_mhist():
     """
+    Permet de créer un histogramme MHIST
     Exemple de requête :
     curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/mhist/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto", "donnee": [[1, 2, 3, 4, 5, 6 ,1]]}'
     :return:
@@ -56,6 +64,7 @@ def creer_mhist():
 @app.route('/creer/genhist/', methods=['POST'])
 def creer_genhist():
     """
+    Permet de créer un histogramme GENHIST
     Exemple de requête :
     curl -X POST -H 'Content-Type: application/json' -i http://localhost:5000/creer/genhist/ --data '{"nom_attributs":["x"], "nom_histogramme":"toto", "donnee": [[1, 2, 3, 4, 5, 6 ,1]]}'
     :return:
@@ -78,6 +87,7 @@ def creer_genhist():
 @app.route('/<nom_histogramme>/estimer', methods=['POST'])
 def estimer(nom_histogramme=None):
     """
+    Réalise une estimation avec l'histogramme donné
     Exemple de requête :
     curl -X POST -H 'Content-Type: application/json' -i 'http://localhost:5000/test.genhist/estimer' --data '{"nom_attributs": ["x"], "zone":[[-1, 1]]}'
     :param nom_histogramme:
@@ -105,18 +115,37 @@ def estimer(nom_histogramme=None):
 
 @app.route('/<nom_histogramme>', methods=['DELETE'])
 def supprimer(nom_histogramme=None):
+    """
+    Permet de supprimer côté serveur un histogramme sérialisé
+    :param nom_histogramme:
+    :return:
+    """
     print(nom_histogramme)
     path = "./saved_hist/" + nom_histogramme
     if wrapper.remove_hist(path):
-        return jsonify(status='True')
+        return jsonify(status='True', message= nom_histogramme + " a été supprimé avec succès")
     else:
         return jsonify(status='False', message="Impossible de supprimer l'histogramme :" + nom_histogramme)
 
 
 @app.route('/lister', methods=['GET'])
 def lister():
+    """
+    Renvoit la liste des noms des histogrammes stocké côté seveur
+    :return:
+    """
     list_histogramme = [path.split('/')[-1] for path in wrapper.list_hist()]
     return jsonify(status='True', resultat=list_histogramme)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """
+    redirige les erreurs 404 vers la page de documentation
+    :param e: erreur on ne s'en sert pas ici ... mais necessaire de le laisser !
+    :return:
+    """
+    return render_template('documentation.html'), 404
 
 
 if __name__ == '__main__':
