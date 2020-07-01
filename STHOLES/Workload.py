@@ -9,8 +9,8 @@ Définition :
     - Une requête est définis comme [([centres], [longueurs]) for each dim]
 """
 import random as random
-import matplotlib.pyplot as plt
-from matplotlib import patches
+# import matplotlib.pyplot as plt
+# from matplotlib import patches
 from utils import est_inclus
 
 

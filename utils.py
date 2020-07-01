@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from numpy import sqrt
+from math import sqrt
 import random
 
 epsilon = 0.00001  # On a besoin d'un espilon pour faire des tests et éviter les problèmes de virgule flottante

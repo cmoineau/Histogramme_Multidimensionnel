@@ -1,7 +1,12 @@
+# -*- coding: UTF-8 -*-
+
 from pickle import load
 from MHIST import Mhist
 from GENHIST import Genhist
 from STHOLES import Stholes, Workload
+from os import remove
+from os.path import exists
+from glob import glob
 
 dic_histo = {"mhist": 0, "genhist": 1, "stholes": 2}
 
@@ -12,7 +17,7 @@ class Histogramme_wrapper(object):
         self.type_histogramme = None
         self.path = None
 
-    def load_histogramme(self, path):
+    def charger_histogramme(self, path):
         with open(path, "rb") as f:
             try:
                 self.histogramme = load(f)
@@ -22,7 +27,7 @@ class Histogramme_wrapper(object):
             self.type_histogramme = dic_histo[terminaison]
             self.path = path
 
-    def create_MHIST(self, data, attributes_name, nom_histogramme, max_classes=500):
+    def creer_MHIST(self, data, attributes_name, nom_histogramme, max_classes=500):
         try:
             histo = Mhist.Mhist(data, attributes_name, max_classes)
             histo.save("./saved_hist/" + nom_histogramme + ".mhist")
@@ -31,7 +36,7 @@ class Histogramme_wrapper(object):
             return False
         return True
 
-    def create_GENHIST(self, data, attributes_name, nom_histogramme, b=50, xi=10):
+    def creer_GENHIST(self, data, attributes_name, nom_histogramme, b=50, xi=10):
         try:
             alpha = (1 / 2) ** (1 / len(data))
             histo = Genhist.Genhist(data, attributes_name, b, xi, alpha)
@@ -41,7 +46,7 @@ class Histogramme_wrapper(object):
             return False
         return True
 
-    def create_STHoles(self, attributes_name, nom_histogramme, max_classes=500):
+    def creer_STHoles(self, attributes_name, nom_histogramme, max_classes=500):
         try:
             histo = Stholes.Stholes(attributes_name, max_classes)
             histo.save("./saved_hist/" + nom_histogramme + ".stholes")
@@ -66,3 +71,17 @@ class Histogramme_wrapper(object):
         if self.histogramme is None:
             raise ValueError("Il faut d'abord charger un histogramme !")
         self.histogramme.print()
+
+    def remove_hist(self, path):
+        if exists(path):
+            if path.split('.')[-1] in ['mhist', 'genhist', 'stholes']:
+                remove(path)
+                return True
+        return False
+
+    def list_hist(self):
+        res = []
+        res += (glob("./saved_hist/*.mhist"))
+        res += (glob("./saved_hist/*.genhist"))
+        res += (glob("./saved_hist/*.stholes"))
+        return res

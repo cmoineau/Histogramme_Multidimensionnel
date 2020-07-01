@@ -4,6 +4,7 @@ COPY ./MHIST /app/MHIST
 COPY ./GENHIST /app/GENHIST
 COPY ./STHOLES /app/STHOLES
 COPY requirements.txt /app/
+COPY utils.py /app/
 WORKDIR /app/API
 RUN pip install --upgrade pip
 RUN pip install -r ../requirements.txt 
