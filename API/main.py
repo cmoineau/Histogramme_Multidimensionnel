@@ -128,7 +128,7 @@ def supprimer(nom_histogramme=None):
         return jsonify(status='False', message="Impossible de supprimer l'histogramme :" + nom_histogramme)
 
 
-@app.route('/lister', methods=['GET'])
+@app.route('/lister_histgogrammes', methods=['GET'])
 def lister():
     """
     Renvoit la liste des noms des histogrammes stocké côté seveur
@@ -136,6 +136,22 @@ def lister():
     """
     list_histogramme = [path.split('/')[-1] for path in wrapper.list_hist()]
     return jsonify(status='True', resultat=list_histogramme)
+
+
+@app.route('/<nom_histogramme>/attributs', methods=['GET'])
+def get_attributs(nom_histogramme=None):
+    """
+    Renvoit les attributs d'un histogramme
+    :param nom_histogramme:
+    :return:
+    """
+    path = './saved_hist/' + nom_histogramme
+    try:
+        wrapper.charger_histogramme(path)
+    except Exception as e:
+        return jsonify(status='False', message="Impossible de trouver l'histogramme")
+    tab_attributes = wrapper.get_attributes()
+    return jsonify(status='True', message='Succès !', resultat=tab_attributes)
 
 
 @app.errorhandler(404)

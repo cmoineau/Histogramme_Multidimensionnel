@@ -156,5 +156,6 @@ class Histogramme_wrapper(object):
 
     def get_attributes(self):
         if self.histogramme is None:
-            raise ValueError("Il faut d'abord charger un histogramme !")
+            print("Il faut d'abord charger un histogramme !")
+            return None
         return self.histogramme.attributes_name

@@ -23,4 +23,7 @@ def create_test_hist():
     wrapper.creer_STHoles(attributes_name, "test")
 
 if __name__ == '__main__':
-    wrapper.Histogramme_wrapper().list_hist()
+    w = wrapper.Histogramme_wrapper()
+    w.get_attributes()
+    w.charger_histogramme("./saved_hist/test.genhist")
+    w.get_attributes()
